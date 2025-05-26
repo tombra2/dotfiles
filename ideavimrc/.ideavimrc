@@ -1,0 +1,31 @@
+let mapleader = " "
+
+nnoremap <leader>fc :edit ~/.ideavimrc<CR>
+nnnoremap <leader>sc :source ~/.ideavimrc<CR>:nohlsearch<CR>
+nnoremap <Esc> :nohlsearch<CR>
+set clipboard^=unnamed,unnamedplus
+set ideajoin
+set hlsearch
+set smartcase
+set ignorecase
+set incsearch
+nnoremap J mzJ`z
+nnoremap K mzK`z
+
+nnoremap p P
+
+Plug 'machakann/vim-highlightedyank'
+Plug 'tpope/vim-commentary'
+
+
+
+
+noremap <C-d> <C-d>zz
+noremap <C-u> <C-u>zz
+
+
+vmap J :m '>+1<CR>gv=gv
+vmap K :m '<-2<CR>gv=gv
+
+
+

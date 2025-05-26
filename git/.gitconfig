@@ -1,0 +1,20 @@
+[user]
+	email = brandner.thomas@me.com
+	name = tom_brandi
+
+	[alias]
+    ci = commit
+    st = status
+[color]
+    branch = auto
+    diff = auto
+    interactive = auto
+    status = auto
+[mergetool]
+	keepBackup = true
+[push]
+	default = simple
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main

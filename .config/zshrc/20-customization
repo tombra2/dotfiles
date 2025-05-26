@@ -1,0 +1,91 @@
+# -----------------------------------------------------
+# CUSTOMIZATION
+# -----------------------------------------------------
+POSH=agnoster
+
+# -----------------------------------------------------
+# oh-myzsh themes: https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# -----------------------------------------------------
+# ZSH_THEME=robbyrussell
+
+# -----------------------------------------------------
+# oh-myzsh plugins
+# -----------------------------------------------------
+plugins=(
+    git
+    sudo
+    web-search
+    archlinux
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    fast-syntax-highlighting
+    copyfile
+    copybuffer
+    dirhistory
+)
+
+# Set-up oh-my-zsh
+source $ZSH/oh-my-zsh.sh
+
+# -----------------------------------------------------
+# Set-up FZF key bindings (CTRL R for fuzzy history finder)
+# -----------------------------------------------------
+source <(fzf --zsh)
+
+# zsh history
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
+# ---------------------------
+ZSH_TMUX_AUTOSTART=true
+
+export FZF_DEFAULT_OPTS="--preview 'bat --color=always {}'"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+bindkey -s '^f' '~/.config/script/tmux-sessionizer\n'
+bindkey -s '^n' 'nvim $(fzf)\n'
+
+# ---------------------------
+# Tmux Autostart
+# ---------------------------
+if command -v tmux &>/dev/null && [ -z "$TMUX" ]; then
+  tmux attach-session -t default || tmux new-session -s default
+fi
+
+
+alias e="exit"
+alias c='clear'
+alias reload_zsh="source ~/.zshrc"
+alias update="sudo pacman -Syu && yay -Syu --noconfirm"
+
+alias lg="lazygit"
+alias ls="eza --no-filesize --long --color=always --icons=always --no-user"
+alias tree="tree -L 3 -a -I '.git' --charset X"
+alias dtree="tree -L 3 -a -d -I '.git' --charset X"
+
+# Git Shortcuts
+alias g="git"
+alias ga="git add ."
+alias gc="git commit -m"
+alias gp="git push"
+alias gs="git status"
+alias gl="git log --oneline --graph --decorate --all"
+
+# Navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias v="nvim"
+# -----------------------------------------------------
+# Prompt
+# -----------------------------------------------------
+alias fd='cd "$(find . -type d | fzf)"'
+alias fh='history | fzf'
+
+eval "$(zoxide init --cmd cd zsh)"
+
+# eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/zen.toml)"
+eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/EDM115-newline.omp.json)"
+
+# Shipped Theme
+# eval "$(oh-my-posh init zsh --config /usr/share/oh-my-posh/themes/agnoster.omp.json)"
