@@ -1,0 +1,46 @@
+#!/bin/bash
+
+set -e # Bricht bei erstem Fehler ab
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+run_step() {
+    echo -e "${GREEN}➤ $1${NC}"
+    eval "$2"
+}
+# 1.PHPCBF
+run_step "Running PHP CBF" "vendor/bin/phpcbf"
+
+# 2. PHPCS (CodeSniffer)
+run_step "Running PHP CodeSniffer" "vendor/bin/phpcs"
+
+# 3. PHP-CS-Fixer
+run_step "Running PHP-CS-Fixer" "vendor/bin/php-cs-fixer fix"
+
+# 4. PHPStan
+run_step "Running PHPStan" "vendor/bin/phpstan analyse"
+
+# 5. PHPStan (Plain)
+run_step "Running PHPStan (plain)" "vendor/bin/phpstan analyse --no-ansi"
+
+#6.1 Psalm fix
+run_step "Running Psalm ClassMustBeFinal" "vendor/bin/psalm --alter --issues=ClassMustBeFinal --dry-run"
+
+# 6. Psalm
+run_step "Running Psalm" "vendor/bin/psalm"
+
+# 7. Rector
+run_step "Running Rector" "vendor/bin/rector process"
+
+# 8. Twig Linter
+run_step "Linting Twig templates" "php bin/console lint:twig templates --show-deprecations"
+
+# 9. PHP Unit
+run_step "Running PHP Unit Tests" "ddev exec vendor/bin/phpunit"
+
+#10. PHP Security Check
+run_step "Running PHP Security Check" "symfony check:security"
+
+echo -e "${GREEN}✅ Alle Checks wurden erfolgreich abgeschlossen.${NC}"

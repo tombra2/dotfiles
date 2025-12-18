@@ -1,0 +1,34 @@
+[[session]]
+name = "Downloads 📥"
+path = "~/Downloads"
+startup_command = "yazi"
+
+[[session]]
+name = "tmux config"
+path = "~/.tmux.conf"
+startup_command = "nvim .tmux.conf"
+preview_command = "bat --color=always ~/.tmux.conf"
+
+
+[[session]]
+name = "sesh"
+path = "~/.config/sesh"
+startup_command = "nvim sesh.toml"
+preview_command = "bat --color=always sesh.toml"
+
+[[session]]
+name = "nvim plugins"
+path = "~/.config/nvim/lua/plugins"
+
+[[session]]
+name = "nvim config"
+path = "~/.config/nvim/lua/config"
+startup_command = "n"
+
+[[session]]
+name = "hyprland"
+path = "~/.config/hypr/"
+startup_command = "n"
+
+
+

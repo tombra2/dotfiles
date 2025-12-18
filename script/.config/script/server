@@ -1,0 +1,167 @@
+#!/bin/bash
+set -e
+
+### Konfiguration (anpassen falls nötig)
+DOMAIN="brandworks.dev"
+MYSQL_DATABASE="db"
+MYSQL_USER="db"
+MYSQL_ROOT_PASSWORD="db"
+
+### Sicherstellen, dass das Script als root ausgeführt wird
+if [ "$EUID" -ne 0 ]; then
+    echo "Bitte als root oder mit sudo ausführen."
+    exit 1
+fi
+
+### Update und Installation von Abhängigkeiten (Docker, Docker-Compose)
+echo "System aktualisieren und Docker installieren ..."
+apt-get update
+apt-get install -y \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+
+# Docker GPG-Schlüssel und Repository hinzufügen
+if [ ! -f /etc/apt/keyrings/docker.gpg ]; then
+    mkdir -p /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+fi
+
+echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list >/dev/null
+
+apt-get update
+apt-get install -y docker-ce docker-ce-cli containerd.io
+
+# Docker Compose installieren (falls noch nicht vorhanden)
+if ! command -v docker-compose &>/dev/null; then
+    echo "Docker Compose installieren ..."
+    COMPOSE_VERSION="2.20.2" # ggf. Version anpassen
+    curl -SL "https://github.com/docker/compose/releases/download/v${COMPOSE_VERSION}/docker-compose-linux-$(uname -m)" -o /usr/local/bin/docker-compose
+    chmod +x /usr/local/bin/docker-compose
+fi
+
+### Erstelle benötigte Verzeichnisstruktur
+echo "Erstelle Verzeichnisstruktur ..."
+BASE_DIR="brandworks"
+mkdir -p "$BASE_DIR"/{nginx/conf.d,php,app,certs}
+
+### Erstelle ein einfaches PHP Dockerfile (PHP 8.3-FPM mit gängigen Extensions)
+cat >"$BASE_DIR/php/Dockerfile" <<'EOF'
+FROM php:8.3-fpm
+
+# Installiere Systempakete und PHP-Erweiterungen
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    zip \
+    unzip \
+    libicu-dev \
+    libonig-dev \
+    && docker-php-ext-install pdo pdo_mysql intl zip opcache
+
+# Optional: Xdebug installieren (falls benötigt)
+# RUN pecl install xdebug && docker-php-ext-enable xdebug
+
+WORKDIR /var/www/html
+EOF
+
+### Erstelle ein docker-compose.yml
+cat >"$BASE_DIR/docker-compose.yml" <<EOF
+version: "3.8"
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./app:/var/www/html
+      - ./certs:/etc/ssl/certs
+    depends_on:
+      - php
+
+  php:
+    build: ./php
+    container_name: php
+    volumes:
+      - ./app:/var/www/html
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  mysql-data:
+EOF
+
+### Erstelle eine Beispiel-NGINX-Konfiguration für Symfony
+cat >"$BASE_DIR/nginx/conf.d/symfony.conf" <<EOF
+server {
+    listen 80;
+    server_name ${DOMAIN};
+    return 301 https://\$host\$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name ${DOMAIN};
+
+    ssl_certificate /etc/ssl/certs/${DOMAIN}.crt;
+    ssl_certificate_key /etc/ssl/certs/${DOMAIN}.key;
+
+    root /var/www/html/public;
+    index index.php index.html index.htm;
+
+    location / {
+        try_files \$uri /index.php\$is_args\$args;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass php:9000;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME \$realpath_root\$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+EOF
+
+### Erstelle ein selbstsigniertes SSL-Zertifikat (selbst für Testumgebungen)
+if [ ! -f "$BASE_DIR/certs/${DOMAIN}.crt" ] || [ ! -f "$BASE_DIR/certs/${DOMAIN}.key" ]; then
+    echo "Erstelle selbstsigniertes SSL-Zertifikat für ${DOMAIN} ..."
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+        -subj "/CN=${DOMAIN}" \
+        -keyout "$BASE_DIR/certs/${DOMAIN}.key" \
+        -out "$BASE_DIR/certs/${DOMAIN}.crt"
+fi
+
+### Kopiere Umgebungsvariablen in docker-compose (ersetze Platzhalter)
+echo "Passe docker-compose.yml an Umgebungsvariablen an ..."
+# (Da wir in docker-compose.yml bereits ${MYSQL_ROOT_PASSWORD} etc. verwenden,
+#  wird docker-compose beim Start automatisch die Variablen aus der Umgebung lesen.)
+export MYSQL_ROOT_PASSWORD
+export MYSQL_DATABASE
+export CLOUDFLARE_TOKEN
+
+### Starte die Container
+echo "Starte Docker-Container ..."
+cd "$BASE_DIR"
+docker-compose up -d
+
+echo "Setup abgeschlossen!"
+cho "Setup abgeschlossen!"
