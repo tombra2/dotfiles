@@ -11,8 +11,8 @@ vim.lsp.enable({
 	"twiggy_language_server",
 })
 vim.diagnostic.config({
-	virtual_lines = true,
-	virtual_text = true,
+	virtual_lines = false,
+	virtual_text = false,
 	underline = true,
 	update_in_insert = false,
 	severity_sort = true,
@@ -26,10 +26,6 @@ vim.diagnostic.config({
 			[vim.diagnostic.severity.WARN] = "󰀪 ",
 			[vim.diagnostic.severity.INFO] = "󰋽 ",
 			[vim.diagnostic.severity.HINT] = "󰌶 ",
-		},
-		numhl = {
-			[vim.diagnostic.severity.ERROR] = "ErrorMsg",
-			[vim.diagnostic.severity.WARN] = "WarningMsg",
 		},
 	},
 })

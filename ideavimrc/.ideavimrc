@@ -1,0 +1,51 @@
+let mapleader = " "
+
+Plug 'tpope/vim-commentary'
+set surround
+set highlightedyank
+set ideajoin
+set quickfix
+set multicursor
+
+
+
+nnoremap <leader>ce :edit ~/.ideavimrc<CR>
+nnoremap <leader>so :source ~/.ideavimrc<CR>:nohlsearch<CR>
+nnoremap <Esc> :nohlsearch<CR>
+set clipboard=unnamed,unnamedplus
+set matchpairs+=<:>
+set ideajoin
+set hlsearch
+set smartcase
+set ignorecase
+set incsearch
+inoremap jk <Esc>
+inoremap jj <Esc>
+inoremap kk <Esc>
+
+map <Leader>gb <action>(com.mituuz.fuzzier.grep.FuzzyGrepCurrentBuffer)
+map <Leader><Leader> <action>(com.mituuz.fuzzier.search.Fuzzier)
+
+nmap s <Action>(flash.search)
+xmap s <Action>(flash.search)
+
+xnoremap p "_dP
+
+map / <Action>(Find)
+
+
+noremap u uzz
+noremap J mzJ`z
+nnoremap K mzK`z
+nnoremap <C-a> ggVG
+nnoremap u uzz
+noremap <C-d> <C-d>zz
+noremap <C-u> <C-u>zz
+vmap J :m '>+1<CR>gv=gv
+vmap K :m '<-2<CR>gv=gv
+//  nmap [ <Action>(GotoNextError)
+// nmap ] <Action>(GotoPreviousError)
+noremap ]] <Action>(MethodDown)
+nnoremap [[ <Action>(MethodUp)
+
+
