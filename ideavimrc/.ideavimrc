@@ -7,8 +7,6 @@ set ideajoin
 set quickfix
 set multicursor
 
-
-
 nnoremap <leader>ce :edit ~/.ideavimrc<CR>
 nnoremap <leader>so :source ~/.ideavimrc<CR>:nohlsearch<CR>
 nnoremap <Esc> :nohlsearch<CR>
