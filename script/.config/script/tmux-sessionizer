@@ -186,8 +186,11 @@ sanity_check
 # Defaults wenn TS_SEARCH_PATHS nicht gesetzt ist
 [[ -n "$TS_SEARCH_PATHS" ]] || TS_SEARCH_PATHS=(
     ~/workspace/github.com/tombra2
-    ~/workspace/htl/
-    ~/workspace/akaryon-development.com/brandner
+    ~/workspace/htl/POS/
+    ~/workspace/htl/SYP/
+    ~/workspace/probe/
+    ~/workspace/akaryon-development.com/gitlab/
+    ~/Documents/PlatformIO/Projects/
 
 )
 

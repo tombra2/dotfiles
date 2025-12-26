@@ -19,14 +19,17 @@ vim.keymap.set("n", "<left>", '<cmd>echo "Use h to move!!"<CR>')
 vim.keymap.set("n", "<right>", '<cmd>echo "Use l to move!!"<CR>')
 vim.keymap.set("n", "<up>", '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+vim.keymap.set("n", "<C-b>", function()
+	require("snacks").explorer()
+end)
 
-vim.keymap.set("n", "<leader><leader>", function()
-  require("fzf-lua").buffers()
-end, { desc = "FZF Buffers", remap = false })
-
-vim.keymap.set("n", "<C-b>", "<cmd>Oil --float<CR>", { desc = "Open Parent Directory in Oil" })
 vim.keymap.set("n", "<C-a>", "ggVG")
 
 vim.keymap.set("n", "<leader>ab", ":!pio run<CR>", { silent = true })
 vim.keymap.set("n", "<leader>ah", ":!pio home<CR>", { silent = true })
 vim.keymap.set("n", "<leader>au", ":!pio run --target upload<CR>", { silent = true })
+
+vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature Help" })
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
+vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Code " })

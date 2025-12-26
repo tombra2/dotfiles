@@ -26,6 +26,7 @@ return {
 
 			-- PHP/Symfony
 			php = { "php-cs-fixer" },
+			twig = { "twig-cs-fixer" },
 
 			-- Shell
 			sh = { "shfmt" },

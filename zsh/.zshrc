@@ -22,13 +22,9 @@ source "$ZSH/oh-my-zsh.sh"
 # ---------------------------------------------------
 # Pfade
 # ---------------------------------------------------
-# JetBrains Toolbox Scripts
 export PATH="$HOME/.local/share/JetBrains/Toolbox/scripts:$PATH"
-
-# Lokale Binaries
 export PATH="$HOME/.local/bin:$PATH"
-
-# opencode
+export PATH="$HOME/.config/script/:$PATH"
 export PATH="$HOME/.opencode/bin:$PATH"
 
 n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }
@@ -47,41 +43,40 @@ export FZF_DEFAULT_OPTS="--preview 'bat --color=always {}'"
 
 # praktische FZF-Shortcuts
 
-alias fh='history | fzf'
-alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
+
+bindkey -s ^f "tmux-sessionizer\n"
 
 
-
-function sesh-sessions() {
-  {
-    # echtes TTY für fzf sicherstellen
-    exec </dev/tty
-    exec <&1
-
-    local session
-    session=$(sesh list -t -c | fzf \
-      --height 40% \
-      --reverse \
-      --border-label ' sesh ' \
-      --border \
-      --prompt '⚡  ') || return
-
-    zle reset-prompt > /dev/null 2>&1 || true
-    [[ -z "$session" ]] && return
-
-    sesh connect "$session"
-  }
-}
-
-zle -N sesh-sessions
-
-# alte ^F-Bindung entfernen (wichtig)
-bindkey -r '^F'
-
-# ^F in allen relevanten Keymaps binden
-bindkey -M emacs '^F' sesh-sessions
-bindkey -M viins '^F' sesh-sessions
-bindkey -M vicmd '^F' sesh-sessions
+# function sesh-sessions() {
+#   {
+#     # echtes TTY für fzf sicherstellen
+#     exec </dev/tty
+#     exec <&1
+#
+#     local session
+#     session=$(sesh list -t -c | fzf \
+#       --height 40% \
+#       --reverse \
+#       --border-label ' sesh ' \
+#       --border \
+#       --prompt '⚡  ') || return
+#
+#     zle reset-prompt > /dev/null 2>&1 || true
+#     [[ -z "$session" ]] && return
+#
+#     sesh connect "$session"
+#   }
+# }
+#
+# zle -N sesh-sessions
+#
+# # alte ^F-Bindung entfernen (wichtig)
+# bindkey -r '^F'
+#
+# # ^F in allen relevanten Keymaps binden
+# bindkey -M emacs '^F' sesh-sessions
+# bindkey -M viins '^F' sesh-sessions
+# bindkey -M vicmd '^F' sesh-sessions
 # ---------------------------------------------------
 # Aliases
 # ---------------------------------------------------
@@ -122,6 +117,15 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
+
+# -------MICROPYTHON--------------------------------
+
+alias µ-push='ampy --port /dev/ttyUSB0 put'
+alias µ-pull='ampy --port /dev/ttyUSB0 get'
+alias µ-rm='ampy --port /dev/ttyUSB0 get rm'
+alias µ-ls='ampy --port /dev/ttyUSB0 get ls'
+
+
 # ---------------------------------------------------
 # zoxide
 # ---------------------------------------------------
@@ -136,3 +140,4 @@ export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 . "$HOME/.local/share/../bin/env"
+export PATH=$PATH:$HOME/.local/opt/go/bin

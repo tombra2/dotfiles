@@ -1,14 +1,21 @@
 [[session]]
-name = "Downloads 📥"
-path = "~/Downloads"
-startup_command = "yazi"
+name = "git config"
+path = "~/.gitconfig"
+startup_command = "nvim .gitconfig"
+preview_command = "bat --color=always ~/.gitconfig"
+
+[[session]]
+name = "zshrc config"
+path = "~/.zshrc"
+startup_command = "nvim .zshrc"
+preview_command = "bat --color=always ~/.zshrc"
+
 
 [[session]]
 name = "tmux config"
 path = "~/.tmux.conf"
 startup_command = "nvim .tmux.conf"
 preview_command = "bat --color=always ~/.tmux.conf"
-
 
 [[session]]
 name = "sesh"
@@ -19,16 +26,49 @@ preview_command = "bat --color=always sesh.toml"
 [[session]]
 name = "nvim plugins"
 path = "~/.config/nvim/lua/plugins"
+startup_command = "yazi"
+
+[[session]]
+name = "kitty"
+path = "~/.config/kitty/"
+startup_command = "nvim kitty.conf"
+preview_command = "bat --color=always ~/.kitty.conf"
 
 [[session]]
 name = "nvim config"
 path = "~/.config/nvim/lua/config"
-startup_command = "n"
+startup_command = "yazi"
+
 
 [[session]]
 name = "hyprland"
 path = "~/.config/hypr/"
-startup_command = "n"
+startup_command = "yazi"
+
+[[session]]
+name = "htl pos"
+path = "~/workspace/htl/POS/"
+startup_command = "yazi"
+
+[[session]]
+name = "htl syp"
+path = "~/workspace/htl/POS/"
+startup_command = "yazi"
+
+[[session]]
+name = "akaryon"
+path = "~/workspace/akaryon-development.com/gitlab/"
+startup_command = "yazi"
+
+[[session]]
+name = "Github"
+path = "~/workspace/github.com/tombra2/"
+startup_command = "yazi"
+
+[[session]]
+name = "Probe"
+path = "~/workspace/probe/"
+startup_command = "yazi"
 
 
 

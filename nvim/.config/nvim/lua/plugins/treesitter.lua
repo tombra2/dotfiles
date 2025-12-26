@@ -2,24 +2,18 @@ return {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
 	config = function()
-		local configs = require("nvim-treesitter")
+		local configs = require("nvim-treesitter.configs")
 
 		configs.setup({
 			ensure_installed = {
-				"arduino",
-				"cpp",
-				"python",
-				"cpp",
 				"c",
-				"twig",
 				"lua",
 				"vim",
 				"vimdoc",
-				"css",
-				"scss",
 				"query",
+				"elixir",
+				"heex",
 				"javascript",
-				"php",
 				"html",
 				"markdown",
 				"markdown_inline",
@@ -32,10 +26,10 @@ return {
 			incremental_selection = {
 				enable = true,
 				keymaps = {
-					init_selection = "enter", -- set to `false` to disable one of the mappings
-					node_incremental = "enter",
+					init_selection = "<Enter>",
+					node_incremental = "<Enter>",
 					scope_incremental = false,
-					node_decremental = "backspace",
+					node_decremental = "<Backspace>",
 				},
 			},
 		})

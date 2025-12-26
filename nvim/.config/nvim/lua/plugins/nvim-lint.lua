@@ -8,7 +8,6 @@ return {
 		-- ============================================================================
 		-- Custom Linter Configurations
 		-- ============================================================================
-
 		-- Customize golangci-lint
 		local golangcilint = lint.linters.golangcilint
 		golangcilint.ignore_exitcode = true
@@ -48,47 +47,6 @@ return {
 
 		-- Configure Laravel Pint for PHP (custom linter since it's not built-in)
 		-- Note: pint is primarily a formatter, so this is for checking style issues
-		lint.linters.pint = {
-			name = "pint",
-			cmd = "pint",
-			stdin = false,
-			args = { "--test", "--json" },
-			stream = "stdout",
-			ignore_exitcode = true,
-			parser = function(output, bufnr)
-				local diagnostics = {}
-				if not output or output == "" then
-					return diagnostics
-				end
-
-				local ok, decoded = pcall(vim.json.decode, output)
-				if ok and decoded and decoded.files then
-					for file, issues in pairs(decoded.files) do
-						if type(issues) == "table" and #issues > 0 then
-							for _, issue in ipairs(issues) do
-								table.insert(diagnostics, {
-									lnum = issue.line and (issue.line - 1) or 0,
-									col = issue.column or 0,
-									message = issue.message or "Style issue",
-									severity = vim.diagnostic.severity.WARN,
-									source = "pint",
-								})
-							end
-						end
-					end
-				elseif string.find(output, "FAIL") or string.find(output, "differs") then
-					-- Fallback for non-JSON output
-					table.insert(diagnostics, {
-						lnum = 0,
-						col = 0,
-						message = "Code style issues found - run formatter to fix",
-						severity = vim.diagnostic.severity.WARN,
-						source = "pint",
-					})
-				end
-				return diagnostics
-			end,
-		}
 
 		-- ============================================================================
 		-- Linters by Filetype

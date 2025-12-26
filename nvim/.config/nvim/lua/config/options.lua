@@ -29,12 +29,3 @@ vim.g.lazyvim_check_order = false
 vim.o.signcolumn = "yes"
 vim.opt.path:append("templates")
 vim.opt.suffixesadd:append(".twig")
-
-vim.api.nvim_create_autocmd("TextYankPost", {
-	group = vim.api.nvim_create_augroup("YankHighlight", { clear = true }),
-	pattern = "*",
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-	desc = "Highlight yank",
-})

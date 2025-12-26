@@ -6,9 +6,12 @@ vim.lsp.enable({
 	"bashls",
 	"cssls",
 	"intelephense",
+	"jtdls",
 	"vimls",
 	"vtsls",
 	"twiggy_language_server",
+	"phpactor",
+	"vimfony",
 })
 vim.diagnostic.config({
 	virtual_lines = false,

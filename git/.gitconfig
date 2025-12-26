@@ -29,5 +29,3 @@
 
 [init]
 	defaultBranch = main
-[credential]
-	helper = /home/thomas/.config/1password/op-credential-helper
