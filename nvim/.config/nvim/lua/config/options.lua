@@ -24,7 +24,11 @@ vim.g.have_nerd_font = true
 vim.schedule(function()
 	vim.o.clipboard = "unnamedplus"
 end)
-
+vim.filetype.add({
+	extension = {
+		twig = "twig",
+	},
+})
 vim.g.lazyvim_check_order = false
 vim.o.signcolumn = "yes"
 vim.opt.path:append("templates")

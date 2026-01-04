@@ -95,7 +95,7 @@ if command -v eza &> /dev/null; then
 fi
 
 
-
+alias y='yazi'
 alias c='clear'
 alias reload_zsh='source ~/.zshrc'
 alias update='sudo pacman -Syu && yay -Syu --noconfirm'

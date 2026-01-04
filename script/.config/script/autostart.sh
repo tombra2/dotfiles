@@ -31,7 +31,7 @@ gtk-launch Notion &
 
 hyprctl dispatch workspace 1
 sleep 3
-alacritty &
+kitty &
 
 hyprctl dispatch workspace 9
 sleep 3

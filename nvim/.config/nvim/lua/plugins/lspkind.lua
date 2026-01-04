@@ -1,44 +1,45 @@
 return {
-	"onsails/lspkind.nvim",
-	opts = {
-		mode = "symbol_text",
+    "onsails/lspkind.nvim",
+    opts = {
+        mode = "symbol_text",
 
-		-- default symbol map
-		-- can be either 'default' (requires nerd-fonts font) or
-		-- 'codicons' for codicon preset (requires vscode-codicons font)
-		--
-		-- default: 'default'
-		preset = "codicons",
+        -- default symbol map
+        -- can be either 'default' (requires nerd-fonts font) or
+        -- 'codicons' for codicon preset (requires vscode-codicons font)
+        --
+        -- default: 'default'
+        preset = "codicons",
 
-		-- override preset symbols
-		--
-		-- default: {}
-		symbol_map = {
-			Text = "󰉿",
-			Method = "󰆧",
-			Function = "󰊕",
-			Constructor = "",
-			Field = "󰜢",
-			Variable = "󰀫",
-			Class = "󰠱",
-			Interface = "",
-			Module = "",
-			Property = "󰜢",
-			Unit = "󰑭",
-			Value = "󰎠",
-			Enum = "",
-			Keyword = "󰌋",
-			Snippet = "",
-			Color = "󰏘",
-			File = "󰈙",
-			Reference = "󰈇",
-			Folder = "󰉋",
-			EnumMember = "",
-			Constant = "󰏿",
-			Struct = "󰙅",
-			Event = "",
-			Operator = "󰆕",
-			TypeParameter = "",
-		},
-	},
+        -- override preset symbols
+        --
+        -- default: {}
+        symbol_map = {
+            Text = "󰉿",
+            Copilot = "",
+            Method = "󰆧",
+            Function = "󰊕",
+            Constructor = "",
+            Field = "󰜢",
+            Variable = "󰀫",
+            Class = "󰠱",
+            Interface = "",
+            Module = "",
+            Property = "󰜢",
+            Unit = "󰑭",
+            Value = "󰎠",
+            Enum = "",
+            Keyword = "󰌋",
+            Snippet = "",
+            Color = "󰏘",
+            File = "󰈙",
+            Reference = "󰈇",
+            Folder = "󰉋",
+            EnumMember = "",
+            Constant = "󰏿",
+            Struct = "󰙅",
+            Event = "",
+            Operator = "󰆕",
+            TypeParameter = "",
+        },
+    },
 }
