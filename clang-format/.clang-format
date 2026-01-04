@@ -1,0 +1,9 @@
+---
+# Basiere auf einem Standard (z.B. Google, LLVM oder WebKit)
+BasedOnStyle: Google
+# Hier ist deine wichtige Einstellung für cpplint
+SpacesBeforeTrailingComments: 2
+# Optional: Andere wichtige Dinge
+IndentWidth: 4
+ColumnLimit: 100
+---
