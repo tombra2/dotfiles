@@ -47,36 +47,36 @@ export FZF_DEFAULT_OPTS="--preview 'bat --color=always {}'"
 bindkey -s ^f "tmux-sessionizer\n"
 
 
-# function sesh-sessions() {
-#   {
-#     # echtes TTY für fzf sicherstellen
-#     exec </dev/tty
-#     exec <&1
-#
-#     local session
-#     session=$(sesh list -t -c | fzf \
-#       --height 40% \
-#       --reverse \
-#       --border-label ' sesh ' \
-#       --border \
-#       --prompt '⚡  ') || return
-#
-#     zle reset-prompt > /dev/null 2>&1 || true
-#     [[ -z "$session" ]] && return
-#
-#     sesh connect "$session"
-#   }
-# }
-#
-# zle -N sesh-sessions
-#
-# # alte ^F-Bindung entfernen (wichtig)
-# bindkey -r '^F'
-#
-# # ^F in allen relevanten Keymaps binden
-# bindkey -M emacs '^F' sesh-sessions
-# bindkey -M viins '^F' sesh-sessions
-# bindkey -M vicmd '^F' sesh-sessions
+function sesh-sessions() {
+  {
+    # echtes TTY für fzf sicherstellen
+    exec </dev/tty
+    exec <&1
+
+    local session
+    session=$(sesh list -t -c | fzf \
+      --height 40% \
+      --reverse \
+      --border-label ' sesh ' \
+      --border \
+      --prompt '⚡  ') || return
+
+    zle reset-prompt > /dev/null 2>&1 || true
+    [[ -z "$session" ]] && return
+
+    sesh connect "$session"
+  }
+}
+
+zle -N sesh-sessions
+
+# alte ^F-Bindung entfernen (wichtig)
+bindkey -r '^F'
+
+# ^F in allen relevanten Keymaps binden
+bindkey -M emacs '^F' sesh-sessions
+bindkey -M viins '^F' sesh-sessions
+bindkey -M vicmd '^F' sesh-sessions
 # ---------------------------------------------------
 # Aliases
 # ---------------------------------------------------
