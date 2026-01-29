@@ -28,6 +28,7 @@ end)
 vim.keymap.set("n", "<leader>ab", ":!pio run<CR>", { silent = true })
 vim.keymap.set("n", "<leader>ah", ":!pio home<CR>", { silent = true })
 vim.keymap.set("n", "<leader>au", ":!pio run --target upload<CR>", { silent = true, desc = "PIO Upload" })
+vim.keymap.set("n", "<leader>ac", ":!pio run -t compiledb<CR>", { silent = true, desc = "Compile" })
 
 
 vim.keymap.set("v", "p", '"_dP', { desc = "Don't override yank on visual mode" })

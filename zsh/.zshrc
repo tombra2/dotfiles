@@ -77,6 +77,12 @@ bindkey -r '^F'
 bindkey -M emacs '^F' sesh-sessions
 bindkey -M viins '^F' sesh-sessions
 bindkey -M vicmd '^F' sesh-sessions
+bindkey -r '^K'
+
+# ^F in allen relevanten Keymaps binden
+bindkey -M emacs '^K' sesh-sessions
+bindkey -M viins '^K' sesh-sessions
+bindkey -M vicmd '^K' sesh-sessions
 # ---------------------------------------------------
 # Aliases
 # ---------------------------------------------------
@@ -93,7 +99,11 @@ if command -v eza &> /dev/null; then
   alias lt='eza --tree --level=2 --long --icons --git'
   alias lta='lt -a'
 fi
+# ---------------------------------------------------
+# Platform IO 
+# ---------------------------------------------------
 
+alias serial='picocom -b 9600 /dev/ttyACM0'
 
 alias y='yazi'
 alias c='clear'

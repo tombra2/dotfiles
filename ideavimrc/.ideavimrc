@@ -6,6 +6,8 @@ set highlightedyank
 set ideajoin
 set quickfix
 set multicursor
+set which-key
+set notimeout
 
 nnoremap <leader>ce :edit ~/.ideavimrc<CR>
 nnoremap <leader>so :source ~/.ideavimrc<CR>:nohlsearch<CR>
@@ -20,13 +22,21 @@ set incsearch
 inoremap jk <Esc>
 inoremap jj <Esc>
 inoremap kk <Esc>
+map <Leader>r <action>(Replace)
+map <Leader>ss <action>(ShowSettings)
+map <Leader>gc <action>(ActivateCommitToolWindow)
+nmap gi <action>(GotoImplementation)
+nmap gd <action>(GotoDeclaration)
+nmap gD <action>(GotoDefinition)
+map <Leader><Leader> <action>(SearchEverywhere)
+map <Leader>sw <action>(Switcher)
 
-map <Leader>gb <action>(com.mituuz.fuzzier.grep.FuzzyGrepCurrentBuffer)
-map <Leader><Leader> <action>(com.mituuz.fuzzier.search.Fuzzier)
-
+map <Leader>cr <action>(RenameElement)
+map <C-b> <action>(ActivateProjectToolWindow)
+map <C-h> <action>(PreviousTab)
+map <C-l> <action>(NextTab)
 nmap s <Action>(flash.search)
 xmap s <Action>(flash.search)
-
 xnoremap p "_dP
 
 map / <Action>(Find)
@@ -35,15 +45,13 @@ map / <Action>(Find)
 noremap u uzz
 noremap J mzJ`z
 nnoremap K mzK`z
-nnoremap <C-a> ggVG
 nnoremap u uzz
 noremap <C-d> <C-d>zz
-noremap <C-u> <C-u>zz
+noremap <C-u> <C-u>zz  
 vmap J :m '>+1<CR>gv=gv
 vmap K :m '<-2<CR>gv=gv
-//  nmap [ <Action>(GotoNextError)
-// nmap ] <Action>(GotoPreviousError)
-noremap ]] <Action>(MethodDown)
-nnoremap [[ <Action>(MethodUp)
+nmap [ <Action>(GotoNextError)
+nmap ] <Action>(GotoPreviousError)
+
 
 

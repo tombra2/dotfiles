@@ -22,6 +22,7 @@ return {
             "rafamadriz/friendly-snippets",
             "thomas-hiron/cmp-symfony",
             "giuxtaposition/blink-cmp-copilot",
+            "Jezda1337/cmp_bootstrap"
         },
         version = "*",
         config = function()
@@ -43,8 +44,14 @@ return {
                         "twig",
                         "twig_constans",
                         "twig_templates",
+                        "bootstrap",
                     },
                     providers = {
+                        bootstrap = {
+                            name = "cmp_bootstrap",
+                            module = "blink.compat.source",
+                            score_offset = 95,
+                        },
                         copilot = {
                             name = "copilot",
                             module = "blink-cmp-copilot",

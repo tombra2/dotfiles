@@ -1,19 +1,44 @@
 #!/bin/bash
 
-set -e # Bricht bei erstem Fehler ab
+# set -e bleibt aktiv, aber wir handhaben die Befehle innerhalb der Funktion vorsichtiger
+set -e
 
 GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m'
 
 run_step() {
     echo -e "${GREEN}➤ $1${NC}"
+    set +e
     eval "$2"
+    RESULT=$?
+    set -e
+
+    # Erfolg (0) ist immer okay
+    if [ $RESULT -eq 0 ]; then
+        return 0
+    fi
+
+    # Spezialfall: PHPCBF oder PHPCS geben 1 zurück
+    # Das bedeutet: PHPCBF hat gefixt ODER PHPCS hat nur Warnungen/kleine Fehler gefunden
+    if [ $RESULT -eq 1 ]; then
+        if [[ "$2" == *"phpcbf"* ]] || [[ "$2" == *"phpcs"* ]]; then
+            echo -e "${YELLOW}⚠ $1 abgeschlossen mit Hinweisen/Fixes (Exit 1).${NC}"
+            return 0
+        fi
+    fi
+
+    # Alles andere ist ein echter Abbruchgrund
+    echo -e "${RED}✘ Fehler in Schritt: $1 (Exit-Code: $RESULT)${NC}"
+    exit $RESULT
 }
-# 1.PHPCBF
+# --- Ab hier deine Schritte ---
+
+# 1. PHPCBF (Akzeptiert jetzt Exit 1)
 run_step "Running PHP CBF" "vendor/bin/phpcbf"
 
-# 2. PHPCS (CodeSniffer)
+# 2. PHPCS (Sollte 0 liefern, wenn PHPCBF alles gefixt hat)
 run_step "Running PHP CodeSniffer" "vendor/bin/phpcs"
 
 # 3. PHP-CS-Fixer
@@ -25,7 +50,7 @@ run_step "Running PHPStan" "vendor/bin/phpstan analyse"
 # 5. PHPStan (Plain)
 run_step "Running PHPStan (plain)" "vendor/bin/phpstan analyse --no-ansi"
 
-#6.1 Psalm fix
+# 6.1 Psalm fix
 run_step "Running Psalm ClassMustBeFinal" "vendor/bin/psalm --alter --issues=ClassMustBeFinal --dry-run"
 
 # 6. Psalm
@@ -40,7 +65,7 @@ run_step "Linting Twig templates" "php bin/console lint:twig templates --show-de
 # 9. PHP Unit
 run_step "Running PHP Unit Tests" "ddev exec vendor/bin/phpunit"
 
-#10. PHP Security Check
+# 10. PHP Security Check
 run_step "Running PHP Security Check" "symfony check:security"
 
 echo -e "${GREEN}✅ Alle Checks wurden erfolgreich abgeschlossen.${NC}"

@@ -22,14 +22,16 @@ vim.opt.path:append("templates")
 vim.opt.suffixesadd:append(".twig")
 vim.g.have_nerd_font = true
 vim.schedule(function()
-	vim.o.clipboard = "unnamedplus"
+    vim.o.clipboard = "unnamedplus"
 end)
 vim.filetype.add({
-	extension = {
-		twig = "twig",
-	},
+    extension = {
+        twig = "twig",
+    },
 })
 vim.g.lazyvim_check_order = false
 vim.o.signcolumn = "yes"
 vim.opt.path:append("templates")
 vim.opt.suffixesadd:append(".twig")
+vim.opt.spelllang = { 'en', 'de' }
+vim.opt.spell = true

@@ -10,6 +10,11 @@ path = "~/.zshrc"
 startup_command = "nvim .zshrc"
 preview_command = "bat --color=always ~/.zshrc"
 
+[[session]]
+name = "Projects"
+path = "~/Documents/PlatformIO/Projects"
+startup_command = "ls"
+preview_command = "bat --color=always ~/.tmux.conf"
 
 [[session]]
 name = "tmux config"
