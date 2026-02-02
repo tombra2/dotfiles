@@ -31,6 +31,7 @@ nmap gD <action>(GotoDefinition)
 map <Leader><Leader> <action>(SearchEverywhere)
 map <Leader>sw <action>(Switcher)
 
+map <Leader>cc <action>(PhpNewClass)
 map <Leader>cr <action>(RenameElement)
 map <C-b> <action>(ActivateProjectToolWindow)
 map <C-h> <action>(PreviousTab)
@@ -38,10 +39,9 @@ map <C-l> <action>(NextTab)
 nmap s <Action>(flash.search)
 xmap s <Action>(flash.search)
 xnoremap p "_dP
-
 map / <Action>(Find)
-
-
+map <Leader>qq <action>(CloseEditor)
+map <Leader>t <action>(ActivateTerminalToolWindow)
 noremap u uzz
 noremap J mzJ`z
 nnoremap K mzK`z
