@@ -22,7 +22,8 @@ set incsearch
 inoremap jk <Esc>
 inoremap jj <Esc>
 inoremap kk <Esc>
-map <Leader>r <action>(Replace)
+map <Leader>rf <action>(Replace)
+map <Leader>rp <action>(ReplaceInPath)
 map <Leader>ss <action>(ShowSettings)
 map <Leader>gc <action>(ActivateCommitToolWindow)
 nmap gi <action>(GotoImplementation)
@@ -32,7 +33,7 @@ map <Leader><Leader> <action>(SearchEverywhere)
 map <Leader>sw <action>(Switcher)
 
 map <Leader>cc <action>(PhpNewClass)
-map <Leader>cr <action>(RenameElement)
+map <Leader>re <action>(RenameElement)
 map <C-b> <action>(ActivateProjectToolWindow)
 map <C-h> <action>(PreviousTab)
 map <C-l> <action>(NextTab)
@@ -40,6 +41,8 @@ nmap s <Action>(flash.search)
 xmap s <Action>(flash.search)
 xnoremap p "_dP
 map / <Action>(Find)
+map <Leader>ff <action>(Find)
+map <Leader>fp <action>(GotoFile)
 map <Leader>qq <action>(CloseEditor)
 map <Leader>t <action>(ActivateTerminalToolWindow)
 noremap u uzz
