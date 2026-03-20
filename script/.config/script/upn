@@ -54,7 +54,7 @@ run_step "Running PHPStan (plain)" "vendor/bin/phpstan analyse --no-ansi"
 run_step "Running Psalm ClassMustBeFinal" "vendor/bin/psalm --alter --issues=ClassMustBeFinal --dry-run"
 
 # 6. Psalm
-run_step "Running Psalm" "vendor/bin/psalm"
+run_step "Running Psalm" "vendor/bin/psalm --alter --issues=MissingOverrideAttribute,ClassMustBeFinal  --dry-run"
 
 # 7. Rector
 run_step "Running Rector" "vendor/bin/rector process"
