@@ -183,3 +183,5 @@ else
 fi
 ###-end-opencode-completions-###
 
+# OpenClaw Completion
+source "/home/thomas/.openclaw/completions/openclaw.zsh"

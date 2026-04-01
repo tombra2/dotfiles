@@ -39,7 +39,8 @@ let g:WhichKeyDesc_git        = "<leader>g +git"
 let g:WhichKeyDesc_quit       = "<leader>q +quit/session"
 let g:WhichKeyDesc_search     = "<leader>s +search"
 let g:WhichKeyDesc_test       = "<leader>t +test"
-let g:WhichKeyDesc_java       = "<leader>f +java"
+let g:WhichKeyDesc_java       = "<leader>j +java"
+let g:WhichKeyDesc_php        = "<leader>p +php"
 let g:WhichKeyDesc_ui         = "<leader>u +ui"
 let g:WhichKeyDesc_windows    = "<leader>w +windows"
 let g:WhichKeyDesc_diagnostics = "<leader>x +diagnostics"
@@ -52,7 +53,7 @@ nmap <leader>e :action ActivateProjectToolWindow<cr>
 
 
 " ── Java SpecificCommands ───────────────────────────
-nmap <leader>jnc :action NewClass<cr>
+nmap <leader>jnc :action NewClass<cr>
 " ── File/Find ───────────────────────────────────────
 nmap <leader><space> :action GotoFile<cr>
 nmap <leader>ff :action GotoFile<cr>
@@ -112,6 +113,7 @@ nmap <leader>uc :action QuickChangeScheme<cr>
 
 " ── Windows ─────────────────────────────────────────
 nmap <leader>wd :action CloseContent<cr>
+nmap <leader>wr :action Next Splitter<cr>
 nmap <leader>wm :action ToggleDistractionFreeMode<cr>
 nmap <leader>- <c-w>s
 nmap <leader>| <c-w>v
