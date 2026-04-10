@@ -1,29 +1,3 @@
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
-vim.keymap.set("n", "U", ":UndotreeToggle | wincmd h<CR>", { desc = "Toggle Undotree and move left" })
-vim.keymap.set("n", "J", "mzJ`z")
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
-vim.keymap.set("n", "u", "uzz")
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-vim.keymap.set({ "n", "v", "i" }, "<C-q>", "<cmd>q<cr>", { desc = "Quit" })
-vim.keymap.set("i", "<C-s>", "<Esc><cmd>w<cr>", { desc = "Save and exit insert mode" })
-vim.keymap.set("n", "<C-s>", "<cmd>w<cr>", { desc = "Save file" })
-vim.keymap.set("n", "<left>", '<cmd>echo "Use h to move!!"<CR>')
-vim.keymap.set("n", "<right>", '<cmd>echo "Use l to move!!"<CR>')
-vim.keymap.set("n", "<up>", '<cmd>echo "Use k to move!!"<CR>')
-vim.keymap.set("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
-vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
-vim.keymap.set("n", "<C-b>", function()
-  require("snacks").explorer()
-end)
-
-vim.keymap.set("n", "<leader>ab", ":!pio run<CR>", { silent = true })
-vim.keymap.set("n", "<leader>ah", ":!pio home<CR>", { silent = true })
-vim.keymap.set("n", "<leader>au", ":!pio run --target upload<CR>", { silent = true, desc = "PIO Upload" })
-vim.keymap.set("n", "<leader>ac", ":!pio run -t compiledb<CR>", { silent = true, desc = "Compile" })
-
-vim.keymap.set("v", "p", '"_dP', { desc = "Don't override yank on visual mode" })
-vim.keymap.set("n", "dd", '"_dd', { desc = "Delete a line without overriding the yank register" })
+-- Keymaps are automatically loaded on the VeryLazy event
+-- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+-- Add any additional keymaps here
