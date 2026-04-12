@@ -45,7 +45,7 @@ run_step "Running PHP CodeSniffer" "vendor/bin/phpcs"
 run_step "Running PHP-CS-Fixer" "vendor/bin/php-cs-fixer fix"
 
 # 4. PHPStan
-run_step "Running PHPStan" "vendor/bin/phpstan analyse"
+run_step "Running PHPStan" "vendor/bin/phpstan analyse --memory-limit=1024M"
 
 # 5. PHPStan (Plain)
 run_step "Running PHPStan (plain)" "vendor/bin/phpstan analyse --no-ansi"
