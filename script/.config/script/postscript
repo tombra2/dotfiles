@@ -27,6 +27,8 @@ install_packages() {
     thunderbird
     stow
     anki
+    obsidian
+    teams-for-linux
 
 
     
