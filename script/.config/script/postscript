@@ -29,6 +29,10 @@ install_packages() {
     anki
     obsidian
     teams-for-linux
+    lazygit
+    lazydocker
+    postman-bin
+    yazi
 
 
     
