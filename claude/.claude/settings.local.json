@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(udevadm info:*)",
+      "Read(//etc/limine-entry-tool.d/**)"
+    ]
+  }
+}

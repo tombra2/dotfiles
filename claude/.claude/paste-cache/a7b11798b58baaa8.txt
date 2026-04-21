@@ -1,0 +1,358 @@
+Zu den Hauptinhalten springenHilfe zur Barrierefreiheit
+Feedback zur Barrierefreiheit
+KI‑Modus
+Alle
+Bilder
+Videos
+News
+Mehr
+
+
+
+thinkpad t14 gen 2 linux hardware support tastatur trackpad driver
+18:36
+Das ThinkPad T14 Gen 2 ist offiziell für Linux zertifiziert (z. B. für Ubuntu) und bietet eine sehr gute Hardware-Unterstützung. Tastatur und Trackpad funktionieren in modernen Distributionen meist „out-of-the-box“, da die benötigten Treiber direkt im Linux-Kernel enthalten sind. 
+ArchWiki
+ArchWiki
+ +3
+Hardware-Unterstützung & Treiber
+Tastatur: Wird standardmäßig über den Standard-PS/2- oder HID-Treiber des Kernels unterstützt. Sondertasten (Fn) und Hintergrundbeleuchtung funktionieren bei aktuellen Kernel-Versionen (ab ca. 5.11) problemlos.
+Trackpad & Trackpoint: Diese nutzen meist das libinput-Framework. Die Hardware wird als Synaptics oder Elan Gerät erkannt.
+Kernel-Empfehlung: Für die beste Unterstützung der Gen 2 (besonders bei der AMD-Variante) wird ein Kernel ab Version 5.16 empfohlen, um Probleme mit dem Energiemanagement und Eingabegeräten zu minimieren. 
+Reddit
+Reddit
+ +3
+Bekannte Probleme & Lösungen
+Falls das Trackpad träge reagiert oder nicht erkannt wird, helfen oft folgende Optimierungen:
+Intertouch-Modus (für Synaptics):
+Standardmäßig läuft das Touchpad manchmal im langsameren PS/2-Kompatibilitätsmodus. Durch Aktivieren von synaptics_intertouch nutzt es das schnellere RMI4-Protokoll.
+Datei bearbeiten: sudo nano /etc/default/grub
+Parameter hinzufügen: GRUB_CMDLINE_LINUX_DEFAULT="quiet splash psmouse.synaptics_intertouch=1"
+Grub aktualisieren: sudo update-grub und Neustart.
+Lag nach dem Standby:
+Es gibt Berichte über ein verzögertes (laggy) Trackpad nach dem Aufwachen aus dem S3-Sleep-Modus.
+Lösung: In den BIOS-Einstellungen unter Config > Power den Sleep-Modus auf "Linux" (S3) oder "Windows" (S0ix/Modern Standby) prüfen. Manche Nutzer berichten von besserer Performance mit dem Kernel-Parameter i8042.nomux=1.
+Gestik-Unterstützung:
+Falls Multitouch-Gesten nicht funktionieren, stelle sicher, dass keine veralteten Treiber wie xserver-xorg-input-synaptics installiert sind. Modernere Desktops (GNOME/KDE) setzen vollständig auf libinput. 
+Reddit
+Reddit
+ +5
+Hast du eine bestimmte Distribution im Einsatz, bei der aktuell Probleme auftreten?
+KI-Antworten können Fehler enthalten. Weitere Informationen
+
+
+
+
+
+undefined
+undefined
+undefined
+10 Websites
+T14 gen. 2 trackpad on linux : r/thinkpad - Reddit
+T14 gen. 2 trackpad on linux : r/thinkpad. ... * Log In / Sign Up. * Advertise on Reddit. * Cookie Preferences. * Try Reddit Pro. ...
+
+Reddit
+
+Lenovo ThinkPad T14 Gen 2a touchpad ghosting under linux - Reddit
+* Best ThinkPad models for students. * Upgrading RAM in older ThinkPads. * Essential accessories for ThinkPad users. * How to opti...
+
+Reddit
+
+Touchpad on Lenovo T14 G2 is... weird? : r/Ubuntu - Reddit
+Touchpad on Lenovo T14 G2 is... weird? : r/Ubuntu. ... * Best Ubuntu apps for productivity. * Top programming languages to learn o...
+
+Reddit
+Alle anzeigen
+ich habe probleme mit tastatur und trackpad trackpad schalten sich aus bei tastatur bleibt buchstabhängen
+18:37
+Das beschriebene Verhalten – hängende Tasten und ein zeitweise ausfallendes Trackpad – deutet beim ThinkPad T14 Gen 2 unter Linux oft auf einen Konflikt im Interrupt-Handling oder eine fehlerhafte Firmware-Kommunikation des Embedded Controllers (EC) hin. 
+Reddit
+Reddit
+Hier sind die effektivsten Lösungen für dieses spezifische Modell:
+1. Kernel-Parameter optimieren (Wichtigster Fix)
+Hängende Buchstaben (Repeating Keys) und Trackpad-Aussetzer lassen sich oft durch Deaktivieren des Multiplexing-Modus beheben. 
+Reddit
+Reddit
+Öffne das Terminal und editiere die Grub-Konfiguration: sudo nano /etc/default/grub
+Suche die Zeile GRUB_CMDLINE_LINUX_DEFAULT und füge den Parameter i8042.nomux=1 hinzu.
+Es sollte dann so aussehen: GRUB_CMDLINE_LINUX_DEFAULT="quiet splash i8042.nomux=1"
+Speichere (Strg+O, Enter), beende (Strg+X) und aktualisiere Grub: sudo update-grub
+Neustart durchführen. 
+2. "Disable while typing" deaktivieren
+Dass sich das Trackpad "ausschaltet", kann an der Funktion liegen, die das Pad während des Tippens sperrt, um Fehlklicks zu vermeiden. Bei diesem Modell reagiert die Erkennung manchmal zu empfindlich oder bleibt "hängen". 
+Framework Community
+Framework Community
+ +3
+Prüfe in deinen Systemeinstellungen unter „Maus & Touchpad“, ob die Option „Touchpad beim Tippen deaktivieren“ aktiv ist. Teste, ob das Problem ohne diese Funktion verschwindet.
+Unter GNOME kannst du dies detailliert mit den GNOME Tweaks steuern (Tab „Tastatur und Maus“ > „Beim Tippen deaktivieren“). 
+Ask Ubuntu
+Ask Ubuntu
+ +2
+3. Firmware- und BIOS-Updates
+Besonders die Gen 2 (Intel und AMD) hatte frühe Probleme mit dem Power Management des Trackpads.
+Stelle sicher, dass dein BIOS aktuell ist. Lenovo liefert Firmware-Updates für das T14 Gen 2 direkt über fwupd aus.
+Befehl im Terminal: fwupdmgr get-updates gefolgt von fwupdmgr update. 
+Lenovo
+Lenovo
+4. Soforthilfe bei Ausfall (Workaround)
+Wenn das Trackpad im laufenden Betrieb einfriert, kannst du den Treiber manuell neu laden, ohne den Laptop neu zu starten: 
+Manjaro Linux Forum
+Manjaro Linux Forum
+ +1
+bash
+sudo modprobe -r psmouse && sudo modprobe psmouse
+# oder für I2C-Geräte:
+sudo modprobe -r i2c_hid_acpi && sudo modprobe i2c_hid_acpi
+Verwende Code mit Vorsicht.
+Zusätzlicher Hardware-Check: Falls Tasten physisch klemmen oder die Software-Fixes gar nicht greifen, führe einen Static Discharge durch: Laptop ausschalten, alle Kabel abziehen und den Power-Button für 60 Sekunden gedrückt halten. 
+Lenovo
+Lenovo
+Tritt das Problem vor allem nach dem Standby auf oder passiert es willkürlich während der Arbeit?
+KI-Antworten können Fehler enthalten. Weitere Informationen
+
+
+
+
+
+undefined
+undefined
+undefined
+14 Websites
+[SOLVED] Disable Touchpad while typing Ubuntu Linux
+Hello, sorry to necro, however this forum topic comes up often if you are searching for the issue, and another solution other than...
+
+Framework Community
+T14-G5-AMD-random-keyboard-and-system-freezes-and ...
+Re:T14 G5 AMD - random keyboard and system freezes and crashing out of hibernation. Hello chef_sam, Welcome to Lenovo Community. I...
+
+Lenovo
+Disable Touchpad While Typing does not work - Ask Ubuntu
+Option 1: use my touchpad_toggle.sh script and assign it to Ctrl + Alt + P (the P means touch P ad) to toggle the touchpad on/off.
+
+Ask Ubuntu
+
+Alle anzeigen
+ich benutze limeline
+18:37
+Da es sich bei Limine (oft als "Limeline" missverstanden) primär um einen Bootloader handelt, musst du die Kernel-Parameter direkt in dessen Konfigurationsdatei anpassen. Die zuvor genannten GRUB-Befehle funktionieren unter Limine nicht. 
+ArchWiki
+ArchWiki
+ +1
+Hängende Tasten und ein ausfallendes Trackpad sind beim ThinkPad T14 Gen 2 oft auf Interrupt-Probleme zurückzuführen. So löst du das unter Limine: 
+Fedora Discussion
+Fedora Discussion
+ +1
+1. Kernel-Parameter in der limine.conf setzen
+Du musst den Parameter i8042.nomux=1 manuell hinzufügen, damit die Tastatur-Schnittstelle stabiler läuft.
+Öffne deine Konfigurationsdatei (meist unter /boot/limine.conf oder auf der EFI-Partition).
+Suche die Zeile, die mit KCMDLINE= oder module_path: ... beginnt und die Kernel-Parameter enthält.
+Füge am Ende der Zeile i8042.nomux=1 hinzu.
+Beispiel: KCMDLINE=root=UUID=... rw quiet splash i8042.nomux=1
+Speichere die Datei. Ein Neustart ist erforderlich, damit die Änderung greift. 
+2. Spezifischer Fix für das T14 Gen 2 Trackpad
+Falls das Trackpad weiterhin sporadisch abschaltet oder träge ist, erzwinge das schnellere RMI4-Protokoll. Ergänze deine limine.conf um einen weiteren Parameter: 
+Reddit
+Reddit
+ +1
+Füge psmouse.synaptics_intertouch=1 zu deiner KCMDLINE hinzu. 
+Reddit
+Reddit
+3. Firmware-Check (Wichtig)
+Die Tastatur-Probleme (Ghosting/Hängen) bei diesem Modell wurden oft durch BIOS-Updates behoben. Da Limine oft in minimalistischen Setups (wie Arch oder Gentoo) genutzt wird, solltest du die Firmware manuell prüfen: 
+Lenovo
+Lenovo
+Installiere das Tool fwupd.
+Führe im Terminal aus:
+bash
+fwupdmgr get-updates
+fwupdmgr update
+Verwende Code mit Vorsicht.
+4. Ausschluss von "Disable-while-typing"
+Wenn das Trackpad nur beim Schreiben ausgeht, ist dies ein Software-Feature („Palm Rejection“). In einer minimalistischen Umgebung ohne grafisches Menü kannst du dies über libinput testen: 
+Befehl zum Testen: xinput set-prop <ID> "libinput Disable While Typing Enabled" 0 (Die ID findest du via xinput list).
+Welche Distribution (z. B. Arch, Gentoo, CachyOS) bootest du mit Limine? Das hilft mir, dir den exakten Pfad zur Konfigurationsdatei zu nennen.
+KI-Antworten können Fehler enthalten. Weitere Informationen
+
+
+
+
+
+undefined
+undefined
+undefined
+8 Websites
+T14 gen. 2 trackpad on linux : r/thinkpad - Reddit
+EDIT: Found the solution! It turns out the touchpad was running in a legacy PS/2 compatibility mode by default, which is why it fe...
+
+Reddit
+
+Touchpad is erratic on thinkpad T14 AMD Gen2
+I have experienced the issue on the fedora kernel as well as a the latest vanilla 5.16 kernel on Fedora 35. I am able to reload th...
+
+Fedora Discussion
+Keyboard goes unresponsive for some reason (Page 2) / Newbie ...
+I had to press the power button to reboot. This occured a few times in the past when I was using the stable kernel (6.4. 2-arch). ...
+
+Arch Linux Forums
+Alle anzeigen
+TARGET_OS_NAME="Omarchy"ESP_PATH="/boot"KERNEL_CMDLINE[default]+="cryptdevice=PARTUUID=c2d13648-3b53-4bfc-8cb6-29965f8ce5ca:root root=/dev/mapper/root zswap.enabled=0 rootflags=subvol=@ rw rootfstype=btrfs"KERNEL_CMDLINE[default]+=" quiet splash"ENABLE_UKI=yesCUSTOM_UKI_NAME="omarchy"ENABLE_LIMINE_FALLBACK=yes# Find and add other bootloadersFIND_BOOTLOADERS=yesBOOT_ORDER="*, *fallback, Snapshots"MAX_SNAPSHOT_ENTRIES=5SNAPSHOT_FORMAT_CHOICE=5 das in meine config
+18:46
+Um das Problem mit der Tastatur und dem Trackpad in deiner Omarchy-Konfiguration (basierend auf Limine/UKI) zu lösen, musst du die Kernel-Parameter direkt an das Array KERNEL_CMDLINE[default] anhängen.
+Füge diese Zeile am Ende deines Konfigurations-Abschnitts hinzu:
+bash
+KERNEL_CMDLINE[default]+=" i8042.nomux=1 psmouse.synaptics_intertouch=1"
+Verwende Code mit Vorsicht.
+So sieht deine angepasste Konfiguration aus:
+bash
+TARGET_OS_NAME="Omarchy"
+ESP_PATH="/boot"
+
+KERNEL_CMDLINE[default]+="cryptdevice=PARTUUID=c2d13648-3b53-4bfc-8cb6-29965f8ce5ca:root root=/dev/mapper/root zswap.enabled=0 rootflags=subvol=@ rw rootfstype=btrfs"
+KERNEL_CMDLINE[default]+=" quiet splash"
+# Fix für Tastatur-Hänger und Trackpad-Aussetzer:
+KERNEL_CMDLINE[default]+=" i8042.nomux=1 psmouse.synaptics_intertouch=1"
+
+ENABLE_UKI=yes
+CUSTOM_UKI_NAME="omarchy"
+ENABLE_LIMINE_FALLBACK=yes
+
+# Find and add other bootloaders
+FIND_BOOTLOADERS=yes
+BOOT_ORDER="*, *fallback, Snapshots"
+MAX_SNAPSHOT_ENTRIES=5
+SNAPSHOT_FORMAT_CHOICE=5
+Verwende Code mit Vorsicht.
+Warum diese Parameter?
+i8042.nomux=1: Dies löst das Problem der hängenden Buchstaben, indem es den Multiplexing-Modus des Tastatur-Controllers deaktiviert. Das ist ein bekannter Fix für ThinkPads dieser Generation.
+psmouse.synaptics_intertouch=1: Verbessert die Kommunikation mit dem Trackpad (RMI4 statt PS/2), was die plötzlichen Abschaltungen verhindert.
+Wichtig: Da du ENABLE_UKI=yes nutzt, musst du nach dem Speichern der Datei wahrscheinlich dein UKI-Image neu generieren (je nachdem, welches Tool Omarchy nutzt, z. B. ukify oder ein lokales Skript), damit die Änderungen in die .efi-Datei übernommen werden.
+Soll ich dir zeigen, wie du mit fwupdmgr prüfst, ob ein BIOS-Update für dein T14 Gen 2 aussteht?
+KI-Antworten können Fehler enthalten. Weitere Informationen
+
+
+
+
+es ist besser aber noch immer
+19:21
+dass es besser ist, zeigt, dass wir auf dem richtigen Weg sind (die Interrupt-Probleme sind teilweise gelöst). Dass es immer noch auftritt, deutet beim T14 Gen 2 oft darauf hin, dass der Controller in einen Energiesparmodus geht oder ein IRQ-Konflikt vorliegt.
+Versuche, deine Konfiguration um diese spezifischen Parameter zu ergänzen:
+1. Update deiner Config
+Ergänze die Zeile in deiner Omarchy-Config um zwei weitere Befehle: i8042.reset (setzt den Controller bei Fehlern zurück) und pci=nocrs (hilft bei der Adressierung der Eingabegeräte):
+bash
+KERNEL_CMDLINE[default]+=" i8042.nomux=1 i8042.reset psmouse.synaptics_intertouch=1 pci=nocrs"
+Verwende Code mit Vorsicht.
+2. Trackpoint/Trackpad Konflikt lösen
+Oft "beißt" sich der Trackpoint (der rote Knubbel) mit dem Trackpad. Teste Folgendes:
+Gehe ins BIOS (F1 beim Start).
+Navigiere zu Config -> Keyboard/Mouse.
+Deaktiviere testweise den Trackpoint. Wenn das Trackpad danach stabil läuft, liegt ein Hardware-Interrupt-Konflikt vor, den wir per Software (udev-Regel) lösen können.
+3. Firmware (EC - Embedded Controller)
+Beim T14 Gen 2 gab es ein spezifisches Firmware-Problem, bei dem der Controller "überflutet" wurde (daher die hängenden Tasten).
+Führe bitte ein sudo fwupdmgr get-updates und sudo fwupdmgr update aus.
+Sollte kein Update verfügbar sein: Schalte den Laptop aus, ziehe das Stromkabel ab und drücke mit einer Büroklammer für 10 Sekunden in das Emergency Reset Hole auf der Unterseite des Gehäuses. Das erzwingt einen Hardware-Reset des Controllers.
+4. Den "Stromspar-Modus" des Trackpads deaktivieren
+Manchmal schaltet Linux das Trackpad ab, um Strom zu sparen. Du kannst das für den Test deaktivieren:
+bash
+sudo sh -c 'echo "on" > /sys/bus/serio/devices/serio1/power/control'
+Verwende Code mit Vorsicht.
+(Der Pfad serio1 kann variieren, meist ist es aber 1 oder 2).
+Welche Desktop-Umgebung nutzt du (GNOME, KDE, Sway)? Bei Wayland-Sitzungen (wie oft in Sway/Hyprland) gibt es noch spezifische libinput-Einstellungen, die wir prüfen könnten.
+KI-Antworten können Fehler enthalten. Weitere Informationen
+
+
+
+
+ich konnte das problem eingrenzen das track nur ncht nach stecken eines buchstabens sont funtkionir das trackpad
+19:35
+Das ist eine sehr hilfreiche Beobachtung! Wenn das Trackpad exakt in dem Moment einfriert, in dem eine Taste "hängt", bestätigt das ein Problem mit dem Interrupt-Flood des PS/2-Controllers (i8042). Die Tastatur "überflutet" den Controller mit Signalen, und da Trackpad und Tastatur am selben Controller hängen, wird das Trackpad blockiert.
+Da die bisherigen Parameter nur teilweise geholfen haben, versuchen wir jetzt, den Controller "ruhiger" und unabhängiger zu machen.
+1. Hardcore-Fix für den Controller (Config anpassen)
+Ersetze die Zeile in deiner Omarchy-Config durch diese Kombination. Wir fügen i8042.nopnp hinzu, damit der Kernel die Hardware-Ressourcen selbst verwaltet, anstatt sich auf das (manchmal fehlerhafte) ACPI/BIOS zu verlassen:
+bash
+KERNEL_CMDLINE[default]+=" i8042.nomux=1 i8042.reset i8042.nopnp i8042.dumbkbd"
+Verwende Code mit Vorsicht.
+i8042.nopnp: Verhindert, dass fehlerhafte Plug-and-Play-Informationen vom BIOS das Interrupt-Handling stören.
+i8042.dumbkbd: Schaltet spezielle Tastatur-Features ab, die oft für das "Hängenbleiben" verantwortlich sind (verhindert das Fluten des Buffers).
+2. BIOS-Einstellung: Sleep State
+Das T14 Gen 2 hat oft Probleme mit dem "Modern Standby" unter Linux, was auch die Eingabegeräte beeinflusst:
+Gehe ins BIOS -> Config -> Power.
+Stelle "Sleep State" von "Windows 10" (oder "Modern Standby") auf "Linux" (S3). Das ändert grundlegend, wie der Controller angesprochen wird.
+3. Libinput "Disable While Typing" (Software-Check)
+Es klingt zwar nach einem Hardware-Hänger, aber um sicherzugehen, dass nicht eine Software-Funktion das Trackpad absichtlich sperrt, wenn sie denkt, du würdest "Dauertippen":
+Falls du eine grafische Oberfläche hast, schalte "Touchpad beim Tippen deaktivieren" (Disable While Typing) komplett AUS.
+4. Letzte Instanz: Der Hardware-Reset
+Falls die Tastatur-Hänger physisch wirken (also der Buchstabe unendlich weiterläuft, bis du eine andere Taste drückst):
+Schalte das Gerät aus.
+Drücke den Reset-Knopf (kleines Loch auf der Unterseite) für 15 Sekunden. Das setzt den Embedded Controller (EC) zurück, der die Kommunikation zwischen Tastatur und System steuert.
+Tritt das Hängenbleiben bei allen Tasten auf oder nur bei bestimmten (z.B. Leertaste, Backspace)?
+KI-Antworten können Fehler enthalten. Weitere Informationen
+
+
+
+
+keine der dinge hat geholfen
+19:43
+Wenn die bisherigen Kernel-Parameter nicht geholfen haben und das Trackpad explizit nach hängenden Tasten ausfällt, liegt das Problem tiefer in der IRQ-Zuweisung (Interrupt Request) oder der ACPI-Tabellen-Interpretation des Kernels. 
+Arch Linux Forums
+Arch Linux Forums
+ +1
+Da Omarchy auf UKI (Unified Kernel Images) setzt, versuche diese aggressivere Konfiguration für deine KERNEL_CMDLINE[default]:
+1. Radikale IRQ-Neuzuweisung
+Füge diese Parameter hinzu, um dem Kernel zu befehlen, die Hardware-Ressourcen des Controllers völlig neu zu organisieren:
+bash
+KERNEL_CMDLINE[default]+=" i8042.nopnp=1 i8042.unlock=1 pci=nocrs acpi_enforce_resources=lax"
+Verwende Code mit Vorsicht.
+i8042.nopnp=1: Ignoriert die (beim T14 oft fehlerhafte) Plug-and-Play-Erkennung durch das BIOS.
+i8042.unlock=1: Ignoriert Sperrsignale des Controllers, die das Trackpad nach einem Tastatur-Überlauf "einfrieren".
+acpi_enforce_resources=lax: Erlaubt dem Treiber Zugriff auf Hardware-Ressourcen, die das BIOS fälschlicherweise als "reserviert" markiert. 
+Fedora Discussion
+Fedora Discussion
+ +1
+2. Deaktivierung von "Disable While Typing" (Hardware-Ebene)
+Es besteht die Chance, dass die Hardware selbst denkt, du hättest die Hand auf der Tastatur abgelegt. In vielen Linux-Systemen (insb. mit libinput) kann das Trackpad gesperrt bleiben, wenn eine Taste "hängt".
+Installiere xinput oder libinput-utils.
+Suche die ID deines Trackpads: xinput list
+Deaktiviere die Funktion: xinput set-prop <ID> "libinput Disable While Typing Enabled" 0. 
+Reddit
+Reddit
+3. Firmware-Spezialfall (EC-Glitch)
+Es gibt Berichte über einen "Buffer Overflow" im Embedded Controller (EC) des T14 Gen 2, wenn zu viele Tastatursignale gleichzeitig eingehen. 
+Reddit
+Reddit
+Hardware-Reset: Da Software-Fixes bei dir versagen, ziehe das Netzteil ab und drücke für 30-60 Sekunden den winzigen Reset-Knopf in dem Loch auf der Unterseite des Gehäuses. Das ist oft der einzige Weg, den EC aus einem "Häng-Zustand" zu befreien.
+Prüfe mit fwupdmgr update unbedingt auf "ThinkPad T14 Gen 2 Consumer Firmware" oder ähnliche Einträge. 
+Arch Linux Forums
+Arch Linux Forums
+ +4
+4. BIOS-Einstellung (Wichtig für Interrupts)
+Prüfe im BIOS unter Config > Keyboard/Mouse den Punkt "Fn and Ctrl Key Swap". Manche Nutzer berichten, dass das Deaktivieren (oder Ändern) dieser Funktion das Interrupt-Verhalten stabilisiert.
+Sollte das Problem weiterhin bestehen: Tritt es auch auf, wenn du ein externes USB-Keyboard verwendest, oder nur bei der internen Tastatur?
+Möchtest du, dass ich nach einer Reparaturwerkstatt in deiner Nähe suche, falls es sich um einen Hardware-Defekt der Tastaturmatte handelt?
+KI-Antworten können Fehler enthalten. Weitere Informationen
+
+
+
+
+
+undefined
+undefined
+undefined
+10 Websites
+Issue with the keyboard not working on touch screen laptop
+nopnp [HW] Don't use ACPIPnP / PnPBIOS to discover KBD/AUX controllers i8042. notimeout [HW] Ignore timeout condition signalled by...
+
+Fedora Discussion
+Key gets 'stuck', keyboard/trackpad stop working. Thinkpad ...
+Frankly, assuming that you don't have an intermittent hardware issue, this sounds like a firmware dilemma with the Electronic Cont...
+
+Reddit
+[Solved] Keyboard problem - Thinkbook 14+ ARA / Kernel ...
+2022-06-18 14:50:44 * Dump the ACPI DSDT and check the IRQ entry in Device (KBC0) * Add a new skip_override entry to drivers/acpi/
+
+Arch Linux Forums
+Alle anzeigen
+Frage stellen
+
+
+
+1Password-Menü ist verfügbar. Zur Auswahl Abwärtspfeiltaste drücken.
