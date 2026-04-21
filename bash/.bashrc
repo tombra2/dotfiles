@@ -10,7 +10,7 @@ source ~/.local/share/omarchy/default/bash/rc
 # Make an alias for invoking commands you use constantly
 # alias p='python'
 alias c='clear'
-alias reload_zsh='source ~/.zshrc'
+alias reload='source ~/.bashrc'
 alias upn='~/.config/script/upn'
 alias migra='ddev exec php bin/console make:migration'
 alias docmigra='ddev exec php bin/console doctrine:migrations:migrate'
@@ -23,12 +23,18 @@ alias mkdir='mkdir -pv'
 alias rm='rm -i'
 alias cp='cp -iv'
 alias mv='mv -iv'
-export PATH="$HOME/.config/composer/vendor/bin:$PATH"
-export PATH="$HOME/.config/composer/vendor/bin:$PATH"
 
-# opencode
+export PATH="$HOME/.config/composer/vendor/bin:$PATH"
 export PATH=/home/thomas/.opencode/bin:$PATH
+export PATH="$HOME/.bun/bin:$PATH"
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-export PATH="$HOME/.bun/bin:$PATH"
+
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
