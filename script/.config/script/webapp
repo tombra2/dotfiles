@@ -1,0 +1,17 @@
+#!/bin/bash
+# This script can be used to automatically create a bunch of web apps (omarchy-webapp-install) at once.
+
+# Define your apps: name | url | icon
+# check out https://dashboardicons.com/ for app icons
+apps=(
+  "Monkeytype|https://monkeytype.com/|https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/monkeytype.png"
+  
+)
+
+for entry in "${apps[@]}"; do
+  IFS='|' read -r name url icon <<< "$entry"
+  echo "Creating web app: $name"
+  bash omarchy-webapp-install "$name" "$url" "$icon"
+done
+
+echo "✅ All web apps created successfully."
