@@ -1,1 +1,7 @@
-{}
+{
+  "voiceEnabled": true,
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  }
+}

@@ -1,0 +1,185 @@
+# Tokyo Night Theme for Yazi
+
+[flavor]
+use = "tokyo-night"
+
+[manager]
+cwd = { fg = "#7aa2f7" }
+
+# Hovered item
+hovered         = { fg = "#c0caf5", bg = "#283457" }
+preview_hovered = { underline = true }
+
+# Find highlight
+find_keyword  = { fg = "#ff9e64", bold = true, italic = true, underline = true }
+find_position = { fg = "#f7768e", bg = "reset", bold = true, italic = true }
+
+# Marker colors
+marker_copied  = { fg = "#9ece6a", bg = "#9ece6a" }
+marker_cut     = { fg = "#f7768e", bg = "#f7768e" }
+marker_marked  = { fg = "#e0af68", bg = "#e0af68" }
+marker_selected = { fg = "#7aa2f7", bg = "#7aa2f7" }
+
+# Tab bar
+tab_active   = { fg = "#1a1b26", bg = "#7aa2f7" }
+tab_inactive = { fg = "#565f89", bg = "#1f2335" }
+tab_width    = 1
+
+# Border
+border_symbol = "│"
+border_style  = { fg = "#3b4261" }
+
+# Statusbar
+syntect_theme = "base16-ocean.dark"
+
+[status]
+separator_open  = ""
+separator_close = ""
+separator_style = { fg = "#3b4261", bg = "#1a1b26" }
+
+# Normal mode
+mode_normal = { fg = "#1a1b26", bg = "#7aa2f7", bold = true }
+mode_select = { fg = "#1a1b26", bg = "#9ece6a", bold = true }
+mode_unset  = { fg = "#1a1b26", bg = "#f7768e", bold = true }
+
+progress_label  = { fg = "#c0caf5", bold = true }
+progress_normal = { fg = "#7aa2f7", bg = "#1f2335" }
+progress_error  = { fg = "#f7768e", bg = "#1f2335" }
+
+permissions_t = { fg = "#565f89" }
+permissions_r = { fg = "#e0af68" }
+permissions_w = { fg = "#f7768e" }
+permissions_x = { fg = "#9ece6a" }
+permissions_s = { fg = "#bb9af7" }
+
+[input]
+border   = { fg = "#7aa2f7" }
+title    = { fg = "#7aa2f7" }
+value    = { fg = "#c0caf5" }
+selected = { reversed = true }
+
+[select]
+border   = { fg = "#7aa2f7" }
+active   = { fg = "#ff9e64", bold = true }
+inactive = { fg = "#565f89" }
+
+[tasks]
+border  = { fg = "#7aa2f7" }
+title   = {}
+hovered = { underline = true }
+
+[which]
+mask            = { bg = "#1f2335" }
+cand            = { fg = "#7dcfff" }
+rest            = { fg = "#565f89" }
+desc            = { fg = "#bb9af7" }
+separator       = "  "
+separator_style = { fg = "#3b4261" }
+
+[help]
+on      = { fg = "#7aa2f7" }
+exec    = { fg = "#9ece6a" }
+desc    = { fg = "#565f89" }
+hovered = { bg = "#283457", bold = true }
+footer  = { fg = "#1a1b26", bg = "#7aa2f7" }
+
+[filetype]
+rules = [
+  # Bilder
+  { mime = "image/*", fg = "#7dcfff" },
+  # Video
+  { mime = "video/*", fg = "#bb9af7" },
+  # Audio
+  { mime = "audio/*", fg = "#e0af68" },
+  # Archive / compressed
+  { mime = "application/zip",             fg = "#f7768e" },
+  { mime = "application/gzip",            fg = "#f7768e" },
+  { mime = "application/x-tar",           fg = "#f7768e" },
+  { mime = "application/x-bzip2",         fg = "#f7768e" },
+  { mime = "application/x-7z-compressed", fg = "#f7768e" },
+  { mime = "application/x-rar",           fg = "#f7768e" },
+  # Code / Text
+  { mime = "text/*",        fg = "#9ece6a" },
+  { mime = "application/json", fg = "#e0af68" },
+  # PDF / Docs
+  { mime = "application/pdf", fg = "#ff9e64" },
+  # Executables
+  { name = "*.sh",  fg = "#9ece6a", bold = true },
+  { name = "*.fish",fg = "#9ece6a", bold = true },
+  # Dotfiles / configs
+  { name = "*.toml", fg = "#e0af68" },
+  { name = "*.yaml", fg = "#e0af68" },
+  { name = "*.yml",  fg = "#e0af68" },
+  { name = "*.env",  fg = "#f7768e" },
+  # Fallback
+  { name = "*", fg = "#c0caf5" },
+]
+
+[icon]
+rules = [
+  # Dirs
+  { name = ".git/",       text = "", fg = "#f7768e" },
+  { name = ".config/",    text = "", fg = "#7aa2f7" },
+  { name = "node_modules/", text = "", fg = "#f7768e" },
+  { name = "Desktop/",    text = "󰇄", fg = "#7aa2f7" },
+  { name = "Documents/",  text = "󰈙", fg = "#7aa2f7" },
+  { name = "Downloads/",  text = "󰇚", fg = "#7aa2f7" },
+  { name = "Music/",      text = "󱍙", fg = "#e0af68" },
+  { name = "Pictures/",   text = "󰋩", fg = "#7dcfff" },
+  { name = "Videos/",     text = "󰎁", fg = "#bb9af7" },
+
+  # Files by name
+  { name = ".gitignore",   text = "", fg = "#f7768e" },
+  { name = ".gitconfig",   text = "", fg = "#f7768e" },
+  { name = ".zshrc",       text = "", fg = "#9ece6a" },
+  { name = ".bashrc",      text = "", fg = "#9ece6a" },
+  { name = "Makefile",     text = "", fg = "#e0af68" },
+  { name = "Dockerfile",   text = "󰡨", fg = "#7dcfff" },
+  { name = "docker-compose.yml", text = "󰡨", fg = "#7dcfff" },
+  { name = "package.json", text = "", fg = "#9ece6a" },
+  { name = "Cargo.toml",   text = "", fg = "#f7768e" },
+  { name = "go.mod",       text = "", fg = "#7dcfff" },
+
+  # Files by extension
+  { name = "*.lua",    text = "", fg = "#7aa2f7" },
+  { name = "*.py",     text = "", fg = "#e0af68" },
+  { name = "*.rs",     text = "", fg = "#f7768e" },
+  { name = "*.go",     text = "", fg = "#7dcfff" },
+  { name = "*.js",     text = "", fg = "#e0af68" },
+  { name = "*.ts",     text = "", fg = "#7aa2f7" },
+  { name = "*.jsx",    text = "", fg = "#7dcfff" },
+  { name = "*.tsx",    text = "", fg = "#7aa2f7" },
+  { name = "*.html",   text = "", fg = "#f7768e" },
+  { name = "*.css",    text = "", fg = "#7aa2f7" },
+  { name = "*.scss",   text = "", fg = "#f7768e" },
+  { name = "*.json",   text = "", fg = "#e0af68" },
+  { name = "*.toml",   text = "", fg = "#e0af68" },
+  { name = "*.yaml",   text = "", fg = "#e0af68" },
+  { name = "*.yml",    text = "", fg = "#e0af68" },
+  { name = "*.md",     text = "", fg = "#7aa2f7" },
+  { name = "*.txt",    text = "󰈙", fg = "#c0caf5" },
+  { name = "*.sh",     text = "", fg = "#9ece6a" },
+  { name = "*.fish",   text = "", fg = "#7dcfff" },
+  { name = "*.vim",    text = "", fg = "#9ece6a" },
+  { name = "*.env",    text = "", fg = "#f7768e" },
+  { name = "*.lock",   text = "", fg = "#565f89" },
+  { name = "*.log",    text = "󱞁", fg = "#565f89" },
+  { name = "*.zip",    text = "󰗄", fg = "#f7768e" },
+  { name = "*.tar",    text = "󰗄", fg = "#f7768e" },
+  { name = "*.gz",     text = "󰗄", fg = "#f7768e" },
+  { name = "*.mp3",    text = "", fg = "#e0af68" },
+  { name = "*.mp4",    text = "", fg = "#bb9af7" },
+  { name = "*.mkv",    text = "", fg = "#bb9af7" },
+  { name = "*.png",    text = "", fg = "#7dcfff" },
+  { name = "*.jpg",    text = "", fg = "#7dcfff" },
+  { name = "*.jpeg",   text = "", fg = "#7dcfff" },
+  { name = "*.gif",    text = "", fg = "#7dcfff" },
+  { name = "*.svg",    text = "󰜡", fg = "#ff9e64" },
+  { name = "*.pdf",    text = "", fg = "#ff9e64" },
+  { name = "*.ttf",    text = "", fg = "#bb9af7" },
+  { name = "*.otf",    text = "", fg = "#bb9af7" },
+
+  # Fallback
+  { name = "*/",  text = "", fg = "#7aa2f7" },
+  { name = "*",   text = "󰈔", fg = "#c0caf5" },
+]
