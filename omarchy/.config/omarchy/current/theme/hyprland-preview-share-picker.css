@@ -1,11 +1,11 @@
 @define-color foreground #ffffff;
 @define-color background #121212;
-@define-color accent #7675d2;
+@define-color accent #6479d2;
 @define-color muted #9e9e9e;
 @define-color card_bg #121212;
 @define-color text_dark #121212;
-@define-color accent_hover #9b95ff;
-@define-color selected_tab #7675d2;
+@define-color accent_hover #879aff;
+@define-color selected_tab #6479d2;
 @define-color text #ffffff;
 
 * {

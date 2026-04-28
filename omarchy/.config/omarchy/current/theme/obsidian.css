@@ -15,42 +15,42 @@
   --background-modifier-border: #9e9e9e;
 
   /* Semantic heading colors */
-  --text-title-h1: #c26252;
-  --text-title-h2: #d0642b;
-  --text-title-h3: #cd5d34;
-  --text-title-h4: #7675d2;
-  --text-title-h5: #c25bc3;
-  --text-title-h6: #c25bc3;
+  --text-title-h1: #fc3023;
+  --text-title-h2: #b96564;
+  --text-title-h3: #fc3023;
+  --text-title-h4: #6479d2;
+  --text-title-h5: #af5ed8;
+  --text-title-h6: #af5ed8;
 
   /* Links and accents */
-  --text-link: #7675d2;
-  --text-accent: #7675d2;
-  --text-accent-hover: #7675d2;
-  --interactive-accent: #7675d2;
-  --interactive-accent-hover: #7675d2;
+  --text-link: #6479d2;
+  --text-accent: #6479d2;
+  --text-accent-hover: #6479d2;
+  --interactive-accent: #6479d2;
+  --interactive-accent-hover: #6479d2;
 
   /* Muted text */
   --text-muted: color-mix(in srgb, #ffffff 70%, transparent);
   --text-faint: color-mix(in srgb, #ffffff 55%, transparent);
 
   /* Code */
-  --code-normal: #7775d2;
+  --code-normal: #6a76cc;
 
   /* Errors and success */
-  --text-error: #c26252;
-  --text-error-hover: #c26252;
-  --text-success: #d0642b;
+  --text-error: #fc3023;
+  --text-error-hover: #fc3023;
+  --text-success: #b96564;
 
   /* Tags */
-  --tag-color: #7775d2;
+  --tag-color: #6a76cc;
   --tag-background: #9e9e9e;
 
   /* Graph */
   --graph-line: #9e9e9e;
-  --graph-node: #7675d2;
-  --graph-node-focused: #7675d2;
-  --graph-node-tag: #7775d2;
-  --graph-node-attachment: #d0642b;
+  --graph-node: #6479d2;
+  --graph-node-focused: #6479d2;
+  --graph-node-tag: #6a76cc;
+  --graph-node-attachment: #b96564;
 }
 
 /* Headers */
@@ -63,16 +63,16 @@
 
 /* Code blocks */
 .markdown-rendered code {
-  color: #7775d2;
+  color: #6a76cc;
 }
 
 /* Syntax highlighting */
-.cm-s-obsidian span.cm-keyword { color: #c26252; }
-.cm-s-obsidian span.cm-string { color: #d0642b; }
-.cm-s-obsidian span.cm-number { color: #cd5d34; }
+.cm-s-obsidian span.cm-keyword { color: #fc3023; }
+.cm-s-obsidian span.cm-string { color: #b96564; }
+.cm-s-obsidian span.cm-number { color: #fc3023; }
 .cm-s-obsidian span.cm-comment { color: #9e9e9e; }
-.cm-s-obsidian span.cm-operator { color: #7675d2; }
-.cm-s-obsidian span.cm-def { color: #7675d2; }
+.cm-s-obsidian span.cm-operator { color: #6479d2; }
+.cm-s-obsidian span.cm-def { color: #6479d2; }
 
 /* Links */
 .markdown-rendered a {
@@ -81,7 +81,7 @@
 
 /* Blockquotes */
 .markdown-rendered blockquote {
-  border-left-color: #7675d2;
+  border-left-color: #6479d2;
 }
 
 /* Active elements */
