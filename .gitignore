@@ -1,1 +1,30 @@
 nvim/.config/nvim/lazy-lock.json
+
+# Claude
+claude/.claude/.credentials.json
+claude/.claude/history.jsonl
+claude/.claude/mcp-needs-auth-cache.json
+claude/.claude/cache/
+claude/.claude/backups/
+claude/.claude/projects/
+claude/.claude/plugins/
+claude/.claude/shell-snapshots/
+claude/.claude/todos/
+claude/.claude/statsig/
+claude/.claude/ide/
+claude/.claude/sessions/
+claude/.claude/file-history/
+claude/.claude/Untitled
+
+# Hypr backup-cruft
+*.bak.[0-9]*
+
+# Secrets/env
+.env
+.env.*
+*.pem
+*.key
+id_rsa
+id_ed25519
+.credentials.json
+*.log
