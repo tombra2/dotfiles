@@ -1,1 +1,12 @@
 .credentials.json
+history.jsonl
+mcp-needs-auth-cache.json
+cache/
+backups/
+projects/
+plugins/
+shell-snapshots/
+todos/
+statsig/
+ide/
+*.log
