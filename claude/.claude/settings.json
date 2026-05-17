@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "phpstorm-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "jetbrains/phpstorm-claude-marketplace"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "phpstorm-plugin@phpstorm-marketplace": true
+  }
+}

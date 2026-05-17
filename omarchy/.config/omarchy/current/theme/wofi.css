@@ -5,7 +5,7 @@
 @define-color gray3 #89b4fa;
 @define-color gray4 #f9e2af;
 @define-color gray5 #cba6f7;
-@define-color fg_bright #bac2de;
+@define-color fg_bright #ffffff;
 
 window {
     background-color: @bg;
