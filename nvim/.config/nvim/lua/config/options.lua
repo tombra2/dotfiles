@@ -1,4 +1,9 @@
--- Options are automatically loaded before lazy.nvim startup
--- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
--- Add any additional options here
-vim.opt.relativenumber = false
+-- Show Copilot suggestions as inline ghost text instead of as entries in the
+-- blink completion menu (LazyVim ai.copilot extra keys off this flag).
+vim.g.ai_cmp = false
+
+vim.opt.relativenumber = true
+vim.opt.scrolloff = 8
+vim.opt.cursorline = false
+vim.opt.spell = true
+vim.opt.spelllang = "de,en"

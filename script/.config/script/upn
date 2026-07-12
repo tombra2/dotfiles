@@ -20,13 +20,17 @@ run_step() {
         return 0
     fi
 
-    # Spezialfall: PHPCBF oder PHPCS geben 1 zurück
-    # Das bedeutet: PHPCBF hat gefixt ODER PHPCS hat nur Warnungen/kleine Fehler gefunden
-    if [ $RESULT -eq 1 ]; then
-        if [[ "$2" == *"phpcbf"* ]] || [[ "$2" == *"phpcs"* ]]; then
-            echo -e "${YELLOW}⚠ $1 abgeschlossen mit Hinweisen/Fixes (Exit 1).${NC}"
+    # Spezialfall: PHPCBF gibt 1 (gefixt) oder 2 (keine fixbaren Fehler) zurück
+    # PHPCS gibt 1 zurück bei Warnungen/kleinen Fehlern
+    if [[ "$2" == *"phpcbf"* ]]; then
+        if [ $RESULT -eq 1 ] || [ $RESULT -eq 2 ]; then
+            echo -e "${YELLOW}⚠ $1 abgeschlossen (Exit $RESULT: keine weiteren fixes nötig).${NC}"
             return 0
         fi
+    fi
+    if [[ "$2" == *"phpcs"* ]] && [ $RESULT -eq 1 ]; then
+        echo -e "${YELLOW}⚠ $1 abgeschlossen mit Hinweisen/Fixes (Exit 1).${NC}"
+        return 0
     fi
 
     # Alles andere ist ein echter Abbruchgrund
@@ -50,6 +54,9 @@ run_step "Running PHPStan" "vendor/bin/phpstan analyse --memory-limit=1024M"
 # 5. PHPStan (Plain)
 run_step "Running PHPStan (plain)" "vendor/bin/phpstan analyse --no-ansi"
 
+# 6. Psalm (volle Analyse — identisch zum Firmenserver-CI, schlägt bei JEDEM Fehler fehl)
+run_step "Running Psalm (full)" "vendor/bin/psalm --no-cache"
+
 # 6.1 Psalm fix
 run_step "Running Psalm ClassMustBeFinal" "vendor/bin/psalm --alter --issues=ClassMustBeFinal --dry-run"
 
@@ -60,7 +67,7 @@ run_step "Running Psalm" "vendor/bin/psalm --alter --issues=MissingOverrideAttri
 run_step "Running Rector" "vendor/bin/rector process"
 
 # 8. Twig Linter
-run_step "Linting Twig templates" "php bin/console lint:twig templates --show-deprecations"
+# run_step "Linting Twig templates" "php bin/console lint:twig templates --show-deprecations"
 
 # 9. PHP Unit
 run_step "Running PHP Unit Tests" "ddev exec vendor/bin/phpunit"

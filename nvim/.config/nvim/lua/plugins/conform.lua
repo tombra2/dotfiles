@@ -1,0 +1,60 @@
+return {
+  "stevearc/conform.nvim",
+  event = { "BufWritePre" },
+  cmd = { "ConformInfo" },
+  opts = {
+    formatters_by_ft = {
+
+      -- Lua
+      lua = { "stylua" },
+
+      -- Web technologies (Biome — see note below for unsupported types)
+      javascript = { "biome" },
+      typescript = { "biome" },
+      javascriptreact = { "biome" },
+      typescriptreact = { "biome" },
+      json = { "biome" },
+      jsonc = { "biome" },
+      css = { "biome" },
+      -- Biome does not support these; no formatter installed yet:
+      -- yaml, markdown, html, scss
+
+      -- Python
+      python = { "isort", "black" },
+
+      -- PHP/Symfony
+      php = { "php-cs-fixer" },
+      -- twig-cs-fixer fixes Twig coding standard, then djlint reflows/indents
+      -- the surrounding HTML (Biome can't parse Twig templates).
+      twig = { "twig-cs-fixer", "djlint" },
+
+      -- Shell
+      sh = { "shfmt" },
+      bash = { "shfmt" },
+
+      -- Java --
+      java = { "google-java-format" },
+
+      -- Additional file types (uncomment as needed)
+      -- markdown = { "markdownlint" },
+      -- yaml = { "yamllint" },
+      -- toml = { "taplo" },
+    },
+    formatters = {
+      php_cs_fixer = {
+        prepend_args = { "--using-cache=no" },
+      },
+      -- Twig syntax is Jinja/Django-like; reflow the HTML with that profile.
+      djlint = {
+        prepend_args = { "--profile", "django" },
+      },
+      -- Stop Xdebug from trying to attach to the short-lived CLI call on save.
+      ["twig-cs-fixer"] = {
+        env = { XDEBUG_MODE = "off" },
+      },
+    },
+  },
+  init = function()
+    vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+  end,
+}

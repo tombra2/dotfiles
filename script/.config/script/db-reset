@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+run() {
+    echo "==> $*"
+    "$@"
+}
+
+reset_db() {
+    local env_args=("$@")
+
+    run ddev exec php bin/console "${env_args[@]}" doctrine:database:drop --if-exists --force --no-interaction
+    run ddev exec php bin/console "${env_args[@]}" doctrine:database:create --if-not-exists --no-interaction
+    run ddev exec php bin/console "${env_args[@]}" doctrine:migrations:migrate --no-interaction
+    run ddev exec php bin/console "${env_args[@]}" doctrine:fixtures:load -n
+    run ddev exec php bin/console "${env_args[@]}" doctrine:schema:validate
+}
+
+echo "### TEST-Datenbank ###"
+reset_db --env=test
+
+echo
+echo "### DEV-Datenbank ###"
+reset_db
+
+echo
+echo "Fertig."

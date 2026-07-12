@@ -199,7 +199,13 @@ sanity_check
 # >>> Spezieller Ordner: nur ~/.config/nvim bis Tiefe 2
 # Initialisiere EXTRA-Array falls nicht gesetzt und füge nvim hinzu
 if [[ -z "${TS_EXTRA_SEARCH_PATHS+x}" ]]; then TS_EXTRA_SEARCH_PATHS=(); fi
-TS_EXTRA_SEARCH_PATHS+=()
+TS_EXTRA_SEARCH_PATHS+=(
+~/.config/nvim:0
+~/.config/hypr:0
+~/.config/walker:0
+~/.config/waybar/:0
+~/.config/tmux/:0
+)
 # <<<
 
 # Extra-Pfade anhängen
@@ -226,7 +232,12 @@ find_dirs() {
             path="$entry"
             depth="${TS_MAX_DEPTH:-1}"
         fi
-        [[ -d "$path" ]] && find "$path" -mindepth 1 -maxdepth "$depth" -path '*/.git' -prune -o -type d -print
+        if [[ "$depth" -eq 0 ]]; then
+            # Tiefe 0: nur das Verzeichnis selbst, ohne Unterordner
+            [[ -d "$path" ]] && echo "$path"
+        else
+            [[ -d "$path" ]] && find "$path" -mindepth 1 -maxdepth "$depth" -path '*/.git' -prune -o -type d -print
+        fi
     done
 }
 
