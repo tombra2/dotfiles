@@ -1,9 +1,9 @@
 {
   "apiKey": "",
   "categories": "100",
-  "order": "desc",
+  "order": "asc",
   "purity": "100",
   "purityControlsEnabled": true,
-  "resolutions": "",
-  "sorting": "toplist"
+  "resolutions": "1920x1080",
+  "sorting": "views"
 }

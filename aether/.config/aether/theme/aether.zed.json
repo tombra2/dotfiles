@@ -15,21 +15,21 @@
         "border.transparent": "#00000000",
         "border.disabled": "#45475a30",
 
-        "elevated_surface.background": "#1e1e2e",
-        "surface.background": "#1e1e2e",
+        "elevated_surface.background": "#353543",
+        "surface.background": "#353543",
 
-        "element.background": "#45475a40",
-        "element.hover": "#45475a60",
+        "element.background": "#353543",
+        "element.hover": "#45475a40",
         "element.active": "#89b4fa30",
-        "element.selected": "#89b4fa20",
+        "element.selected": "#89b4fa25",
         "element.disabled": "#45475a20",
 
         "drop_target.background": "#89b4fa20",
 
         "ghost_element.background": "#00000000",
-        "ghost_element.hover": "#45475a40",
+        "ghost_element.hover": "#353543",
         "ghost_element.active": "#89b4fa30",
-        "ghost_element.selected": "#89b4fa20",
+        "ghost_element.selected": "#89b4fa25",
         "ghost_element.disabled": "#45475a20",
 
         "text": "#cdd6f4",
@@ -44,17 +44,17 @@
         "icon.placeholder": "#45475a",
         "icon.accent": "#89b4fa",
 
-        "status_bar.background": "#1e1e2e",
-        "title_bar.background": "#1e1e2e",
-        "title_bar.inactive_background": "#1e1e2e",
+        "status_bar.background": "#353543",
+        "title_bar.background": "#353543",
+        "title_bar.inactive_background": "#353543",
         "toolbar.background": "#1e1e2e",
-        "tab_bar.background": "#1e1e2e",
-        "tab.inactive_background": "#1e1e2e",
+        "tab_bar.background": "#353543",
+        "tab.inactive_background": "#353543",
         "tab.active_background": "#1e1e2e",
 
         "search.match_background": "#f9e2af40",
 
-        "panel.background": "#1e1e2e",
+        "panel.background": "#353543",
         "panel.focused_border": "#89b4fa",
 
         "pane.focused_border": "#89b4fa",
@@ -68,8 +68,8 @@
         "editor.foreground": "#cdd6f4",
         "editor.background": "#1e1e2e",
         "editor.gutter.background": "#1e1e2e",
-        "editor.subheader.background": "#1e1e2e",
-        "editor.active_line.background": "#1e1e2e60",
+        "editor.subheader.background": "#353543",
+        "editor.active_line.background": "#353543",
         "editor.highlighted_line.background": "#89b4fa15",
         "editor.line_number": "#45475a",
         "editor.active_line_number": "#cdd6f4",
