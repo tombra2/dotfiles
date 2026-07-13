@@ -4,12 +4,12 @@
   "position": "top",
   "spacing": 0,
   "height": 26,
+  "width": 0,
   "modules-left": ["custom/omarchy", "hyprland/workspaces"],
-  "modules-center": ["clock", "custom/weather", "custom/update", "custom/voxtype", "custom/screenrecording-indicator", "custom/idle-indicator", "custom/notification-silencing-indicator"],
+  "modules-center": ["clock#horizontal", "clock#vertical", "custom/weather", "custom/update", "custom/voxtype", "custom/screenrecording-indicator", "custom/idle-indicator", "custom/notification-silencing-indicator"],
   "modules-right": [
     "group/tray-expander",
     "bluetooth",
-    "custom/vpn",
     "network",
     "pulseaudio",
     "cpu",
@@ -61,20 +61,18 @@
     "on-click": "omarchy-launch-or-focus-tui btop",
     "on-click-right": "alacritty"
   },
-  "clock": {
+  "clock#horizontal": {
     "format": "{:L%A %H:%M}",
     "format-alt": "{:L%d %B W%V %Y}",
     "tooltip": false,
     "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select"
   },
-  "custom/vpn": {
-    "exec": "~/.config/waybar/scripts/vpn-htl-status.sh",
-    "on-click": "~/.config/waybar/scripts/vpn-htl-toggle.sh",
-    "return-type": "json",
-    "interval": 5,
-    "signal": 11
+  "clock#vertical": {
+    "format": "{:%H\n  —\n%M}",
+    "format-alt": "{:L%d %B W%V %Y}",
+    "tooltip": false,
+    "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select"
   },
-
   "custom/weather": {
     "exec": "$OMARCHY_PATH/default/waybar/weather.sh",
     "return-type": "json",
@@ -143,10 +141,23 @@
       "transition-duration": 600,
       "children-class": "tray-group-item"
     },
-    "modules": ["custom/expand-icon", "tray"]
+    "modules": ["group/expand-icons", "tray"]
   },
-  "custom/expand-icon": {
+  "group/expand-icons": {
+    "orientation": "inherit",
+    "modules": ["custom/expand-icon#horizontal", "custom/expand-icon#vertical"]
+  },
+  "custom/expand-icon#horizontal": {
     "format": "",
+    "tooltip": false,
+    "on-scroll-up": "",
+    "on-scroll-down": "",
+    "on-scroll-left": "",
+    "on-scroll-right": ""
+  },
+  "custom/expand-icon#vertical": {
+    "format": "",
+    "rotate": 270,
     "tooltip": false,
     "on-scroll-up": "",
     "on-scroll-down": "",
