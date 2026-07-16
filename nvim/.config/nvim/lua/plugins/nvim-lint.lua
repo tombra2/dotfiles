@@ -80,8 +80,9 @@ return {
       -- Lua
       lua = { "luacheck" },
 
-      -- Python
-      python = { "ruff", "mypy" },
+      -- Python (type checking comes from basedpyright's LSP diagnostics;
+      -- mypy here would just duplicate those)
+      python = { "ruff" },
 
       -- Shell
       sh = { "shellcheck" },
