@@ -46,8 +46,17 @@ o.window(".*whatsapp.*", { workspace = "8" .. SILENT })
 o.window(".*todoist.*", { workspace = "9" .. SILENT, float = true, size = { 591, 1300 }, move = { 1797, 38 } })
 o.window("chromium", { workspace = "10" .. SILENT })
 
--- Quick-ask Claude Code popup (CTRL+T): floating, centered, 50% x 50%.
+-- Quick-ask Claude Code popup (SUPER + T): floating, centered, 50% x 50%,
+-- parked on its own special workspace so it can be toggled hidden/shown
+-- (see scripts/claude-float-toggle and the SUPER + T binding).
 o.window(
-	"^ClaudeFloat$",
-	{ float = true, center = true, size = { 1200, 675 }, tag = "-default-opacity", opacity = "1 1" }
+	"^claudefloat$",
+	{
+		workspace = "special:claudefloat",
+		float = true,
+		center = true,
+		size = { 1200, 675 },
+		tag = "-default-opacity",
+		opacity = "1 1",
+	}
 )

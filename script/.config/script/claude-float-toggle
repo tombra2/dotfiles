@@ -1,0 +1,25 @@
+#!/bin/bash
+# Toggle the floating "claude code" quick-ask window (bound to SUPER + T).
+# Launches it into a hidden special workspace on first use, then just
+# toggles that special workspace's visibility on every subsequent press.
+
+set -euo pipefail
+
+CLASS="claudefloat"
+LAUNCH_CMD=(kitty --class=claudefloat -o background_opacity=1.0 --directory=/home/thomas/session -e tmux new-session -A -s claude -c /home/thomas/session claude)
+
+window_exists() {
+	hyprctl clients -j | jq -e --arg c "$CLASS" 'any(.[]; .class == $c)' >/dev/null
+}
+
+if ! window_exists; then
+	setsid "${LAUNCH_CMD[@]}" >/dev/null 2>&1 &
+	disown
+
+	for _ in $(seq 1 40); do
+		window_exists && break
+		sleep 0.05
+	done
+fi
+
+hyprctl dispatch 'hl.dsp.workspace.toggle_special("claudefloat")' >/dev/null
