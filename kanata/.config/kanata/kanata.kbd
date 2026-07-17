@@ -7,16 +7,17 @@
 )
 
 (defalias
+  escctrl (tap-hold 100 100 esc lctl)
   a (tap-hold 200 250 a lmet)
   s (tap-hold 200 250 s lalt)
-  d (tap-hold 200 250 d lctl)
-  f (tap-hold 200 250 f lsft)
-  j (tap-hold 200 250 j rsft)
-  k (tap-hold 200 250 k rctl)
+  d (tap-hold 200 250 d lsft)
+  f (tap-hold 200 250 f lctl)
+  j (tap-hold 200 250 j rctl)
+  k (tap-hold 200 250 k rsft)
   l (tap-hold 200 250 l ralt)
   ö (tap-hold 200 250 ; rmet)
 )
 
 (deflayer base
-  esc @a  @s  @d  @f  @j  @k  @l  @ö
+  @escctrl @a  @s  @d  @f  @j  @k  @l  @ö
 )
