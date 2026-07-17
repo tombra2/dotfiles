@@ -10,6 +10,8 @@ Key directories:
 - `tmux/.tmux.conf` → symlinked to `~/.tmux.conf`
 - `nvim/.config/nvim/` → symlinked to `~/.config/nvim`
 - `hypr/.config/hypr/` → symlinked to `~/.config/hypr`
+- `kanata/.config/kanata/` → symlinked to `~/.config/kanata`
+- `kanata/.config/systemd/user/kanata.service` → symlinked to `~/.config/systemd/user/kanata.service`
 - `kitty/.config/kitty/` → symlinked to `~/.config/kitty`
 - `alacritty/.config/alacritty/` → symlinked to `~/.config/alacritty`
 - `sesh/.config/sesh/` → symlinked to `~/.config/sesh`
@@ -20,7 +22,7 @@ Key directories:
 
 Uses `stow` for symlink management. Run from repo root:
 ```bash
-stow zsh git tmux nvim hypr kitty alacritty sesh script opencode
+stow zsh git tmux nvim hypr kanata kitty alacritty sesh script opencode
 ```
 
 ## Key Aliases
