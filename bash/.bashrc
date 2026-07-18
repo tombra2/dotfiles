@@ -8,6 +8,8 @@ alias c='clear'
 alias reload='source ~/.bashrc'
 alias upn='~/.config/script/upn'
 alias db-reset='~/.config/script/db-reset'
+alias install-cq-configs='~/dev/defaults/install-cq-configs.sh'
+alias install-symfony='bash ~/dev/defaults/install-symfony.sh'
 alias migra='ddev exec php bin/console make:migration'
 alias docmigra='ddev exec php bin/console doctrine:migrations:migrate'
 
