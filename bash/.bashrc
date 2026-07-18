@@ -34,27 +34,29 @@ tmux_sessionizer_popup() {
 }
 bind -x '"\C-f":"tmux_sessionizer_popup"'
 
+# Baut das nvim/opencode/terminal-Fenster-Layout in einer bereits existierenden
+# Session auf. Wird von n() und vom tmux-sessionizer-Hook (~/.tmux-sessionizer) genutzt.
+_tmux_dev_layout() {
+  local session="$1"
+  tmux send-keys -t "$session:nvim" 'nvim -c Neotree' C-m
+  tmux new-window -t "$session" -c "$PWD" -n opencode
+  tmux send-keys -t "$session:opencode" 'opencode' C-m
+  tmux new-window -t "$session" -c "$PWD" -n terminal
+  tmux select-window -t "$session:nvim"
+}
+
 n() {
-    local session
-    session=$(basename "$PWD" | tr . _)
-
-    if ! tmux has-session -t "$session" 2>/dev/null; then
-        local win pane_left pane_right
-        win=$(tmux new-session -ds "$session" -c "$PWD" -P -F "#{window_id}")
-        pane_left=$(tmux list-panes -t "$win" -F "#{pane_id}")
-        pane_right=$(tmux split-window -h -t "$win" -c "$PWD" -P -F "#{pane_id}")
-        tmux split-window -v -t "$pane_left" -c "$PWD"
-
-        tmux send-keys -t "$pane_left" 'nvim' C-m
-        tmux send-keys -t "$pane_right" 'opencode' C-m
-        tmux select-pane -t "$pane_left"
-    fi
-
-    if [[ -n "$TMUX" ]]; then
-        tmux switch-client -t "$session"
-    else
-        tmux attach-session -t "$session"
-    fi
+  local session
+  session=$(basename "$PWD" | tr . _)
+  if ! tmux has-session -t "$session" 2>/dev/null; then
+      tmux new-session -ds "$session" -c "$PWD" -n nvim
+      _tmux_dev_layout "$session"
+  fi
+  if [[ -n "$TMUX" ]]; then
+      tmux switch-client -t "$session"
+  else
+      tmux attach-session -t "$session"
+  fi
 }
 
 export PATH=/home/thomas/.opencode/bin:$PATH
