@@ -34,16 +34,45 @@ if _startup_done then
 	_startup_done:close()
 end
 
-o.window("obsidian", { workspace = "9" .. SILENT, float = true, size = { 1771, 1300 }, move = { 12, 38 } })
+-- WS7/WS9 splits are % of the monitor (monitor_w/monitor_h), not fixed px,
+-- so the layout holds up whether this lands on the laptop panel or the
+-- desktop monitor. TOP/OUT/MID mirror the looknfeel gaps_out + top bar
+-- height and stay literal px since those don't scale with monitor size.
+local TOP = 38
+local OUT = 12
+local MID = 6
+o.window(
+	"obsidian",
+	{ workspace = "9" .. SILENT, float = true, size = { "monitor_w*0.75-" .. (OUT + MID), "monitor_h-" .. (TOP + OUT) }, move = { OUT, TOP } }
+)
 o.window("^kitty$", { workspace = "2" .. SILENT })
 o.window("[sS]potify", { workspace = "3" .. SILENT })
 o.window(".*[tT]hunderbird.*", { workspace = "4" .. SILENT })
 o.window(".*[dD]iscord.*", { workspace = "5" .. SILENT })
 o.window("^(1[p|P]assword)$", { workspace = "6" .. SILENT, tile = true, tag = "-floating-window" })
-o.window(".*element.io.*", { workspace = "7" .. SILENT, float = true, size = { 1771, 1300 }, move = { 617, 38 } })
-o.window(".*mantis.akaryon.*", { workspace = "7" .. SILENT, float = true, size = { 591, 1300 }, move = { 12, 38 } })
+o.window(
+	".*element.io.*",
+	{
+		workspace = "7" .. SILENT,
+		float = true,
+		size = { "monitor_w*0.75-" .. (OUT + MID), "monitor_h-" .. (TOP + OUT) },
+		move = { "monitor_w*0.25+" .. MID, TOP },
+	}
+)
+o.window(
+	".*mantis.akaryon.*",
+	{ workspace = "7" .. SILENT, float = true, size = { "monitor_w*0.25-" .. (OUT + MID), "monitor_h-" .. (TOP + OUT) }, move = { OUT, TOP } }
+)
 o.window(".*whatsapp.*", { workspace = "8" .. SILENT })
-o.window(".*todoist.*", { workspace = "9" .. SILENT, float = true, size = { 591, 1300 }, move = { 1797, 38 } })
+o.window(
+	".*todoist.*",
+	{
+		workspace = "9" .. SILENT,
+		float = true,
+		size = { "monitor_w*0.25-" .. (OUT + MID), "monitor_h-" .. (TOP + OUT) },
+		move = { "monitor_w*0.75+" .. MID, TOP },
+	}
+)
 o.window("chromium", { workspace = "10" .. SILENT })
 
 -- Quick-ask Claude Code popup (SUPER + T): floating, centered, 50% x 50%,
