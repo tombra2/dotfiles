@@ -51,6 +51,13 @@ o.bind("SUPER + TAB", "former workspace", hl.dsp.focus({ workspace = "previous" 
 
 -- focus windows with vim keys (h/j/k/l) instead of arrows.
 
--- overwrite existing bindings with hl.unbind() first if needed.
--- hl.unbind("SUPER + SPACE")
--- o.bind("SUPER + SPACE", "omarchy menu", "omarchy-menu")
+-- overrides: J was "toggle window split", K was "show key bindings",
+-- L was "toggle workspace layout". H had no default binding.
+hl.unbind("SUPER + J")
+hl.unbind("SUPER + K")
+hl.unbind("SUPER + L")
+
+o.bind("SUPER + H", "Focus on left window", hl.dsp.focus({ direction = "l" }))
+o.bind("SUPER + J", "Focus on below window", hl.dsp.focus({ direction = "d" }))
+o.bind("SUPER + K", "Focus on above window", hl.dsp.focus({ direction = "u" }))
+o.bind("SUPER + L", "Focus on right window", hl.dsp.focus({ direction = "r" }))
