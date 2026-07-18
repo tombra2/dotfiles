@@ -9,6 +9,7 @@ o.bind("SUPER + SHIFT + ALT + B", "browser (private)", { omarchy = "browser --pr
 o.bind("SUPER + SHIFT + M", "music", { launch = "spotify", focus = "^spotify$" })
 o.bind("SUPER + SHIFT + ALT + M", "music tui", { tui = "cliamp", focus = true })
 o.bind("SUPER + SHIFT + N", "editor", { omarchy = "editor" })
+o.bind("SUPER + N", "obsidian daily note", "omarchy-launch-terminal " .. os.getenv("HOME") .. "/.config/hypr/scripts/obsidian-daily-note.sh")
 o.bind("SUPER + SHIFT + D", "docker", { tui = "lazydocker" })
 o.bind("SUPER + SHIFT + O", "obsidian", { launch = "obsidian", focus = "^obsidian$" })
 o.bind("SUPER + SHIFT + W", "typora", { launch = "typora --enable-wayland-ime" })
