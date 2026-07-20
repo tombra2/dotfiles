@@ -1,0 +1,28 @@
+# Global yamllint defaults. yamllint picks this up automatically from
+# ~/.config/yamllint/config; a project-local .yamllint(.yaml) still wins.
+extends: default
+
+rules:
+  # Editor gutter already shows long lines; 80 chars is unrealistic for
+  # compose files and CI pipelines.
+  line-length:
+    max: 120
+    allow-non-breakable-words: true
+    allow-non-breakable-inline-mappings: true
+
+  # "on:" in GitHub Actions and unquoted yes/no are intentional.
+  truthy:
+    check-keys: false
+
+  # Almost nobody writes the leading "---".
+  document-start: disable
+
+  # Both list styles are fine; don't fight the file you opened.
+  indentation:
+    spaces: 2
+    indent-sequences: consistent
+
+  comments:
+    min-spaces-from-content: 1
+
+  comments-indentation: disable

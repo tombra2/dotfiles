@@ -17,7 +17,12 @@ return {
       jsonc = { "biome" },
       css = { "biome" },
       -- Biome does not support these; no formatter installed yet:
-      -- yaml, markdown, html, scss
+      -- markdown, html, scss
+
+      -- YAML (yamlfmt keeps comments intact, unlike prettier)
+      yaml = { "yamlfmt" },
+      ["yaml.docker-compose"] = { "yamlfmt" },
+      ["yaml.gitlab"] = { "yamlfmt" },
 
       -- Python
       python = { "isort", "black" },
@@ -37,7 +42,6 @@ return {
 
       -- Additional file types (uncomment as needed)
       -- markdown = { "markdownlint" },
-      -- yaml = { "yamllint" },
       -- toml = { "taplo" },
     },
     formatters = {
