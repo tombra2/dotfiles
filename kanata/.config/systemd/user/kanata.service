@@ -7,7 +7,12 @@ Environment=PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:$HOME/.cargo/bin
 Environment=DISPLAY=:0
 Type=simple
 ExecStart=/usr/bin/sh -c 'exec $$(which kanata) --cfg $${HOME}/.config/kanata/kanata.kbd'
-Restart=no
+# Kanata exits hard when a keyboard hotplugs and the device grab returns
+# EBUSY; restart so the remapping comes back by itself.
+Restart=always
+RestartSec=3
+# Keep input latency low under load.
+Nice=-20
 
 [Install]
 WantedBy=default.target
