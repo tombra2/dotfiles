@@ -34,28 +34,45 @@ tmux_sessionizer_popup() {
 }
 bind -x '"\C-f":"tmux_sessionizer_popup"'
 
+# Legt Fenster "$2" in Session "$1" an, falls es fehlt, und startet darin "$3" --
+# aber nur, wenn dort gerade bloss eine Shell laeuft (sonst wuerde ein laufendes
+# nvim/opencode den Befehl als Tastendruck abbekommen).
+_tmux_ensure_window() {
+  local session="$1" name="$2" cmd="$3"
+  if ! tmux list-windows -t "$session:" -F '#W' 2>/dev/null | grep -qx "$name"; then
+      tmux new-window -dt "$session:" -c "$PWD" -n "$name"
+  fi
+  [[ -z "$cmd" ]] && return
+  case "$(tmux display-message -p -t "$session:$name" '#{pane_current_command}')" in
+      bash | sh | zsh | fish) tmux send-keys -t "$session:$name" "$cmd" C-m ;;
+  esac
+}
+
 # Baut das nvim/opencode/terminal-Fenster-Layout in einer bereits existierenden
 # Session auf. Wird von n() und vom tmux-sessionizer-Hook (~/.tmux-sessionizer) genutzt.
+# Idempotent: ergaenzt nur, was fehlt -- laeuft also auch in einer Session, die
+# der Sessionizer (Ctrl-F) schon ohne Layout angelegt hat.
 _tmux_dev_layout() {
   local session="$1"
-  tmux send-keys -t "$session:nvim" 'nvim -c Neotree' C-m
-  tmux new-window -t "$session" -c "$PWD" -n opencode
-  tmux send-keys -t "$session:opencode" 'opencode' C-m
-  tmux new-window -t "$session" -c "$PWD" -n terminal
+  _tmux_ensure_window "$session" nvim 'nvim -c Neotree'
+  _tmux_ensure_window "$session" opencode 'opencode'
+  _tmux_ensure_window "$session" terminal ''
   tmux select-window -t "$session:nvim"
 }
 
 n() {
   local session
   session=$(basename "$PWD" | tr . _)
-  if ! tmux has-session -t "$session" 2>/dev/null; then
+  # -t= / =$session erzwingen exakte Namen; ohne das matcht tmux auch Prefixe,
+  # d.h. "brandner" wuerde eine Session "brandner-frontend" treffen.
+  if ! tmux has-session -t="$session" 2>/dev/null; then
       tmux new-session -ds "$session" -c "$PWD" -n nvim
-      _tmux_dev_layout "$session"
   fi
+  _tmux_dev_layout "$session"
   if [[ -n "$TMUX" ]]; then
-      tmux switch-client -t "$session"
+      tmux switch-client -t "=$session"
   else
-      tmux attach-session -t "$session"
+      tmux attach-session -t "=$session"
   fi
 }
 
