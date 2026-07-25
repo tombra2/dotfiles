@@ -1,6 +1,6 @@
 {
   "excludedApps": {},
-  "includeGtk": false,
+  "includeGtk": true,
   "includeNeovim": true,
   "includeVscode": false,
   "includeZed": true,

@@ -75,13 +75,13 @@ o.window(
 )
 o.window("chromium", { workspace = "10" .. SILENT })
 
--- Quick-ask Claude Code popup (SUPER + T): floating, centered, 50% x 50%,
+-- OpenClaw TUI popup (SUPER + T): floating and centered,
 -- parked on its own special workspace so it can be toggled hidden/shown
 -- (see scripts/claude-float-toggle and the SUPER + T binding).
 o.window(
-	"^claudefloat$",
+	"^openclawfloat$",
 	{
-		workspace = "special:claudefloat",
+		workspace = "special:openclawfloat",
 		float = true,
 		center = true,
 		size = { 1200, 675 },

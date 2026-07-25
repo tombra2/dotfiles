@@ -28,6 +28,13 @@ vim.keymap.set({ "n", "x", "o" }, "<BS>", function()
   end
 end)
 
+-- JetBrains-style intention actions
+vim.keymap.set({ "n", "x" }, "<M-CR>", vim.lsp.buf.code_action, { desc = "Code Action" })
+vim.keymap.set("i", "<M-CR>", function()
+  vim.cmd("stopinsert")
+  vim.lsp.buf.code_action()
+end, { desc = "Code Action" })
+
 -- Analyse the current file with PHPStan in a terminal
 vim.keymap.set("n", "<leader>cqp", function()
   local file = vim.fn.expand("%:p")

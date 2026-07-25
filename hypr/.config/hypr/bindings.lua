@@ -30,11 +30,11 @@ o.bind("SUPER + SHIFT + ALT + X", "x post", { webapp = "https://x.com/compose/po
 -- add extra bindings below.
 -- o.bind("SUPER + SHIFT + R", "ssh", "alacritty -e ssh your-server")
 
--- quick-ask floating claude code instance (system-wide). toggles the window
+-- floating OpenClaw TUI instance (system-wide). toggles the window
 -- hidden/shown; launches a fresh one in tmux the first time.
 -- overrides super + t (default: "toggle window floating/tiling").
 hl.unbind("SUPER + T")
-o.bind("SUPER + T", "claude code (toggle)", {
+o.bind("SUPER + T", "openclaw tui (toggle)", {
 	launch = "/home/thomas/.config/script/claude-float-toggle",
 })
 -- moved here from the overridden super + t default.

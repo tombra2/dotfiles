@@ -3,6 +3,7 @@ return {
   lazy = true,
   dependencies = {
     "olimorris/neotest-phpunit",
+    "rcasia/neotest-java",
   },
   opts = function(_, opts)
     opts.adapters = opts.adapters or {}
@@ -15,6 +16,7 @@ return {
           PHP_CS_FIXER_IGNORE_ENV = "1",
         },
       }),
+      require("neotest-java")({}),
     })
 
     opts.consumers = opts.consumers or {}

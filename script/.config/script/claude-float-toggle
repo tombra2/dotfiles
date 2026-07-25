@@ -1,12 +1,12 @@
 #!/bin/bash
-# Toggle the floating "claude code" quick-ask window (bound to SUPER + T).
+# Toggle the floating OpenClaw TUI window (bound to SUPER + T).
 # Launches it into a hidden special workspace on first use, then just
 # toggles that special workspace's visibility on every subsequent press.
 
 set -euo pipefail
 
-CLASS="claudefloat"
-LAUNCH_CMD=(kitty --class=claudefloat -o background_opacity=1.0 --directory=/home/thomas/session -e tmux new-session -A -s claude -c /home/thomas/session claude)
+CLASS="openclawfloat"
+LAUNCH_CMD=(kitty --class="$CLASS" -o background_opacity=1.0 --directory=/home/thomas/session -e tmux new-session -A -s openclaw -c /home/thomas/session openclaw tui)
 
 window_exists() {
 	hyprctl clients -j | jq -e --arg c "$CLASS" 'any(.[]; .class == $c)' >/dev/null
@@ -22,4 +22,4 @@ if ! window_exists; then
 	done
 fi
 
-hyprctl dispatch 'hl.dsp.workspace.toggle_special("claudefloat")' >/dev/null
+hyprctl dispatch 'hl.dsp.workspace.toggle_special("openclawfloat")' >/dev/null

@@ -20,6 +20,7 @@ return {
       end,
       keymap = {
         preset = "none",
+        ["<C-Space>"] = { "show" },
         ["<CR>"] = { "accept", "fallback" },
         ["<C-p>"] = { "select_prev", "fallback" },
         ["<C-n>"] = { "select_next", "fallback" },
@@ -62,7 +63,7 @@ return {
           },
         },
         list = {
-          selection = { preselect = false, auto_insert = false },
+          selection = { preselect = true, auto_insert = false },
         },
         documentation = {
           auto_show = false,

@@ -1,5 +1,11 @@
 return {
   "ibhagwan/fzf-lua",
+  opts = {
+    files = {
+      -- show the filename first, the directory dimmed behind it
+      formatter = "path.filename_first",
+    },
+  },
   keys = {
     {
       "<leader><leader>",
