@@ -17,6 +17,7 @@
 	mnemonicPrefix = true    # More intuitive refs in diff output
 [commit]
 	verbose = true           # Include diff comment in commit message template
+	gpgsign = true
 [column]
 	ui = auto 			     # Output in columns when possible
 [branch]
@@ -29,6 +30,7 @@
 [user]
 	name = Thomas Brandner
 	email = brandner.thomas@me.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBv/StZg50KdIHUBIWa5+GGLJesfUdH5YXvKk/51Q5w3
 
 [credential "https://github.com"]
 	helper = 
@@ -36,3 +38,7 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /opt/1Password/op-ssh-sign

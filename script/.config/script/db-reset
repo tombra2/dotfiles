@@ -16,6 +16,8 @@ reset_db() {
     run ddev exec php bin/console "${env_args[@]}" doctrine:schema:validate
 }
 
+run ddev mysql -uroot -proot -e "GRANT ALL PRIVILEGES ON \`db_test\`.* TO 'db'@'%'; FLUSH PRIVILEGES;"
+
 echo "### TEST-Datenbank ###"
 reset_db --env=test
 

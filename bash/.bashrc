@@ -55,7 +55,7 @@ _tmux_ensure_window() {
 _tmux_dev_layout() {
   local session="$1"
   _tmux_ensure_window "$session" nvim 'nvim -c Neotree'
-  _tmux_ensure_window "$session" opencode 'opencode'
+  _tmux_ensure_window "$session" opencode 'opencode .'
   _tmux_ensure_window "$session" terminal ''
   tmux select-window -t "$session:nvim"
 }

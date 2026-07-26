@@ -6,7 +6,8 @@
 set -euo pipefail
 
 CLASS="openclawfloat"
-LAUNCH_CMD=(kitty --class="$CLASS" -o background_opacity=1.0 --directory=/home/thomas/session -e tmux new-session -A -s openclaw -c /home/thomas/session openclaw tui)
+OPENCLAW="/home/thomas/.local/share/mise/installs/node/latest/bin/openclaw"
+LAUNCH_CMD=(alacritty --class="$CLASS" -o 'window.opacity=1.0' --working-directory="$HOME" -e tmux new-session -A -s openclaw -c "$HOME" "$OPENCLAW" tui)
 
 window_exists() {
 	hyprctl clients -j | jq -e --arg c "$CLASS" 'any(.[]; .class == $c)' >/dev/null
@@ -22,4 +23,4 @@ if ! window_exists; then
 	done
 fi
 
-hyprctl dispatch 'hl.dsp.workspace.toggle_special("openclawfloat")' >/dev/null
+hyprctl dispatch "hl.dsp.workspace.toggle_special(\"$CLASS\")" >/dev/null

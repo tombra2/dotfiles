@@ -45,12 +45,12 @@ return {
       }
     end
 
-    -- markdownlint sucht die Config nur im cwd (nie im Home) und bei --stdin
-    -- gar nicht. Deshalb die globale ~/.markdownlint.jsonc explizit mitgeben.
-    lint.linters.markdownlint.args = {
+    -- markdownlint-cli2 sucht die Config nur im cwd. Deshalb die globale
+    -- ~/.markdownlint.jsonc explizit mitgeben.
+    lint.linters["markdownlint-cli2"].args = {
       "--config",
       vim.fn.expand("~/.markdownlint.jsonc"),
-      "--stdin",
+      "-",
     }
 
     -- Configure Laravel Pint for PHP (custom linter since it's not built-in)
@@ -112,7 +112,7 @@ return {
       jsonc = { "jsonlint" },
 
       -- Markdown
-      markdown = { "markdownlint" },
+      markdown = { "markdownlint-cli2" },
 
       -- Docker
       dockerfile = { "hadolint" },
