@@ -51,7 +51,7 @@ o.window(".*[tT]hunderbird.*", { workspace = "4" .. SILENT })
 o.window(".*[dD]iscord.*", { workspace = "5" .. SILENT })
 o.window("^(1[p|P]assword)$", { workspace = "6" .. SILENT, tile = true, tag = "-floating-window" })
 o.window(
-	".*element.io.*",
+	"^Element$",
 	{
 		workspace = "7" .. SILENT,
 		float = true,
@@ -75,17 +75,5 @@ o.window(
 )
 o.window("chromium", { workspace = "10" .. SILENT })
 
--- OpenClaw TUI popup (SUPER + T): floating and centered,
--- parked on its own special workspace so it can be toggled hidden/shown
--- (see scripts/claude-float-toggle and the SUPER + T binding).
-o.window(
-	"^openclawfloat$",
-	{
-		workspace = "special:openclawfloat",
-		float = true,
-		center = true,
-		size = { 1200, 675 },
-		tag = "-default-opacity",
-		opacity = "1 1",
-	}
-)
+-- Keep every window fully opaque, overriding Omarchy's default opacity rules.
+o.window(".*", { opacity = "1 1" })
