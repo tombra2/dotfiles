@@ -28,3 +28,8 @@ id_rsa
 id_ed25519
 .credentials.json
 *.log
+
+# Pi runtime data
+pi/.pi/agent/auth.json
+pi/.pi/agent/models-store.json
+pi/.pi/agent/sessions/
