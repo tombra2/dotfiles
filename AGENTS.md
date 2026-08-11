@@ -1,63 +1,18 @@
 # Dotfiles
 
-## Structure
+## Repository Workflow
 
-This repo uses a per-tool directory structure. Most directories contain a dotfile or a `.config/<tool>/` subdirectory that maps directly to the target location.
+- This is a GNU Stow repository. Each top-level tool directory is an independent package whose paths mirror the target under `$HOME` (for example, `waybar/.config/waybar` -> `~/.config/waybar`). Run Stow from the repository root and target only the package being changed: `stow <package>...`.
+- There is no root build, test, lint, or package-manager workflow. Validate changes with the component-specific commands below; do not invent a project-wide test command.
+- Read the package-local instructions before editing Neovim or Kanata: `nvim/.config/nvim/CLAUDE.md` and `kanata/.config/kanata/CLAUDE.md`.
 
-Key directories:
-- `zsh/.zshrc` → symlinked to `~/.zshrc`
-- `git/.gitconfig` → symlinked to `~/.gitconfig`
-- `tmux/.tmux.conf` → symlinked to `~/.tmux.conf`
-- `nvim/.config/nvim/` → symlinked to `~/.config/nvim`
-- `hypr/.config/hypr/` → symlinked to `~/.config/hypr`
-- `kanata/.config/kanata/` → symlinked to `~/.config/kanata`
-- `kanata/.config/systemd/user/kanata.service` → symlinked to `~/.config/systemd/user/kanata.service`
-- `kitty/.config/kitty/` → symlinked to `~/.config/kitty`
-- `alacritty/.config/alacritty/` → symlinked to `~/.config/alacritty`
-- `sesh/.config/sesh/` → symlinked to `~/.config/sesh`
-- `script/.config/script/` → symlinked to `~/.config/script`
-- `opencode/.config/opencode/` → symlinked to `~/.config/opencode`
+## Runtime Validation
 
-## Installation
+- Hyprland configuration is Lua and is loaded by `hypr/.config/hypr/hyprland.lua` together with Omarchy defaults. After editing it, run `hyprctl reload` followed by `hyprctl configerrors`.
+- Waybar configuration is JSONC, and its stylesheet imports the active Omarchy theme. After editing anything in `waybar/.config/waybar/`, apply it with `omarchy restart waybar`.
+- Kanata uses the user systemd service, not the disabled system service. From `kanata/.config/kanata/`, run `kanata --check --cfg kanata.kbd`, then apply changes with `systemctl --user restart kanata`.
 
-Uses `stow` for symlink management. Run from repo root:
-```bash
-stow zsh git tmux nvim hypr kanata kitty alacritty sesh script opencode
-```
+## Omarchy Themes
 
-## Key Aliases
-
-From `.zshrc`:
-- `n` → `nvim` (with optional path arg)
-- `y` → `yazi` (file manager)
-- `gs` → `git status --short`
-- `lt` → `eza --tree --level=2 --long --icons --git`
-
-## Tool-Specific Notes
-
-### tmux
-- Prefix: `Ctrl+Space`
-- Uses tmux-sessionx, tmux-resurrect, tmux-continuum, and tokyo-night theme
-- `K` opens sesh session picker
-
-### nvim
-- LazyVim starter template
-- stylua.toml for Lua formatting config
-
-### sesh
-- Session definitions in `sesh/.config/sesh/sesh.toml`
-- Pre-configured sessions for: git, zshrc, tmux, nvim, hypr, kitty, and various project directories
-
-### hypr
-- Hyprland (Wayland compositor) configuration
-- Includes: hyprland.conf, hypridle.conf, hyprlock.conf, hyprsunset.conf, bindings, workspaces
-
-## Git Config
-
-Username: tom_brandi
-Email: brandner.thomas@me.com
-Uses GitHub CLI (`gh auth git-credential`) for credentials.
-
-## Platform
-
-Arch Linux with yay for AUR packages.
+- Treat `omarchy/.config/omarchy/current/` as active theme state managed by Omarchy. Edit a named theme under `omarchy/.config/omarchy/themes/` and activate it through Omarchy rather than editing `current/` directly.
+- Never modify Omarchy's upstream files under `~/.local/share/omarchy/`; user customizations belong in this repository's stowed configuration.
