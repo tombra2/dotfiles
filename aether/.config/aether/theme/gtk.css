@@ -4,25 +4,25 @@
  */
 
 /* Dynamic color palette from Aether */
-@define-color background #1e1e2e;
-@define-color foreground #cdd6f4;
+@define-color background #45475a;
+@define-color foreground #bac2de;
 
-@define-color black #1e1e2e;
+@define-color black #45475a;
 @define-color red #f38ba8;
 @define-color green #a6e3a1;
 @define-color yellow #f9e2af;
 @define-color blue #89b4fa;
-@define-color magenta #cba6f7;
+@define-color magenta #f5c2e7;
 @define-color cyan #94e2d5;
-@define-color white #cdd6f4;
-@define-color bright_black #45475a;
+@define-color white #bac2de;
+@define-color bright_black #585b70;
 @define-color bright_red #f38ba8;
 @define-color bright_green #a6e3a1;
 @define-color bright_yellow #f9e2af;
 @define-color bright_blue #89b4fa;
-@define-color bright_magenta #cba6f7;
+@define-color bright_magenta #f5c2e7;
 @define-color bright_cyan #94e2d5;
-@define-color bright_white #ffffff;
+@define-color bright_white #a6adc8;
 
 /* Adwaita color overrides (libadwaita / GTK4) */
 @define-color accent_bg_color @blue;
