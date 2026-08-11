@@ -45,11 +45,33 @@ return {
       }
     end
 
+    -- The builtin parser expects a column, but djlint's default template does
+    -- not emit one. A fixed column keeps diagnostics attached to the line.
+    lint.linters.djlint.args = {
+      "--profile",
+      "jinja",
+      "--linter-output-format",
+      "{line}:1:{code}: {message}",
+      "--stdin-filename",
+      function()
+        return vim.api.nvim_buf_get_name(0)
+      end,
+      "-",
+    }
+
     -- markdownlint-cli2 sucht die Config nur im cwd. Deshalb die globale
     -- ~/.markdownlint.jsonc explizit mitgeben.
     lint.linters["markdownlint-cli2"].args = {
       "--config",
       vim.fn.expand("~/.markdownlint.jsonc"),
+      "-",
+    }
+
+    lint.linters.yamllint.args = {
+      "--format",
+      "parsable",
+      "--config-data",
+      [[{extends: default, rules: {document-start: disable, line-length: disable, comments-indentation: disable, comments: {min-spaces-from-content: 1}, truthy: {allowed-values: ["true", "false", "on", "off"], check-keys: false}}}]],
       "-",
     }
 
@@ -72,7 +94,7 @@ return {
       svelte = { "biomejs" },
 
       -- Web
-      html = { "htmlhint" },
+      html = { "biomejs" },
       css = { "stylelint" },
       scss = { "stylelint" },
       less = { "stylelint" },
@@ -106,6 +128,8 @@ return {
       -- YAML
       yaml = { "yamllint" },
       ["yaml.docker-compose"] = { "yamllint" },
+      ["yaml.gitlab"] = { "yamllint" },
+      ["yaml.github-actions"] = { "yamllint" },
 
       -- JSON
       json = { "jsonlint" },
@@ -135,7 +159,7 @@ return {
       cpp = { "cppcheck", "cpplint" },
 
       -- Twig
-      twig = { "twig-cs-fixer" },
+      twig = { "twig-cs-fixer", "djlint" },
     }
 
     -- ============================================================================

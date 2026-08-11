@@ -1,0 +1,117 @@
+#!/usr/bin/env python3
+
+import re
+import shutil
+import subprocess
+import sys
+
+
+source = sys.stdin.buffer.read()
+profile = "jinja"
+
+if len(sys.argv) > 1 and sys.argv[1] == "--biome":
+    if len(sys.argv) < 5:
+        sys.stderr.write("usage: twig-html-format --biome BIOME DJLINT FILENAME\n")
+        sys.exit(2)
+
+    biome = sys.argv[2]
+    djlint = sys.argv[3]
+    filename = sys.argv[4]
+    biome_result = subprocess.run(
+        [
+            biome,
+            "format",
+            "--stdin-file-path",
+            filename,
+            "--html-formatter-enabled=true",
+            "--html-formatter-whitespace-sensitivity=ignore",
+            "--indent-style=space",
+            "--indent-width=4",
+            "--line-width=120",
+        ],
+        input=source,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    if biome_result.returncode != 0:
+        sys.stderr.buffer.write(biome_result.stderr)
+        sys.exit(biome_result.returncode)
+    source = biome_result.stdout
+    profile = "html"
+else:
+    djlint = sys.argv[1] if len(sys.argv) > 1 else shutil.which("djlint")
+
+if not djlint:
+    sys.stderr.write("djlint executable not found\n")
+    sys.exit(127)
+
+result = subprocess.run(
+    [
+        djlint,
+        "--reformat",
+        "--profile",
+        profile,
+        "--no-function-formatting",
+        "--preserve-blank-lines",
+        "--max-attribute-length",
+        "120",
+        "--max-line-length",
+        "120",
+        "-",
+    ],
+    input=source,
+    stdout=subprocess.PIPE,
+    stderr=subprocess.PIPE,
+)
+
+if result.returncode != 0:
+    sys.stderr.buffer.write(result.stderr)
+    sys.exit(result.returncode)
+
+
+def unindent(line: str) -> str:
+    return line[4:] if line.startswith("    ") else line
+
+
+lines = result.stdout.decode().splitlines()
+formatted = []
+inside_html = False
+inside_body = False
+body_block_depth = 0
+
+for line in lines:
+    stripped = line.strip()
+
+    if stripped.startswith("<html"):
+        inside_html = True
+        formatted.append(line)
+        continue
+
+    if inside_html and stripped == "</html>":
+        inside_html = False
+        formatted.append(line)
+        continue
+
+    if inside_html:
+        line = unindent(line)
+        stripped = line.strip()
+
+    if stripped == "<body>":
+        inside_body = True
+    elif inside_body and stripped == "</body>":
+        inside_body = False
+    elif inside_body:
+        starts_body_block = re.match(r"{%\s*block\s+body\s*%}", stripped) is not None
+        if body_block_depth or starts_body_block:
+            line = unindent(line)
+            body_block_depth += len(re.findall(r"{%\s*block\s+", stripped))
+            body_block_depth -= len(re.findall(r"{%\s*endblock(?:\s+\w+)?\s*%}", stripped))
+
+    match = re.match(r"^(\s*){%\s*block\s+stylesheets\s*%}{%\s*endblock\s*%}$", line)
+    if match:
+        indent = match.group(1)
+        formatted.extend((f"{indent}{{% block stylesheets %}}", f"{indent}{{% endblock %}}"))
+    else:
+        formatted.append(line)
+
+sys.stdout.write("\n".join(formatted) + "\n")

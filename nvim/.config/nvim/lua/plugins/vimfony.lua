@@ -5,8 +5,8 @@ return {
       vim.lsp.config("vimfony", {
         cmd = { "vimfony" },
         filetypes = { "php", "twig", "yaml", "xml" },
-        root_markers = { ".git" },
-        single_file_support = true,
+        root_markers = { "symfony.lock" },
+        workspace_required = true,
         before_init = function(params, config)
           local root = params.rootPath and tostring(params.rootPath)
           if root and root ~= "" then

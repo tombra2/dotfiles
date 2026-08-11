@@ -21,6 +21,20 @@ local function namespace()
 end
 
 ls.add_snippets("php", {
+  s("doc_p", {
+    t({ "/**", " * @param " }),
+    i(1, "mixed"),
+    t(" $"),
+    i(2, "parameter"),
+    t({ "", " */" }),
+  }),
+
+  s("doc_r", {
+    t({ "/**", " * @return " }),
+    i(1, "mixed"),
+    t({ "", " */" }),
+  }),
+
   -- public function
   s("pubf", {
     t("public function "),
@@ -63,7 +77,7 @@ ls.add_snippets("php", {
     t({ "<?php", "", "declare(strict_types=1);", "", "namespace " }),
     f(namespace),
     t({ ";", "", "class " }),
-    t(filename()),
+    f(filename),
     t({ "", "{", "    " }),
     i(0),
     t({ "", "}" }),

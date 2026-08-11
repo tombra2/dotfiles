@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+set -u
+
+project_root="$PWD"
+while [[ "$project_root" != "/" && ! -d "$project_root/.ddev" ]]; do
+  project_root="$(dirname "$project_root")"
+done
+
+if [[ ! -d "$project_root/.ddev" ]]; then
+  printf 'No DDEV project found from %s\n' "$PWD" >&2
+  exit 1
+fi
+
+host_results=""
+shared_results="$project_root/var/neotest-junit-$$.xml"
+container_results="/var/www/html/var/$(basename "$shared_results")"
+arguments=()
+
+for argument in "$@"; do
+  case "$argument" in
+    --log-junit=*)
+      host_results="${argument#--log-junit=}"
+      arguments+=("--log-junit=$container_results")
+      ;;
+    "$project_root")
+      ;;
+    "$project_root"/*)
+      arguments+=("/var/www/html/${argument#"$project_root"/}")
+      ;;
+    *)
+      arguments+=("$argument")
+      ;;
+  esac
+done
+
+(
+  cd "$project_root" || exit 1
+  ddev exec --dir /var/www/html vendor/bin/phpunit "${arguments[@]}"
+)
+status=$?
+
+if [[ -n "$host_results" && -f "$shared_results" ]]; then
+  sed "s#/var/www/html#$project_root#g" "$shared_results" > "$host_results"
+  rm -f "$shared_results"
+fi
+
+exit "$status"

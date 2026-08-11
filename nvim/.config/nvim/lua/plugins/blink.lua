@@ -63,7 +63,13 @@ return {
           },
         },
         list = {
-          selection = { preselect = true, auto_insert = false },
+          selection = {
+            preselect = function()
+              local is_html = vim.tbl_contains({ "html", "twig" }, vim.bo.filetype)
+              return not (is_html and require("luasnip").in_snippet())
+            end,
+            auto_insert = false,
+          },
         },
         documentation = {
           auto_show = false,

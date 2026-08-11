@@ -1,6 +1,19 @@
--- YAML: LSP (yaml-language-server + SchemaStore) comes from the
--- lazyvim.plugins.extras.lang.yaml extra; Docker/Compose LSP from
--- lazyvim.plugins.extras.lang.docker. This file only fills the gaps.
+vim.filetype.add({
+  filename = {
+    ["compose.yaml"] = "yaml.docker-compose",
+    ["compose.yml"] = "yaml.docker-compose",
+    ["docker-compose.yaml"] = "yaml.docker-compose",
+    ["docker-compose.yml"] = "yaml.docker-compose",
+    [".gitlab-ci.yaml"] = "yaml.gitlab",
+    [".gitlab-ci.yml"] = "yaml.gitlab",
+  },
+  pattern = {
+    [".*/%.github/workflows/.*%.ya?ml"] = "yaml.github-actions",
+    [".*%.gitlab%-ci%.ya?ml"] = "yaml.gitlab",
+    [".*docker%-compose%..*%.ya?ml"] = "yaml.docker-compose",
+  },
+})
+
 return {
   {
     "mason-org/mason.nvim",
@@ -15,15 +28,25 @@ return {
     opts = {
       servers = {
         yamlls = {
+          -- Microsoft Compose LSP provides richer, non-duplicated Compose diagnostics.
+          filetypes = { "yaml", "yaml.gitlab", "yaml.github-actions", "yaml.helm-values" },
           settings = {
             yaml = {
-              -- Compose files are validated by docker-compose-langserver;
-              -- yamlls would only duplicate (and disagree on) those errors.
-              schemas = {
-                ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = {
-                  "docker-compose*.y*ml",
-                  "compose*.y*ml",
-                },
+              yamlVersion = "1.2",
+              validate = true,
+              hover = true,
+              completion = true,
+              customTags = {
+                "!reference sequence",
+                "!abstract scalar",
+                "!closure scalar",
+                "!php/const scalar",
+                "!php/enum scalar",
+                "!php/object scalar",
+                "!returns_clone scalar",
+                "!service scalar",
+                "!tagged_iterator scalar",
+                "!tagged_locator scalar",
               },
               keyOrdering = false,
               format = { enable = false }, -- conform/yamlfmt owns formatting
