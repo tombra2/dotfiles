@@ -14,13 +14,13 @@ preview_command = "bat --color=always ~/.zshrc"
 name = "Projects"
 path = "~/Documents/PlatformIO/Projects"
 startup_command = "ls"
-preview_command = "bat --color=always ~/.tmux.conf"
+preview_command = "eza --tree --level=2 --color=always ~/Documents/PlatformIO/Projects"
 
 [[session]]
-name = "tmux config"
-path = "~/.tmux.conf"
-startup_command = "nvim .tmux.conf"
-preview_command = "bat --color=always ~/.tmux.conf"
+name = "herdr config"
+path = "~/.config/herdr"
+startup_command = "nvim config.toml"
+preview_command = "bat --color=always config.toml"
 
 [[session]]
 name = "sesh"
@@ -74,6 +74,5 @@ startup_command = "yazi"
 name = "Probe"
 path = "~/workspace/probe/"
 startup_command = "yazi"
-
 
 

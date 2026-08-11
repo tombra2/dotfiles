@@ -27,7 +27,13 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.config/script/:$PATH"
 export PATH="$HOME/.opencode/bin:$PATH"
 
-n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }
+n() {
+  if [ "$#" -eq 0 ]; then
+    "$HOME/.config/script/herdr-sessionizer" "$PWD"
+  else
+    nvim "$@"
+  fi
+}
 zle -N n
 bindkey '^b' n
 # ---------------------------------------------------
@@ -44,7 +50,7 @@ export FZF_DEFAULT_OPTS="--preview 'bat --color=always {}'"
 # praktische FZF-Shortcuts
 
 
-bindkey -s ^f "tmux-sessionizer\n"
+bindkey -s ^f "herdr-sessionizer\n"
 
 
 # function sesh-sessions() {

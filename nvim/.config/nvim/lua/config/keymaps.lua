@@ -7,9 +7,14 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
 vim.keymap.set("n", "<C-f>", function()
-  vim.cmd('silent !tmux display-popup -E -w 50\\% -h 50\\% "$HOME/.config/script/tmux-sessionizer"')
+  vim.cmd('silent !"$HOME/.config/script/herdr-sessionizer"')
   vim.cmd("redraw!")
-end, { desc = "tmux-sessionizer" })
+end, { desc = "Herdr sessionizer" })
+
+vim.keymap.set({ "n", "t" }, "<C-7>", function()
+  Snacks.terminal.focus(nil, { cwd = LazyVim.root() })
+end, { desc = "Terminal (Root Dir)" })
+
 vim.keymap.set("n", "U", ":UndotreeToggle | wincmd h<CR>")
 vim.keymap.set("n", "<leader>a", "ggVG")
 vim.keymap.set({ "n", "x", "o" }, "<CR>", function()

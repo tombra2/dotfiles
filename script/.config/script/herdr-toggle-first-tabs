@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+HERDR_BIN="${HERDR_BIN_PATH:-herdr}"
+tabs="$($HERDR_BIN tab list --workspace "$HERDR_ACTIVE_WORKSPACE_ID")"
+first_tab="$(jq -r '.result.tabs[0].tab_id // ""' <<<"$tabs")"
+second_tab="$(jq -r '.result.tabs[1].tab_id // ""' <<<"$tabs")"
+
+[[ -n "$first_tab" && -n "$second_tab" ]] || exit 0
+
+if [[ "$HERDR_ACTIVE_TAB_ID" == "$first_tab" ]]; then
+  target_tab="$second_tab"
+else
+  target_tab="$first_tab"
+fi
+
+"$HERDR_BIN" tab focus "$target_tab" >/dev/null

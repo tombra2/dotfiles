@@ -1,0 +1,140 @@
+onboarding = false
+
+[theme]
+name = "one-dark"
+
+auto_switch = false
+[terminal]
+default_shell = "/usr/bin/bash"
+shell_mode = "non_login"
+new_cwd = "follow"
+
+[keys]
+prefix = "ctrl+space"
+help = "prefix+?"
+detach = "prefix+d"
+reload_config = "prefix+q"
+new_workspace = "prefix+shift+c"
+rename_workspace = "prefix+shift+r"
+close_workspace = "prefix+shift+x"
+workspace_picker = "prefix+w"
+goto = "prefix+g"
+previous_workspace = "alt+up"
+next_workspace = "alt+down"
+new_tab = "prefix+c"
+rename_tab = "prefix+r"
+previous_tab = ["prefix+p", "alt+left"]
+next_tab = ["prefix+n", "alt+right"]
+switch_tab = ["prefix+1..9", "alt+1..9"]
+close_tab = "prefix+k"
+focus_pane_left = "prefix+left"
+focus_pane_down = "prefix+down"
+focus_pane_up = "prefix+up"
+focus_pane_right = "prefix+right"
+split_vertical = ["prefix+v", "alt+shift+enter"]
+split_horizontal = ["prefix+h", "alt+enter"]
+close_pane = ["prefix+x", "alt+esc"]
+copy_mode = "prefix+["
+zoom = "prefix+z"
+resize_mode = "prefix+shift+z"
+
+[[keys.command]]
+key = "ctrl+f"
+type = "popup"
+command = '"$HOME/.config/script/herdr-sessionizer"'
+description = "open project sessionizer"
+width = "80%"
+height = "80%"
+
+[[keys.command]]
+key = "alt+tab"
+type = "shell"
+command = 'bash "$HOME/.config/script/herdr-toggle-first-tabs"'
+description = "toggle first two tabs"
+
+[[keys.command]]
+key = "ctrl+h"
+type = "plugin_action"
+command = "vim-herdr-navigation.left"
+description = "navigate left (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "plugin_action"
+command = "vim-herdr-navigation.down"
+description = "navigate down (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "plugin_action"
+command = "vim-herdr-navigation.up"
+description = "navigate up (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "plugin_action"
+command = "vim-herdr-navigation.right"
+description = "navigate right (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+alt+shift+left"
+type = "shell"
+command = '"${HERDR_BIN_PATH:-herdr}" pane resize --direction left --amount 0.05 --pane "$HERDR_ACTIVE_PANE_ID"'
+description = "resize pane left"
+
+[[keys.command]]
+key = "ctrl+alt+shift+down"
+type = "shell"
+command = '"${HERDR_BIN_PATH:-herdr}" pane resize --direction down --amount 0.05 --pane "$HERDR_ACTIVE_PANE_ID"'
+description = "resize pane down"
+
+[[keys.command]]
+key = "ctrl+alt+shift+up"
+type = "shell"
+command = '"${HERDR_BIN_PATH:-herdr}" pane resize --direction up --amount 0.05 --pane "$HERDR_ACTIVE_PANE_ID"'
+description = "resize pane up"
+
+[[keys.command]]
+key = "ctrl+alt+shift+right"
+type = "shell"
+command = '"${HERDR_BIN_PATH:-herdr}" pane resize --direction right --amount 0.05 --pane "$HERDR_ACTIVE_PANE_ID"'
+description = "resize pane right"
+
+[[keys.command]]
+key = "prefix+j"
+type = "plugin_action"
+command = "jetbrains.open"
+description = "open space in JetBrains IDE"
+
+[[keys.command]]
+key = "prefix+shift+j"
+type = "plugin_action"
+command = "jetbrains.pick"
+description = "pick a JetBrains IDE"
+
+[ui]
+mouse_capture = true
+copy_on_select = true
+pane_borders = true
+pane_gaps = false
+show_agent_labels_on_pane_borders = true
+hide_tab_bar_when_single_tab = false
+prompt_new_tab_name = false
+agent_panel_sort = "priority"
+accent = "blue"
+
+[ui.toast]
+delivery = "system"
+delay_seconds = 1
+
+[ui.sound]
+enabled = true
+
+[session]
+resume_agents_on_restore = true
+
+[experimental]
+pane_history = false
+
+[advanced]
+scrollback_limit_bytes = 50000000
