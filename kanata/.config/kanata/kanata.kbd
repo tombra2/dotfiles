@@ -3,15 +3,19 @@
 )
 
 (defsrc
-  caps a ;
+  caps a s d f j k l ;
 )
 
 (defalias
   a (tap-hold 200 250 a lmet)
-  ö (tap-hold 200 250 ; rmet)
-)
+  s (tap-hold 200 250 s lalt)
+  f (tap-hold 200 250 d lsft)
+  d (tap-hold 200 250 f lctl)
+  k (tap-hold 200 250 j rctl)
+  j (tap-hold 200 250 k rsft)
+  l (tap-hold 200 250 l ralt)
+  ö (tap-hold 200 250 ; rmet))
 
 (deflayer base
-  esc @a  @ö
-)
+  esc @a @s @f @d @k @j @l @ö)
  
