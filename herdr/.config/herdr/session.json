@@ -1,0 +1,218 @@
+{
+  "version": 3,
+  "workspaces": [
+    {
+      "id": "w1",
+      "custom_name": null,
+      "identity_cwd": "/home/thomas",
+      "public_pane_numbers": {
+        "3": 3,
+        "1": 1,
+        "4": 4,
+        "2": 2
+      },
+      "next_public_pane_number": 5,
+      "public_tab_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "next_public_tab_number": 5,
+      "tabs": [
+        {
+          "custom_name": null,
+          "layout": {
+            "Pane": 1
+          },
+          "panes": {
+            "1": {
+              "cwd": "/home/thomas"
+            }
+          },
+          "zoomed": false,
+          "focused": 1,
+          "root_pane": 1
+        },
+        {
+          "custom_name": "nvim",
+          "layout": {
+            "Pane": 2
+          },
+          "panes": {
+            "2": {
+              "cwd": "/home/thomas"
+            }
+          },
+          "zoomed": false,
+          "focused": 2,
+          "root_pane": 2
+        },
+        {
+          "custom_name": "pi",
+          "layout": {
+            "Pane": 3
+          },
+          "panes": {
+            "3": {
+              "cwd": "/home/thomas"
+            }
+          },
+          "zoomed": false,
+          "focused": 3,
+          "root_pane": 3
+        },
+        {
+          "custom_name": "terminal",
+          "layout": {
+            "Pane": 4
+          },
+          "panes": {
+            "4": {
+              "cwd": "/home/thomas"
+            }
+          },
+          "zoomed": false,
+          "focused": 4,
+          "root_pane": 4
+        }
+      ],
+      "active_tab": 2
+    },
+    {
+      "id": "w2",
+      "custom_name": "paperpipe",
+      "identity_cwd": "/home/thomas/nextcloud/workspace/akaryon-development.com/brandner/paperpipe",
+      "public_pane_numbers": {
+        "7": 2,
+        "8": 3,
+        "6": 1
+      },
+      "next_public_pane_number": 4,
+      "public_tab_numbers": [
+        1,
+        2,
+        3
+      ],
+      "next_public_tab_number": 4,
+      "tabs": [
+        {
+          "custom_name": "nvim",
+          "layout": {
+            "Pane": 6
+          },
+          "panes": {
+            "6": {
+              "cwd": "/home/thomas/nextcloud/workspace/akaryon-development.com/brandner/paperpipe"
+            }
+          },
+          "zoomed": false,
+          "focused": 6,
+          "root_pane": 6
+        },
+        {
+          "custom_name": "pi",
+          "layout": {
+            "Pane": 7
+          },
+          "panes": {
+            "7": {
+              "cwd": "/home/thomas/nextcloud/workspace/akaryon-development.com/brandner/paperpipe",
+              "agent_session": {
+                "source": "herdr:pi",
+                "agent": "pi",
+                "kind": "path",
+                "value": "/home/thomas/.pi/agent/sessions/--home-thomas-nextcloud-workspace-akaryon-development.com-brandner-paperpipe--/2026-07-11T15-03-48-530Z_019f51b4-c232-70a7-a47e-1b08ba5177fe.jsonl"
+              }
+            }
+          },
+          "zoomed": false,
+          "focused": 7,
+          "root_pane": 7
+        },
+        {
+          "custom_name": "terminal",
+          "layout": {
+            "Pane": 8
+          },
+          "panes": {
+            "8": {
+              "cwd": "/home/thomas"
+            }
+          },
+          "zoomed": false,
+          "focused": 8,
+          "root_pane": 8
+        }
+      ],
+      "active_tab": 0
+    },
+    {
+      "id": "w3",
+      "custom_name": "dotfiles",
+      "identity_cwd": "/home/thomas/dotfiles",
+      "public_pane_numbers": {
+        "14": 5,
+        "12": 3,
+        "13": 4
+      },
+      "next_public_pane_number": 6,
+      "public_tab_numbers": [
+        3,
+        4,
+        5
+      ],
+      "next_public_tab_number": 6,
+      "tabs": [
+        {
+          "custom_name": "terminal",
+          "layout": {
+            "Pane": 12
+          },
+          "panes": {
+            "12": {
+              "cwd": "/home/thomas/dotfiles"
+            }
+          },
+          "zoomed": false,
+          "focused": 12,
+          "root_pane": 12
+        },
+        {
+          "custom_name": "pi",
+          "layout": {
+            "Pane": 13
+          },
+          "panes": {
+            "13": {
+              "cwd": "/home/thomas/dotfiles"
+            }
+          },
+          "zoomed": false,
+          "focused": 13,
+          "root_pane": 13
+        },
+        {
+          "custom_name": null,
+          "layout": {
+            "Pane": 14
+          },
+          "panes": {
+            "14": {
+              "cwd": "/home/thomas/dotfiles"
+            }
+          },
+          "zoomed": false,
+          "focused": 14,
+          "root_pane": 14
+        }
+      ],
+      "active_tab": 2
+    }
+  ],
+  "active": 2,
+  "selected": 2,
+  "sidebar_width": 26,
+  "sidebar_section_split": 0.5,
+  "collapsed_space_keys": []
+}
