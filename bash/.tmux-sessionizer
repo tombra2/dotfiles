@@ -1,7 +1,0 @@
-# Wird von ~/.config/script/tmux-sessionizer (hydrate()) per send-keys in einer
-# frisch angelegten Session gesourct -- also in einer interaktiven Shell, in der
-# ~/.bashrc bereits geladen ist. Baut dort das nvim/opencode/terminal-Layout auf.
-if declare -F _tmux_dev_layout >/dev/null; then
-    tmux rename-window -t "$(tmux display-message -p '#{window_id}')" nvim
-    _tmux_dev_layout "$(tmux display-message -p '#S')"
-fi

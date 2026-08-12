@@ -1,79 +1,76 @@
--- Learn how to configure Hyprland: https://wiki.hypr.land/Configuring/Start/
+dofile((os.getenv("OMARCHY_PATH") or "/usr/share/omarchy") .. "/default/hypr/bootstrap.lua")
 
--- Load user modules from ~/.config and Omarchy defaults from $OMARCHY_PATH.
-package.path = os.getenv("HOME")
-	.. "/.config/?.lua;"
-	.. (os.getenv("OMARCHY_PATH") or (os.getenv("HOME") .. "/.local/share/omarchy"))
-	.. "/?.lua;"
-	.. package.path
-
--- All Omarchy default setups
 require("default.hypr.omarchy")
-
--- Change your own setup in these files and override defaults.
 require("hypr.monitors")
 require("hypr.input")
 require("hypr.bindings")
 require("hypr.looknfeel")
 require("hypr.autostart")
-
--- Toggle config flags dynamically.
 require("default.hypr.toggles")
 
--- Add any other personal Hyprland configuration below.
--- o.window("qemu", { workspace = "5" })
+local startup_flag = (os.getenv("XDG_RUNTIME_DIR") or "/tmp") .. "/hypr-startup-done"
+local startup_file = io.open(startup_flag, "r")
+local startup_complete = startup_file ~= nil
+if startup_file then
+	startup_file:close()
+end
+local silent_suffix = startup_complete and "" or " silent"
 
--- Place apps silently (no view-switch) ONLY during initial login, so the
--- autostart doesn't yank the view around. autostart.lua creates this flag and
--- reloads once startup is done -> SILENT becomes "" and launching an app
--- switches to its workspace again (normal workflow). The flag lives in
--- XDG_RUNTIME_DIR, which the system clears on every boot.
-local _startup_done = io.open((os.getenv("XDG_RUNTIME_DIR") or "/tmp") .. "/hypr-startup-done", "r")
-local SILENT = _startup_done and "" or " silent"
-if _startup_done then
-	_startup_done:close()
+local layout = {
+	top = 38,
+	outer_gap = 12,
+	middle_gap = 6,
+}
+
+local function workspace(number)
+	return tostring(number) .. silent_suffix
 end
 
--- WS7/WS9 splits are % of the monitor (monitor_w/monitor_h), not fixed px,
--- so the layout holds up whether this lands on the laptop panel or the
--- desktop monitor. TOP/OUT/MID mirror the looknfeel gaps_out + top bar
--- height and stay literal px since those don't scale with monitor size.
-local TOP = 38
-local OUT = 12
-local MID = 6
-o.window(
-	"obsidian",
-	{ workspace = "9" .. SILENT, float = true, size = { "monitor_w*0.75-" .. (OUT + MID), "monitor_h-" .. (TOP + OUT) }, move = { OUT, TOP } }
-)
-o.window("^kitty$", { workspace = "2" .. SILENT })
-o.window("[sS]potify", { workspace = "3" .. SILENT })
-o.window(".*[tT]hunderbird.*", { workspace = "4" .. SILENT })
-o.window(".*[dD]iscord.*", { workspace = "5" .. SILENT })
-o.window("^(1[p|P]assword)$", { workspace = "6" .. SILENT, tile = true, tag = "-floating-window" })
-o.window(
-	"^Element$",
-	{
-		workspace = "7" .. SILENT,
-		float = true,
-		size = { "monitor_w*0.75-" .. (OUT + MID), "monitor_h-" .. (TOP + OUT) },
-		move = { "monitor_w*0.25+" .. MID, TOP },
-	}
-)
-o.window(
-	".*mantis.akaryon.*",
-	{ workspace = "7" .. SILENT, float = true, size = { "monitor_w*0.25-" .. (OUT + MID), "monitor_h-" .. (TOP + OUT) }, move = { OUT, TOP } }
-)
-o.window(".*whatsapp.*", { workspace = "8" .. SILENT })
-o.window(
-	".*todoist.*",
-	{
-		workspace = "9" .. SILENT,
-		float = true,
-		size = { "monitor_w*0.25-" .. (OUT + MID), "monitor_h-" .. (TOP + OUT) },
-		move = { "monitor_w*0.75+" .. MID, TOP },
-	}
-)
-o.window("chromium", { workspace = "10" .. SILENT })
+local function place(pattern, number, rules)
+	rules = rules or {}
+	rules.workspace = workspace(number)
+	o.window(pattern, rules)
+end
+
+local function panel_width(percent, operator, gap)
+	return string.format("monitor_w*%.2f%s%d", percent, operator, gap)
+end
+
+local function panel_height()
+	return "monitor_h-" .. (layout.top + layout.outer_gap)
+end
+
+local wide_width = panel_width(0.75, "-", layout.outer_gap + layout.middle_gap)
+local narrow_width = panel_width(0.25, "-", layout.outer_gap + layout.middle_gap)
+local right_offset = panel_width(0.25, "+", layout.middle_gap)
+
+place("obsidian", 9, {
+	float = true,
+	size = { wide_width, panel_height() },
+	move = { layout.outer_gap, layout.top },
+})
+place("^kitty$", 2)
+place("[sS]potify", 3)
+place(".*[tT]hunderbird.*", 4)
+place(".*[dD]iscord.*", 5)
+place("^[1][pP]assword$", 6, { tile = true, tag = "-floating-window" })
+place("^Element$", 7, {
+	float = true,
+	size = { wide_width, panel_height() },
+	move = { right_offset, layout.top },
+})
+place(".*mantis.akaryon.*", 7, {
+	float = true,
+	size = { narrow_width, panel_height() },
+	move = { layout.outer_gap, layout.top },
+})
+place(".*whatsapp.*", 8)
+place(".*todoist.*", 9, {
+	float = true,
+	size = { narrow_width, panel_height() },
+	move = { panel_width(0.75, "+", layout.middle_gap), layout.top },
+})
+place("chromium", 10)
 
 -- Keep every window fully opaque, overriding Omarchy's default opacity rules.
 o.window(".*", { opacity = "1 1" })

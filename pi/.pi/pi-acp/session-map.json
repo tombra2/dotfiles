@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "sessions": {
+    "019ff47a-c72f-7224-a80a-6148edfd2c88": {
+      "sessionId": "019ff47a-c72f-7224-a80a-6148edfd2c88",
+      "cwd": "/home/thomas/workspace/akaryon-development.com/brandner/paperpipe",
+      "sessionFile": "/home/thomas/.pi/agent/sessions/--home-thomas-Nextcloud-workspace-akaryon-development.com-brandner-paperpipe--/2026-08-12T05-38-34-927Z_019ff47a-c72f-7224-a80a-6148edfd2c88.jsonl",
+      "updatedAt": "2026-08-12T05:38:34.970Z"
+    },
+    "019ff487-95a5-7821-8486-b4c5f72fc782": {
+      "sessionId": "019ff487-95a5-7821-8486-b4c5f72fc782",
+      "cwd": "/home/thomas/workspace/akaryon-development.com/brandner/paperpipe",
+      "sessionFile": "/home/thomas/.pi/agent/sessions/--home-thomas-Nextcloud-workspace-akaryon-development.com-brandner-paperpipe--/2026-08-12T05-52-34-213Z_019ff487-95a5-7821-8486-b4c5f72fc782.jsonl",
+      "updatedAt": "2026-08-12T05:52:34.252Z"
+    },
+    "019ff6aa-7fe9-7ef1-bd36-4980117e527c": {
+      "sessionId": "019ff6aa-7fe9-7ef1-bd36-4980117e527c",
+      "cwd": "/home/thomas/workspace/akaryon-development.com/brandner/paperpipe",
+      "sessionFile": "/home/thomas/.pi/agent/sessions/--home-thomas-Nextcloud-workspace-akaryon-development.com-brandner-paperpipe--/2026-08-12T15-49-56-841Z_019ff6aa-7fe9-7ef1-bd36-4980117e527c.jsonl",
+      "updatedAt": "2026-08-12T15:49:56.893Z"
+    },
+    "019ff6ab-659d-7150-afc5-f182c7248600": {
+      "sessionId": "019ff6ab-659d-7150-afc5-f182c7248600",
+      "cwd": "/home/thomas/workspace/akaryon-development.com/brandner/paperpipe",
+      "sessionFile": "/home/thomas/.pi/agent/sessions/--home-thomas-Nextcloud-workspace-akaryon-development.com-brandner-paperpipe--/2026-08-12T15-50-55-645Z_019ff6ab-659d-7150-afc5-f182c7248600.jsonl",
+      "updatedAt": "2026-08-12T15:50:55.699Z"
+    }
+  }
+}

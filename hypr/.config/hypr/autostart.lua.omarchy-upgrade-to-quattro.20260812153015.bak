@@ -1,5 +1,3 @@
--- Extra autostart processes.
--- o.launch_on_start("my-service")
 o.launch_on_start("kitty") -- WS2  terminal
 o.launch_on_start("spotify") -- WS3
 o.launch_on_start("thunderbird") -- WS4

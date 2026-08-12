@@ -21,7 +21,55 @@ return {
       keymap = {
         preset = "none",
         ["<C-Space>"] = { "show" },
-        ["<CR>"] = { "accept", "fallback" },
+        ["<CR>"] = {
+          function(cmp)
+            local is_markup = vim.tbl_contains({ "html", "twig" }, vim.bo.filetype)
+            local guard = vim.b.blink_emmet_enter_guard
+            local cursor = vim.api.nvim_win_get_cursor(0)
+
+            if
+              is_markup
+              and guard
+              and guard.row == cursor[1]
+              and guard.col == cursor[2]
+              and guard.changedtick == vim.api.nvim_buf_get_changedtick(0)
+            then
+              vim.b.blink_emmet_enter_guard = nil
+              cmp.hide()
+              vim.schedule(function()
+                vim.api.nvim_feedkeys(vim.keycode("<CR>"), "n", false)
+              end)
+              return true
+            end
+
+            vim.b.blink_emmet_enter_guard = nil
+            local item = cmp.get_selected_item()
+            if not (is_markup and item) then
+              return
+            end
+
+            local client = item.client_id and vim.lsp.get_client_by_id(item.client_id) or nil
+            local is_emmet = (client and client.name == "emmet_language_server") or item.detail == "Emmet Abbreviation"
+            if not is_emmet then
+              return
+            end
+
+            local bufnr = vim.api.nvim_get_current_buf()
+            return cmp.accept({
+              callback = function()
+                local accepted_at = vim.api.nvim_win_get_cursor(0)
+                vim.b[bufnr].blink_emmet_enter_guard = {
+                  row = accepted_at[1],
+                  col = accepted_at[2],
+                  changedtick = vim.api.nvim_buf_get_changedtick(bufnr),
+                }
+                cmp.hide()
+              end,
+            })
+          end,
+          "accept",
+          "fallback",
+        },
         ["<C-p>"] = { "select_prev", "fallback" },
         ["<C-n>"] = { "select_next", "fallback" },
         ["<C-e>"] = { "hide", "fallback" },
