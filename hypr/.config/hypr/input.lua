@@ -2,6 +2,16 @@
 -- replace Omarchy's defaults.
 
 -- Keyboard layout and options.
+-- The Omarchy update added shift:both_capslock_cancel, which intercepts
+-- pressing both Shift keys and prevents JetBrains' Shift Shift shortcut.
+-- Keep the previous keyboard options for PhpStorm's double-Shift action.
+hl.config({
+  input = {
+    kb_layout = "de",
+    kb_options = "compose:caps",
+  },
+})
+
 -- See https://wiki.hypr.land/Configuring/Basics/Variables/#input
 -- hl.config({
 --   input = {

@@ -12,12 +12,11 @@ set smartcase
 set clipboard=unnamed,unnamedplus
 set ignorecase
 set incsearch
-set which-key
+set multicursor
+set dial
 
 nnoremap <Esc> :nohlsearch<CR>
 
-map <C-h> <action>(PreviousTab)
-map <C-l> <action>(NextTab)
 xnoremap p "_dP
 map / <Action>(Find)
 noremap u uzz
@@ -29,92 +28,14 @@ noremap <C-u> <C-u>zz
 vmap J :m '>+1<CR>gv=gv
 vmap K :m '<-2<CR>gv=gv
 let mapleader=" "
-
-" ── Group descriptions ──────────────────────────────
-let g:WhichKeyDesc_buffer     = "<leader>b +buffer"
-let g:WhichKeyDesc_code       = "<leader>c +code"
-let g:WhichKeyDesc_debug      = "<leader>d +debug"
-let g:WhichKeyDesc_file       = "<leader>f +file/find"
-let g:WhichKeyDesc_git        = "<leader>g +git"
-let g:WhichKeyDesc_quit       = "<leader>q +quit/session"
-let g:WhichKeyDesc_search     = "<leader>s +search"
-let g:WhichKeyDesc_test       = "<leader>t +test"
-let g:WhichKeyDesc_java       = "<leader>j +java"
-let g:WhichKeyDesc_php        = "<leader>p +php"
-let g:WhichKeyDesc_ui         = "<leader>u +ui"
-let g:WhichKeyDesc_windows    = "<leader>w +windows"
-let g:WhichKeyDesc_diagnostics = "<leader>x +diagnostics"
-let g:WhichKeyDesc_grep       = "<leader>/  +Grep (Root Dir)"
-
-" ── BaseCommands ───────────────────────────────────────
-
+nmap <leader>ca :action ShowIntentionActions<cr>
+nmap <leader>cr :action RenameElement<cr>
+nmap <leader>cn :action PhpNewClass<cr>
+map W [w
+map B [b
 nmap <leader>/ :action FindInPath<cr>
 nmap <leader>e :action ActivateProjectToolWindow<cr>
-
-
-" ── Java SpecificCommands ───────────────────────────
-nmap <leader>jnc :action NewClass<cr>
-" ── File/Find ───────────────────────────────────────
-nmap <leader><space> :action GotoFile<cr>
-nmap <leader>ff :action GotoFile<cr>
-nmap <leader>fr :action RecentFiles<cr>
-nmap <leader>fn :action NewElementSamePlace<cr>
-nmap <leader>fb :action Switcher<cr>
-nmap <leader>ft :action ActivateTerminalToolWindow<cr>
-nmap <leader>fe :action ActivateProjectToolWindow<cr>
-nmap <leader>fs :action SaveAll<cr>
-
-" ── Buffer ──────────────────────────────────────────
-nmap <leader>bd :action CloseContent<cr>
-nmap <leader>bo :action CloseAllEditorsButActive<cr>
-nmap <leader>bp :action PinActiveTabToggle<cr>
-nmap <leader>bl :action CloseAllToTheLeft<cr>
-nmap <leader>br :action CloseAllToTheRight<cr>
-
-" ── Code ────────────────────────────────────────────
-nmap <leader>ca :action RefactoringMenu<cr>
-nmap <leader>cf :action Format<cr>
-nmap <leader>cr :action RenameElement<cr>
-nmap <leader>cR :action RenameFile<cr>
-nmap <leader>cg :action Generate<cr>
-nmap <leader>cd :action ActivateProblemsViewToolWindow<cr>
-
-" ── Debug ───────────────────────────────────────────
-nmap <leader>db :action ToggleLineBreakpoint<cr>
-nmap <leader>dc :action Resume<cr>
-nmap <leader>di :action StepInto<cr>
-nmap <leader>do :action StepOut<cr>
-nmap <leader>dO :action StepOver<cr>
-nmap <leader>dt :action Stop<cr>
-
-" ── Git ─────────────────────────────────────────────
-nmap <leader>gg :action ActivateCommitToolWindow<cr>
-nmap <leader>gb :action Annotate<cr>
-nmap <leader>gl :action Vcs.Show.Log<cr>
-nmap <leader>gs :action Vcs.Show.Log<cr>
-
-" ── Search ──────────────────────────────────────────
-nmap <leader>sg :action FindInPath<cr>
-nmap <leader>ss :action GotoSymbol<cr>
-nmap <leader>sh :action HelpTopics<cr>
-nmap <leader>sk :map<cr>
-nmap <leader>sm :marks<cr>
-nmap <leader>so :action ShowSettings<cr>
-nmap <leader>sr :action Replace<cr>
-
-" ── Quit ────────────────────────────────────────────
-nmap <leader>qq :action Exit<cr>
-
-" ── UI ──────────────────────────────────────────────
-nmap <leader>uw :setlocal wrap!<cr>
-nmap <leader>ul :set number!<cr>
-nmap <leader>uL :set relativenumber!<cr>
-nmap <leader>uc :action QuickChangeScheme<cr>
-
-" ── Windows ─────────────────────────────────────────
-nmap <leader>wd :action CloseContent<cr>
-nmap <leader>wr :action Next Splitter<cr>
-nmap <leader>wm :action ToggleDistractionFreeMode<cr>
-nmap <leader>- <c-w>s
-nmap <leader>| <c-w>v
-
+nmap <leader>a ggVG
+nnoremap <leader>cqp :w<CR><Action>(Tool_External Tools_PHPStan-Current-File)
+nmap <leader><leader> :action Switcher<cr>
+nnoremap <C-/> :action ActivateTerminalToolWindow<CR>
