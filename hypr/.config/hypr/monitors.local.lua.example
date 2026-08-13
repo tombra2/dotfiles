@@ -1,0 +1,7 @@
+-- Copy this file to monitors.local.lua on each machine.
+-- The local file is ignored by git and can differ between laptop and desktop.
+
+-- Example desktop:
+-- hl.monitor({ output = "DP-1", mode = "2560x1440@144", position = "0x0", scale = 1 })
+-- Example laptop:
+-- hl.monitor({ output = "eDP-1", mode = "preferred", position = "0x0", scale = 1.25 })

@@ -12,3 +12,14 @@ hl.monitor({ output = "", mode = "preferred", position = "auto", scale = omarchy
 
 -- Portrait/rotated secondary monitor (transform: 1 = 90°, 3 = 270°).
 -- hl.monitor({ output = "DP-2", mode = "preferred", position = "auto", scale = 1, transform = 1 })
+
+-- Machine-specific monitor settings stay local and are not committed. This lets
+-- the same dotfiles work on both the laptop and the desktop.
+local source = debug.getinfo(1, "S").source
+local config_dir = source:match("^@(.*[/\\\\])") or ""
+local local_file = config_dir .. "monitors.local.lua"
+local file = io.open(local_file, "r")
+if file then
+	file:close()
+	dofile(local_file)
+end

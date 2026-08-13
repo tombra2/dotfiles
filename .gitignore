@@ -19,6 +19,9 @@ claude/.claude/Untitled
 # Hypr backup-cruft
 *.bak.[0-9]*
 
+# Per-machine monitor layout (keep separate on laptop and desktop)
+hypr/.config/hypr/monitors.local.lua
+
 # Secrets/env
 .env
 .env.*
