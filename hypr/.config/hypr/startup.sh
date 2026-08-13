@@ -34,8 +34,7 @@ ensure_app '"class": "Element"' uwsm-app -- element-desktop
 
 for _ in $(seq 1 30); do
   has 'org.mozilla.Thunderbird' &&
-    has 'chrome-app.todoist' &&
-    has '"class": "obsidian"' &&
+    has '[oO]bsidian' &&
     has '[dD]iscord' &&
     has '[eE]lement' &&
     has '[wW]hatsapp' && break
