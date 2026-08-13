@@ -44,7 +44,7 @@ local wide_width = panel_width(0.75, "-", layout.outer_gap + layout.middle_gap)
 local narrow_width = panel_width(0.25, "-", layout.outer_gap + layout.middle_gap)
 local right_offset = panel_width(0.25, "+", layout.middle_gap)
 
-place("obsidian", 9, {
+place(".*[oO]bsidian.*", 9, {
 	float = true,
 	size = { wide_width, panel_height() },
 	move = { layout.outer_gap, layout.top },
@@ -65,12 +65,15 @@ place(".*mantis.akaryon.*", 7, {
 	move = { layout.outer_gap, layout.top },
 })
 place(".*whatsapp.*", 8)
-place(".*todoist.*", 9, {
-	float = true,
-	size = { narrow_width, panel_height() },
-	move = { panel_width(0.75, "+", layout.middle_gap), layout.top },
-})
 place("chromium", 10)
 
--- Keep every window fully opaque, overriding Omarchy's default opacity rules.
+-- Todoist-Popup liegt auf einem eigenen Special-Workspace und wird per SUPER+T getoggelt.
+o.window({ class = "chrome-app.todoist.com__app_today-Default" }, {
+	workspace = "special:chrome-todoist-window",
+	float = true,
+	center = true,
+	size = { "monitor_w*0.70", "monitor_h*0.75" },
+})
+
+-- Keep every window fully opaque.
 o.window(".*", { opacity = "1 1" })

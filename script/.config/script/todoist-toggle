@@ -1,0 +1,21 @@
+#!/bin/bash
+# Toggle the floating Todoist webapp window (SUPER + T).
+set -euo pipefail
+
+CLASS="chrome-app.todoist.com__app_today-Default"
+LAUNCH_CMD=(chromium --app=https://app.todoist.com/app/today)
+
+window_exists() {
+	hyprctl clients -j | jq -e --arg c "$CLASS" 'any(.[]; .class == $c)' >/dev/null
+}
+
+if ! window_exists; then
+	setsid "${LAUNCH_CMD[@]}" >/dev/null 2>&1 &
+	disown
+	for _ in $(seq 1 40); do
+		window_exists && break
+		sleep 0.05
+	done
+fi
+
+hyprctl dispatch 'hl.dsp.workspace.toggle_special("chrome-todoist-window")' >/dev/null

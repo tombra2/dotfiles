@@ -1,5 +1,16 @@
 -- Change the default Omarchy look'n'feel.
 
+-- Blur the windows behind floating popups such as Todoist.
+hl.config({
+  decoration = {
+    blur = {
+      enabled = true,
+      size = 6,
+      passes = 3,
+    },
+  },
+})
+
 -- https://wiki.hypr.land/Configuring/Basics/Variables/#general
 -- hl.config({
 --   general = {
