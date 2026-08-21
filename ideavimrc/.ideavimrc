@@ -23,8 +23,10 @@ noremap u uzz
 noremap J mzJ`z
 nnoremap K mzK`z
 nnoremap u uzz
-noremap <C-d> <C-d>zz
-noremap <C-u> <C-u>zz
+noremap <C-d> :action MethodDown<cr>
+nnoremap <cr> :action EditorSelectWord<cr>
+noremap <C-u> :action MethodUp<cr>
+noremap <esc> :action HideActiveWindow<cr>
 vmap J :m '>+1<CR>gv=gv
 vmap K :m '<-2<CR>gv=gv
 let mapleader=" "

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "hello.world",
+  "name": "Hello World",
+  "version": "1.0.0",
+  "author": "Dein Name",
+  "description": "Eine einfachen Hello-World-Bar-Widget",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "HelloWorld.qml"
+  },
+  "barWidget": {
+    "displayName": "Hello World",
+    "description": "Zeigt Hello World in der Leiste",
+    "category": "Example"
+  }
+}

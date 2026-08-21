@@ -9,7 +9,6 @@
 ## Runtime Validation
 
 - Hyprland configuration is Lua and is loaded by `hypr/.config/hypr/hyprland.lua` together with Omarchy defaults. After editing it, run `hyprctl reload` followed by `hyprctl configerrors`.
-- Waybar configuration is JSONC, and its stylesheet imports the active Omarchy theme. After editing anything in `waybar/.config/waybar/`, apply it with `omarchy restart waybar`.
 - Kanata uses the user systemd service, not the disabled system service. From `kanata/.config/kanata/`, run `kanata --check --cfg kanata.kbd`, then apply changes with `systemctl --user restart kanata`.
 
 ## Omarchy Themes

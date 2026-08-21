@@ -2,32 +2,32 @@
   "version": 3,
   "workspaces": [
     {
-      "id": "w1",
-      "custom_name": null,
-      "identity_cwd": "/home/thomas",
+      "id": "w2",
+      "custom_name": "paperpipe",
+      "identity_cwd": "/home/thomas/nextcloud/workspace/akaryon-development.com/brandner/paperpipe",
       "public_pane_numbers": {
-        "3": 3,
         "2": 2,
+        "31": 9,
         "1": 1,
-        "4": 4
+        "3": 8
       },
-      "next_public_pane_number": 5,
+      "next_public_pane_number": 10,
       "public_tab_numbers": [
         1,
         2,
-        3,
-        4
+        8,
+        9
       ],
-      "next_public_tab_number": 5,
+      "next_public_tab_number": 10,
       "tabs": [
         {
-          "custom_name": null,
+          "custom_name": "nvim",
           "layout": {
             "Pane": 1
           },
           "panes": {
             "1": {
-              "cwd": "/home/thomas"
+              "cwd": "/home/thomas/nextcloud/workspace/akaryon-development.com/brandner/paperpipe"
             }
           },
           "zoomed": false,
@@ -35,13 +35,26 @@
           "root_pane": 1
         },
         {
-          "custom_name": "nvim",
+          "custom_name": "pi",
           "layout": {
             "Pane": 2
           },
           "panes": {
             "2": {
-              "cwd": "/home/thomas"
+              "cwd": "/home/thomas/nextcloud/workspace/akaryon-development.com/brandner/paperpipe",
+              "agent_session": {
+                "source": "herdr:pi",
+                "agent": "pi",
+                "kind": "path",
+                "value": "/home/thomas/.pi/agent/sessions/--home-thomas-nextcloud-workspace-akaryon-development.com-brandner-paperpipe--/2026-08-19T16-51-22-503Z_01a01aef-4106-7b4d-b3c5-2751a8002263.jsonl"
+              },
+              "agent_launch": {
+                "agent": "pi",
+                "args": [
+                  "--session",
+                  "/home/thomas/.pi/agent/sessions/--home-thomas-nextcloud-workspace-akaryon-development.com-brandner-paperpipe--/2026-08-18T06-40-56-692Z_01a0139a-0773-7157-b79b-d6abca691164.jsonl"
+                ]
+              }
             }
           },
           "zoomed": false,
@@ -49,13 +62,13 @@
           "root_pane": 2
         },
         {
-          "custom_name": "pi",
+          "custom_name": "terminal",
           "layout": {
             "Pane": 3
           },
           "panes": {
             "3": {
-              "cwd": "/home/thomas"
+              "cwd": "/home/thomas/nextcloud/workspace/akaryon-development.com/brandner/paperpipe"
             }
           },
           "zoomed": false,
@@ -63,163 +76,94 @@
           "root_pane": 3
         },
         {
-          "custom_name": "terminal",
+          "custom_name": null,
           "layout": {
-            "Pane": 4
+            "Pane": 31
           },
           "panes": {
-            "4": {
-              "cwd": "/home/thomas"
-            }
-          },
-          "zoomed": false,
-          "focused": 4,
-          "root_pane": 4
-        }
-      ],
-      "active_tab": 2
-    },
-    {
-      "id": "w2",
-      "custom_name": "paperpipe",
-      "identity_cwd": "/home/thomas/nextcloud/workspace/akaryon-development.com/brandner/paperpipe",
-      "public_pane_numbers": {
-        "5": 1,
-        "6": 2,
-        "7": 3
-      },
-      "next_public_pane_number": 4,
-      "public_tab_numbers": [
-        1,
-        2,
-        3
-      ],
-      "next_public_tab_number": 4,
-      "tabs": [
-        {
-          "custom_name": "nvim",
-          "layout": {
-            "Pane": 5
-          },
-          "panes": {
-            "5": {
+            "31": {
               "cwd": "/home/thomas/nextcloud/workspace/akaryon-development.com/brandner/paperpipe"
             }
           },
           "zoomed": false,
-          "focused": 5,
-          "root_pane": 5
-        },
-        {
-          "custom_name": "pi",
-          "layout": {
-            "Pane": 6
-          },
-          "panes": {
-            "6": {
-              "cwd": "/home/thomas/nextcloud/workspace/akaryon-development.com/brandner/paperpipe",
-              "agent_session": {
-                "source": "herdr:pi",
-                "agent": "pi",
-                "kind": "path",
-                "value": "/home/thomas/.pi/agent/sessions/--home-thomas-nextcloud-workspace-akaryon-development.com-brandner-paperpipe--/2026-07-11T15-03-48-530Z_019f51b4-c232-70a7-a47e-1b08ba5177fe.jsonl"
-              },
-              "agent_launch": {
-                "agent": "pi",
-                "args": [
-                  "--session",
-                  "/home/thomas/.pi/agent/sessions/--home-thomas-nextcloud-workspace-akaryon-development.com-brandner-paperpipe--/2026-07-11T15-03-48-530Z_019f51b4-c232-70a7-a47e-1b08ba5177fe.jsonl"
-                ]
-              }
-            }
-          },
-          "zoomed": false,
-          "focused": 6,
-          "root_pane": 6
-        },
-        {
-          "custom_name": "terminal",
-          "layout": {
-            "Pane": 7
-          },
-          "panes": {
-            "7": {
-              "cwd": "/home/thomas"
-            }
-          },
-          "zoomed": false,
-          "focused": 7,
-          "root_pane": 7
+          "focused": 31,
+          "root_pane": 31
         }
       ],
-      "active_tab": 0
+      "active_tab": 1
     },
     {
-      "id": "w3",
-      "custom_name": "dotfiles",
-      "identity_cwd": "/home/thomas/dotfiles",
+      "id": "w8",
+      "custom_name": "thomas",
+      "identity_cwd": "/home/thomas",
       "public_pane_numbers": {
-        "8": 3,
-        "10": 5,
-        "9": 4
+        "30": 5,
+        "28": 3,
+        "35": 6
       },
-      "next_public_pane_number": 6,
+      "next_public_pane_number": 7,
       "public_tab_numbers": [
         3,
-        4,
-        5
+        5,
+        6
       ],
-      "next_public_tab_number": 6,
+      "next_public_tab_number": 7,
       "tabs": [
         {
           "custom_name": "terminal",
           "layout": {
-            "Pane": 8
+            "Pane": 28
           },
           "panes": {
-            "8": {
-              "cwd": "/home/thomas/dotfiles"
+            "28": {
+              "cwd": "/home/thomas"
             }
           },
           "zoomed": false,
-          "focused": 8,
-          "root_pane": 8
-        },
-        {
-          "custom_name": "pi",
-          "layout": {
-            "Pane": 9
-          },
-          "panes": {
-            "9": {
-              "cwd": "/home/thomas/dotfiles"
-            }
-          },
-          "zoomed": false,
-          "focused": 9,
-          "root_pane": 9
+          "focused": 28,
+          "root_pane": 28
         },
         {
           "custom_name": null,
           "layout": {
-            "Pane": 10
+            "Pane": 30
           },
           "panes": {
-            "10": {
-              "cwd": "/home/thomas/dotfiles"
+            "30": {
+              "cwd": "/home/thomas/nextcloud/workspace/github.com/tombra2/api"
             }
           },
           "zoomed": false,
-          "focused": 10,
-          "root_pane": 10
+          "focused": 30,
+          "root_pane": 30
+        },
+        {
+          "custom_name": null,
+          "layout": {
+            "Pane": 35
+          },
+          "panes": {
+            "35": {
+              "cwd": "/home/thomas/dotfiles/pi/.pi/agent/prompts",
+              "agent_session": {
+                "source": "herdr:pi",
+                "agent": "pi",
+                "kind": "path",
+                "value": "/home/thomas/.pi/agent/sessions/--home-thomas-dotfiles-pi-.pi-agent-prompts--/2026-08-20T14-54-38-632Z_01a01faa-be28-7bbc-9347-3879cc9e1ae6.jsonl"
+              }
+            }
+          },
+          "zoomed": false,
+          "focused": 35,
+          "root_pane": 35
         }
       ],
       "active_tab": 0
     }
   ],
-  "active": 1,
-  "selected": 1,
-  "sidebar_width": 26,
+  "active": 0,
+  "selected": 0,
+  "sidebar_width": 30,
   "sidebar_section_split": 0.5,
   "collapsed_space_keys": []
 }
