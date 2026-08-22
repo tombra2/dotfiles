@@ -8,6 +8,7 @@
 hl.config({
   input = {
     kb_layout = "de",
+    kb_file = "/home/thomas/.config/xkb/de-custom.xkb",
     -- CapsLock is handled by Kanata (tap = Escape, hold = Ctrl).
     kb_options = "",
   },
