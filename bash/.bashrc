@@ -104,3 +104,8 @@ n() {
         herdr-sessionizer "$PWD"
     fi
 }
+
+# Start or attach to Herdr whenever an interactive terminal opens, but never from a Herdr pane.
+if [[ "${HERDR_ENV:-}" != "1" ]]; then
+    exec herdr
+fi
