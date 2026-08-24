@@ -40,4 +40,4 @@ nmap <leader>e :action ActivateProjectToolWindow<cr>
 nmap <leader>a ggVG
 nnoremap <leader>cqp :w<CR><Action>(Tool_External Tools_PHPStan-Current-File)
 nmap <leader><leader> :action Switcher<cr>
-nnoremap <C-/> :action ActivateTerminalToolWindow<CR>
+nnoremap <C-7> :action ActivateTerminalToolWindow<CR>
