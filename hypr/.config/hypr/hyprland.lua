@@ -32,7 +32,9 @@ place("[sS]potify", 3)
 place(".*[tT]hunderbird.*", 4)
 place(".*[dD]iscord.*", 5)
 place("^[1][pP]assword$", 6, { tile = true, tag = "-floating-window" })
-place(".*whatsapp.*", 8)
+place("^[eE]lement$", 7)
+place(".*[oO]bsidian.*", 9)
+place(".*[wW]hatsapp.*", 8)
 place("chromium", 10)
 
 -- Todoist-Popup liegt auf einem eigenen Special-Workspace und wird per SUPER+T getoggelt.

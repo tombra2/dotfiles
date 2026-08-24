@@ -1,3 +1,5 @@
+-- ALT+TAB is reserved for Herdr tab switching.
+hl.unbind("ALT + TAB")
 hl.unbind("SUPER + TAB")
 hl.unbind("SUPER + W")
 hl.unbind("SUPER + H")

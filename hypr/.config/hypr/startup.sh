@@ -31,6 +31,7 @@ done
 # Retry apps whose first autostart attempt did not create a window.
 ensure_app '[dD]iscord' omarchy-launch-webapp 'https://discord.com/app'
 ensure_app '"class": "Element"' uwsm-app -- element-desktop
+ensure_app '[wW]hatsapp' omarchy-launch-webapp 'https://web.whatsapp.com/'
 
 for _ in $(seq 1 30); do
   has 'org.mozilla.Thunderbird' &&

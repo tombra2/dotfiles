@@ -8,6 +8,5 @@ o.launch_on_start("chromium") -- WS10 browser
 o.launch_on_start("element-desktop") -- WS7 (right 75%)
 
 o.exec_on_start(o.launch_webapp("https://discord.com/app")) -- WS5
-o.exec_on_start(o.launch_webapp("https://mantis.akaryon-services.com/")) -- WS7 (left 25%)
 o.exec_on_start(o.launch_webapp("https://web.whatsapp.com/")) -- WS8
 o.exec_on_start("$HOME/.config/hypr/startup.sh")
