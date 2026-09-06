@@ -26,7 +26,6 @@ local function place(pattern, number, rules)
 	o.window(pattern, rules)
 end
 
-
 place("^kitty$", 2)
 place("[sS]potify", 3)
 place(".*[tT]hunderbird.*", 4)
@@ -46,4 +45,4 @@ o.window({ class = "chrome-app.todoist.com__app_today-Default" }, {
 })
 
 -- Keep every window fully opaque.
-o.window(".*", { opacity = "0.95 0.95" })
+o.window(".*", { opacity = "1 1" })
