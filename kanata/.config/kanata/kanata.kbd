@@ -1,29 +1,10 @@
+;; Kanata is deliberately left without remappings.
+;; The desktop uses the regular German XKB layout.
 (defcfg
   process-unmapped-keys yes
 )
 
-(defsrc
-  caps a s d f j k l ;
-  lctl lalt lsft lmet rctl ralt rsft rmet
-  '
-)
+(defsrc)
 
-(defalias
-  a (tap-hold 200 200 a lmet)
-  s (tap-hold 200 200 s lalt)
-  d (tap-hold 200 200 d lsft)
-  f (tap-hold 200 200 f lctl)
-  j (tap-hold 200 200 j rctl)
-  k (tap-hold 200 200 k rsft)
-  l (tap-hold 200 200 l ralt)
-  ö (tap-hold 200 200 ; rmet)
-  ä (tap-hold 200 200 ' rmet)
-)
-
-(deflayer base
-  esc @a @s @d @f @j @k @l @ö
-  XX XX XX XX XX XX XX XX
-  @ä
-)
-
+(deflayer base)
 
