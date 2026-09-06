@@ -1,3 +1,5 @@
+local overrides = require("config.tokyonight-overrides")
+
 return {
   {
     "folke/tokyonight.nvim",
@@ -5,6 +7,8 @@ return {
     opts = {
       style = "night",
       transparent = true,
+      on_colors = overrides.colors,
+      on_highlights = overrides.highlights,
     },
   },
 
