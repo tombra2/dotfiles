@@ -69,7 +69,7 @@ alias mv='mv -iv'
 alias start='ddev start && ddev launch && ddev mailpit'
 alias stop='ddev stop'
 
-alias dtest='ddev exec php bin/phpunit'
+alias test='ddev exec php bin/phpunit'
 
 alias migra='ddev exec php bin/console make:migration'
 alias docmigra='ddev exec php bin/console doctrine:migrations:migrate'
