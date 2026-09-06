@@ -108,30 +108,27 @@ ensure_dev_tab() {
 }
 
 ensure_dev_layout() {
-  local workspace_id="$1" path="$2" nvim_tab
-  nvim_tab="$(ensure_dev_tab "$workspace_id" "$path" nvim 'exec nvim -c Neotree')"
-  ensure_dev_tab "$workspace_id" "$path" pi 'exec pi -r' >/dev/null
+  local workspace_id="$1" path="$2" pi_tab
+  pi_tab="$(ensure_dev_tab "$workspace_id" "$path" pi 'exec pi')"
   ensure_dev_tab "$workspace_id" "$path" terminal '' >/dev/null
-  "$HERDR_BIN" tab focus "$nvim_tab" >/dev/null
+  "$HERDR_BIN" tab focus "$pi_tab" >/dev/null
 }
 
 create_dev_workspace() {
-  local path="$1" name workspace_json workspace_id nvim_tab nvim_pane tab_json pane_id
+  local path="$1" name workspace_json workspace_id pi_tab pi_pane split_json hunk_pane
   name="$(basename "$path" | tr . _)"
   workspace_json="$($HERDR_BIN workspace create --cwd "$path" --label "$name" --focus)"
   workspace_id="$(jq -r '.result.workspace.workspace_id' <<<"$workspace_json")"
-  nvim_tab="$(jq -r '.result.tab.tab_id' <<<"$workspace_json")"
-  nvim_pane="$(jq -r '.result.root_pane.pane_id' <<<"$workspace_json")"
+  pi_tab="$(jq -r '.result.tab.tab_id' <<<"$workspace_json")"
+  pi_pane="$(jq -r '.result.root_pane.pane_id' <<<"$workspace_json")"
 
-  "$HERDR_BIN" tab rename "$nvim_tab" nvim >/dev/null
-  "$HERDR_BIN" pane run "$nvim_pane" 'exec nvim -c Neotree' >/dev/null
-
-  tab_json="$($HERDR_BIN tab create --workspace "$workspace_id" --cwd "$path" --label pi --no-focus)"
-  pane_id="$(jq -r '.result.root_pane.pane_id' <<<"$tab_json")"
-  "$HERDR_BIN" pane run "$pane_id" 'exec pi -r' >/dev/null
-
+  "$HERDR_BIN" tab rename "$pi_tab" pi >/dev/null
+  "$HERDR_BIN" pane run "$pi_pane" 'exec pi' >/dev/null
+  split_json="$($HERDR_BIN pane split --pane "$pi_pane" --direction right --cwd "$path" --no-focus)"
+  hunk_pane="$(jq -r '.result.pane.pane_id' <<<"$split_json")"
+  "$HERDR_BIN" pane run "$hunk_pane" 'exec hunk diff --watch' >/dev/null
   "$HERDR_BIN" tab create --workspace "$workspace_id" --cwd "$path" --label terminal --no-focus >/dev/null
-  "$HERDR_BIN" tab focus "$nvim_tab" >/dev/null
+  "$HERDR_BIN" tab focus "$pi_tab" >/dev/null
 }
 
 attach_if_needed() {
