@@ -109,3 +109,6 @@ n() {
 if [[ "${HERDR_ENV:-}" != "1" ]]; then
     exec herdr
 fi
+
+. "$HOME/.atuin/bin/env"
+eval "$(atuin init bash)"
