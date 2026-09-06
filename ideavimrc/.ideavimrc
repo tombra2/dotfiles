@@ -16,7 +16,7 @@ set multicursor
 set dial
 
 nnoremap <Esc> :nohlsearch<CR>
-
+vnoremap <Esc> <Esc>
 xnoremap p "_dP
 map / <Action>(Find)
 noremap u uzz
@@ -26,7 +26,6 @@ nnoremap u uzz
 noremap <C-d> :action MethodDown<cr>
 nnoremap <cr> :action EditorSelectWord<cr>
 noremap <C-u> :action MethodUp<cr>
-noremap <esc> :action HideActiveWindow<cr>
 vmap J :m '>+1<CR>gv=gv
 vmap K :m '<-2<CR>gv=gv
 let mapleader=" "
@@ -38,6 +37,10 @@ map B [b
 nmap <leader>/ :action FindInPath<cr>
 nmap <leader>e :action ActivateProjectToolWindow<cr>
 nmap <leader>a ggVG
-nnoremap <leader>cqp :w<CR><Action>(Tool_External Tools_PHPStan-Current-File)
+nnoremap <leader>cqp :w<CR><Action>(Tool_External_Tools_PHPStan-Current-File)
 nmap <leader><leader> :action Switcher<cr>
 nnoremap <C-7> :action ActivateTerminalToolWindow<CR>
+nmap <C-h> :action PrevSplitter<CR>
+nmap <C-l> :action NextSplitter<CR>
+nmap <leader>sr :action Replace<CR>
+nmap <leader>cg :action Generate<CR>
