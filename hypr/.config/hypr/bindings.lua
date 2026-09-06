@@ -24,3 +24,7 @@ hl.unbind("SUPER + SHIFT + T")
 o.bind("SUPER + SHIFT + T", "Toggle window floating/tiling", hl.dsp.window.float({ action = "toggle" }))
 
 o.bind("SUPER + TAB", "former workspace", hl.dsp.focus({ workspace = "previous" }))
+
+-- SUPER+P ersetzt die Standardaktion "Pseudo window" durch den Screenshot-Dialog.
+hl.unbind("SUPER + P")
+o.bind("SUPER + P", "Screenshot", "omarchy-capture-screenshot")
