@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
   "id": "hello.world",
-  "name": "Hello World",
-  "version": "1.0.0",
-  "author": "Dein Name",
-  "description": "Eine einfachen Hello-World-Bar-Widget",
+  "name": "Paperpipe Pipeline",
+  "version": "1.1.0",
+  "author": "Thomas",
+  "description": "Zeigt den Status der letzten Paperpipe-GitLab-Pipeline.",
   "kinds": ["bar-widget"],
   "entryPoints": {
     "barWidget": "HelloWorld.qml"
   },
   "barWidget": {
-    "displayName": "Hello World",
-    "description": "Zeigt Hello World in der Leiste",
-    "category": "Example"
+    "displayName": "Paperpipe Pipeline",
+    "description": "Status der letzten Paperpipe-GitLab-Pipeline",
+    "category": "Development"
   }
 }
