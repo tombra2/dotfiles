@@ -1,41 +1,72 @@
 ---
 name: commit
-description: Group the current uncommitted git changes into logically related commits and push them. Use this whenever the user says "commit", "commit my changes", asks to split changes into commits, or wants their working tree committed in sensible groups instead of one big commit. Trigger even if the user just says "commit" with no further detail.
+description: Gruppiere die aktuellen, noch nicht committeten Git-Änderungen in logisch zusammengehörige Commits und pushe sie. Verwende diesen Skill immer, wenn der Benutzer „commit“, „commit my changes“ sagt, darum bittet, Änderungen auf mehrere Commits aufzuteilen, oder möchte, dass die Änderungen im Working Tree sinnvoll gruppiert statt in einem einzigen großen Commit committed werden. Trigger auch dann, wenn der Benutzer lediglich „commit“ ohne weitere Details sagt.
+---
+
 ---
 
 # Commit
 
-Splits the current working-tree changes into logically grouped commits (Conventional Commits style), proposes the grouping to the user, then commits and pushes after confirmation.
+Teilt die aktuellen Änderungen im Working Tree in logisch gruppierte Commits im Conventional-Commits-Stil auf, schlägt dem Benutzer zunächst die Gruppierung vor und führt die Commits sowie den Push erst nach seiner Bestätigung aus.
+
+## ZIEL
+
+Die aktuellen Git-Änderungen sollen anhand ihrer fachlichen und technischen Zusammengehörigkeit in sinnvolle, kleine Commits aufgeteilt werden. Jeder Commit soll genau eine nachvollziehbare Änderung enthalten und dem Conventional-Commits-Standard entsprechen.
 
 ## Workflow
 
-1. **Inspect state**
-   - `git status --porcelain` to list changed/new/deleted files.
-   - `git diff` (and `git diff --staged` if anything is already staged) to see actual changes, not just filenames.
-   - If there are no changes, say so and stop.
+1. **Aktuellen Zustand prüfen**
 
-2. **Group by logic, not by file/folder**
-   - Read the diffs and cluster changes that belong to the same logical unit of work (e.g. "new endpoint + its test", "refactor of service X", "config change", "unrelated bugfix").
-   - A group can span multiple files; a single file can even be split via `git add -p` if it contains unrelated hunks.
-   - Do not group purely by directory or file type — group by what the change _does_.
+   - `git status --porcelain`, um geänderte, neue und gelöschte Dateien aufzulisten.
+   - `git diff` sowie `git diff --staged`, falls bereits Änderungen gestaged wurden, um die tatsächlichen Änderungen und nicht nur die Dateinamen zu prüfen.
+   - Wenn keine Änderungen vorhanden sind, teile dies dem Benutzer mit und beende den Vorgang.
 
-3. **Propose the grouping**
-   - Present each proposed group to the user: files/hunks included + a draft Conventional Commit message (`type(scope): summary`, e.g. `feat(auth): add password reset endpoint`).
-   - Use types: feat, fix, refactor, test, docs, chore, style, perf, build, ci.
-   - Wait for user confirmation or adjustments before committing anything. Keep this proposal concise — a short list, not a long essay.
+2. **Nach Logik gruppieren, nicht nach Datei oder Verzeichnis**
 
-4. **Commit each group**
-   - `git add <specific files/hunks>` for that group only.
-   - `git commit -m "<conventional commit message>"`.
-   - Repeat per group, in a sensible order (e.g. foundational/refactor changes before features that depend on them).
+   - Lies die Diffs und gruppiere Änderungen, die zur selben logischen Arbeitseinheit gehören, z. B. „neuer Endpoint + zugehöriger Test“, „Refactoring von Service X“, „Konfigurationsänderung“ oder „unabhängiger Bugfix“.
+   - Eine Gruppe kann mehrere Dateien umfassen. Eine einzelne Datei kann bei Bedarf sogar mit `git add -p` auf mehrere Commits aufgeteilt werden, wenn sie voneinander unabhängige Änderungen enthält.
+   - Gruppiere Änderungen nicht ausschließlich anhand des Verzeichnisses oder Dateityps, sondern danach, **was die Änderung bewirkt**.
 
-5. **Push**
-   - After all groups are committed, `git push`.
-   - If the branch has no upstream, use `git push -u origin <branch>`.
-   - Report the final list of commits made (`git log --oneline -n <count>`).
+3. **Gruppierung vorschlagen**
 
-## Notes
+   - Präsentiere dem Benutzer jede vorgeschlagene Gruppe nur mit einer vorgeschlagenen Conventional-Commit-Message im Format `type(scope): summary`, z. B. `feat(auth): add password reset endpoint`.
+   - Nenne keine enthaltenen Dateien, Hunks oder Listen mit Dateipfaden, außer der Benutzer fragt ausdrücklich danach.
 
-- Never invent a grouping the diff doesn't support — if the change is genuinely one unit, one commit is correct; don't force artificial splits.
-- If splitting a single file's hunks is needed, use `git add -p` (or `git diff` + targeted staging) rather than committing the whole file to the wrong group.
-- If unsure whether two changes belong together, ask the user rather than guessing.
+   - Verwende folgende Commit-Typen:
+
+     - `feat`
+     - `fix`
+     - `refactor`
+     - `test`
+     - `docs`
+     - `chore`
+     - `style`
+     - `perf`
+     - `build`
+     - `ci`
+
+   - Frage nach Ticket Nummer, sollte es eine Ticketnummer geben bitte vor type(scope) einfügen z.B #006849 feat(auth): add password reset endpoint
+   - Warte auf die Bestätigung oder Änderungswünsche des Benutzers, bevor etwas committed wird.
+   - Halte den Vorschlag kompakt: Hat es ein Ticket zu dieser Änderung gegeben, wenn du es nicht weißt frage nach der Ticke Beschreibung? Welches Problem löst dieser Commit. Kurz und Aussagekräftig.
+
+4. **Jede Gruppe committen**
+
+   - Stage ausschließlich die Dateien bzw. Hunks der jeweiligen Gruppe mit `git add <bestimmte Dateien/Hunks>`.
+   - Erstelle anschließend den Commit mit:
+     `git commit -m "<conventional commit message>"`
+   - Wiederhole diesen Vorgang für jede Gruppe.
+   - Verwende eine sinnvolle Reihenfolge, z. B. grundlegende Änderungen oder Refactorings vor Features, die davon abhängig sind.
+
+5. **Push durchführen**
+
+   - Nachdem alle Gruppen committed wurden, führe `git push` aus.
+   - Falls der aktuelle Branch noch keinen Upstream besitzt, verwende:
+     `git push -u origin <branch>`
+   - Gib anschließend die endgültige Liste der erstellten Commits aus:
+     `git log --oneline -n <count>`
+
+## Hinweise
+
+- Erfinde keine Gruppierungen, die durch den Diff nicht gerechtfertigt sind. Wenn die Änderungen tatsächlich eine einzige logische Einheit bilden, ist ein einzelner Commit korrekt. Erzwinge keine künstliche Aufteilung.
+- Wenn einzelne Hunks einer Datei getrennt werden müssen, verwende `git add -p` oder `git diff` mit gezieltem Staging, anstatt die gesamte Datei dem falschen Commit zuzuordnen.
+- Wenn unklar ist, ob zwei Änderungen zusammengehören, frage den Benutzer, anstatt eine Annahme zu treffen.
