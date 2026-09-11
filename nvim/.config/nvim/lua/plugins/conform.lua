@@ -105,6 +105,7 @@ return {
         -- Stop Xdebug from trying to attach to the short-lived CLI call on save.
         ["twig-cs-fixer"] = {
           env = { XDEBUG_MODE = "off" },
+          prepend_args = { "--no-cache" },
         },
       },
     },
