@@ -129,7 +129,8 @@ return {
         },
       },
       fuzzy = {
-        sorts = { "score", "sort_text" },
+        -- Exact prefixes remain above fuzzy matches.
+        sorts = { "exact", "score", "sort_text" },
       },
     },
   },
