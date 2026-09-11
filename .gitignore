@@ -16,8 +16,9 @@ claude/.claude/sessions/
 claude/.claude/file-history/
 claude/.claude/Untitled
 
-# Hypr backup-cruft
+# Backup files
 *.bak.[0-9]*
+kitty/.config/kitty/*.bak.*
 
 # Per-machine monitor layout (keep separate on laptop and desktop)
 hypr/.config/hypr/monitors.local.lua
@@ -32,7 +33,12 @@ id_ed25519
 .credentials.json
 *.log
 
+# Herdr runtime data
+herdr/.config/herdr/session.json
+
 # Pi runtime data
 pi/.pi/agent/auth.json
+pi/.pi/pi-acp/session-map.json
 pi/.pi/agent/models-store.json
+pi/.pi/agent/models.json
 pi/.pi/agent/sessions/
