@@ -11,6 +11,17 @@ return {
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
+    keys = {
+      {
+        "<C-M-l>",
+        function()
+          require("conform").format({ async = false, lsp_format = "fallback" })
+          vim.cmd("write")
+        end,
+        mode = "n",
+        desc = "Format and save",
+      },
+    },
     opts = {
       formatters_by_ft = {
         -- Lua
