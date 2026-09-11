@@ -7,10 +7,10 @@
           "id": "omarchy.indicators"
         },
         {
-          "birthYear": 0,
+          "id": "omarchy.clock",
+          "birthYear": 1986,
           "format": "dddd HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
-          "id": "omarchy.clock",
           "lifeExpectancy": 86,
           "verticalFormat": "HH\n—\nmm"
         },
@@ -35,6 +35,9 @@
       "right": [
         {
           "id": "omarchy.tray"
+        },
+        {
+          "id": "tony.ddev-projects"
         },
         {
           "id": "omarchy.dropbox"
