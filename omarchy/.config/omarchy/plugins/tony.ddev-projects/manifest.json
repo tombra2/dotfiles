@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "tony.ddev-projects",
+  "name": "DDEV Projects",
+  "version": "1.0.0",
+  "author": "Tony",
+  "license": "MIT",
+  "description": "Herd-style DDEV project manager for the bar — see running projects, start/stop, and launch them in your browser",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "DDEV Projects",
+    "description": "Manage local DDEV projects from the bar",
+    "category": "Development",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}
