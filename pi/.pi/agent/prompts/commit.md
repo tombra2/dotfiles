@@ -54,6 +54,7 @@ Die aktuellen Git-Änderungen sollen anhand ihrer fachlichen und technischen Zus
    - Stage ausschließlich die Dateien bzw. Hunks der jeweiligen Gruppe mit `git add <bestimmte Dateien/Hunks>`.
    - Erstelle anschließend den Commit mit:
      `git commit -m "<conventional commit message>"`
+   - Verwende niemals `git commit --no-verify`. Wirklich niemals. Wenn ein Hook fehlschlägt, brich den Vorgang ab, informiere den Benutzer und behebe das Problem nur nach ausdrücklicher Anweisung.
    - Wiederhole diesen Vorgang für jede Gruppe.
    - Verwende eine sinnvolle Reihenfolge, z. B. grundlegende Änderungen oder Refactorings vor Features, die davon abhängig sind.
 
