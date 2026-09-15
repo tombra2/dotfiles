@@ -1,6 +1,7 @@
 hl.config({
 	input = {
 		kb_layout = "de",
+		kb_variant = "nodeadkeys",
 		kb_options = "compose:caps",
 	},
 })
