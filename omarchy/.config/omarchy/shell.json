@@ -9,7 +9,7 @@
         {
           "id": "omarchy.clock",
           "birthYear": 1986,
-          "format": "dddd HH:mm",
+          "format": "HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
           "lifeExpectancy": 86,
           "verticalFormat": "HH\n—\nmm"
@@ -35,6 +35,9 @@
       "right": [
         {
           "id": "omarchy.tray"
+        },
+        {
+          "id": "io.github.twiking.omasettings"
         },
         {
           "id": "tony.ddev-projects"

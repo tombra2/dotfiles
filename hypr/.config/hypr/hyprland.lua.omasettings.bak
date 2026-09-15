@@ -46,6 +46,3 @@ o.window({ class = "chrome-app.todoist.com__app_today-Default" }, {
 
 -- Keep every window fully opaque.
 o.window(".*", { opacity = "1 1" })
-
--- Load settings written by OmaSettings (omasettings:managed).
-require("hypr.omasettings")
