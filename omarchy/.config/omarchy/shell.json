@@ -7,6 +7,10 @@
           "id": "omarchy.indicators"
         },
         {
+          "id": "omacom.elsewhen",
+          "zones": "Vienna|Europe/Vienna, Delhi|Asia/Kolkata, Tokyo|Asia/Tokyo, Los Angeles|America/Los_Angeles, New York|America/New_York"
+        },
+        {
           "id": "omarchy.clock",
           "birthYear": 1986,
           "format": "HH:mm",
