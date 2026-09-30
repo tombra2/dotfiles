@@ -7,19 +7,19 @@
           "id": "omarchy.indicators"
         },
         {
-          "id": "omacom.elsewhen",
+          "id": "omarchy.elsewhen",
           "zones": "Vienna|Europe/Vienna, Delhi|Asia/Kolkata, Tokyo|Asia/Tokyo, Los Angeles|America/Los_Angeles, New York|America/New_York"
         },
         {
+          "id": "omarchy.keyboard-layout"
+        },
+        {
           "id": "omarchy.clock",
-          "birthYear": 1986,
+          "birthYear": 0,
           "format": "HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
           "lifeExpectancy": 86,
           "verticalFormat": "HH\n—\nmm"
-        },
-        {
-          "id": "omarchy.keyboard-layout"
         },
         {
           "id": "omarchy.weather"
@@ -57,6 +57,9 @@
         },
         {
           "id": "omarchy.network"
+        },
+        {
+          "id": "thomas.school-vpn"
         },
         {
           "id": "omarchy.audio"

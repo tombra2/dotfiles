@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "thomas.school-vpn",
+  "name": "School VPN",
+  "version": "1.0.0",
+  "author": "Thomas",
+  "description": "Toggle the school VPN",
+  "kinds": ["bar-widget"],
+  "entryPoints": {"barWidget": "Panel.qml"},
+  "barWidget": {
+    "displayName": "School VPN",
+    "description": "Toggle the school VPN",
+    "category": "Network",
+    "allowMultiple": false
+  }
+}
