@@ -14,6 +14,14 @@ return {
           init_options = {
             licenceKey = vim.fn.expand("~/.config/intelephense/licence.txt"),
           },
+          settings = {
+            intelephense = {
+              completion = {
+                parameterCase = "camel",
+                propertyCase = "camel",
+              },
+            },
+          },
         },
         phpactor = {
           enabled = false,
