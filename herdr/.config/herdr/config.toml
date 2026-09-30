@@ -7,14 +7,15 @@ auto_switch = false
 [terminal]
 default_shell = "/usr/bin/bash"
 shell_mode = "non_login"
-new_cwd = "follow"
+new_cwd = "home"
 
 [keys]
 prefix = "ctrl+space"
 help = "prefix+?"
 detach = "prefix+d"
 reload_config = "prefix+q"
-new_workspace = "alt+shift+n"
+new_workspace = ""
+
 rename_workspace = "prefix+shift+r"
 close_workspace = "prefix+shift+x"
 workspace_picker = "prefix+w"
@@ -37,6 +38,12 @@ close_pane = ["prefix+x", "alt+esc"]
 copy_mode = "prefix+["
 zoom = "prefix+z"
 resize_mode = "prefix+shift+z"
+
+[[keys.command]]
+key = "alt+shift+n"
+type = "shell"
+command = "'$HOME/.config/script/herdr-home-workspace'"
+description = "new home workspace with nvim, pi and terminal"
 
 [[keys.command]]
 key = "ctrl+f"

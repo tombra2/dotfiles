@@ -25,6 +25,9 @@ o.bind("SUPER + SHIFT + T", "Toggle window floating/tiling", hl.dsp.window.float
 
 o.bind("SUPER + TAB", "former workspace", hl.dsp.focus({ workspace = "previous" }))
 
+-- Global shortcut: create a Herdr home workspace with nvim, pi and terminal.
+o.bind("ALT + SHIFT + N", "Herdr: Home workspace", "$HOME/.config/script/herdr-home-workspace")
+
 -- SUPER+P ersetzt die Standardaktion "Pseudo window" durch den Screenshot-Dialog.
 hl.unbind("SUPER + P")
 o.bind("SUPER + P", "Screenshot", "omarchy-capture-screenshot")
