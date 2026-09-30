@@ -44,6 +44,9 @@
           "id": "io.github.twiking.omasettings"
         },
         {
+          "id": "omarchy.bluetooth"
+        },
+        {
           "id": "tony.ddev-projects"
         },
         {
@@ -51,9 +54,6 @@
         },
         {
           "id": "omarchy.agents"
-        },
-        {
-          "id": "omarchy.bluetooth"
         },
         {
           "id": "omarchy.network"

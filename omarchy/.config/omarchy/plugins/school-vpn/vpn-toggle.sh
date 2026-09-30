@@ -4,7 +4,7 @@ set -euo pipefail
 # Create and configure this NetworkManager VPN profile in the desktop network
 # settings. NetworkManager's secret agent handles credentials; none are stored
 # in this script. The script never connects automatically.
-VPN_CONNECTION="Schule VPN"
+VPN_CONNECTION="Schul-VPN"
 
 case "${1:-status}" in
   up) nmcli connection up id "$VPN_CONNECTION" ;;
