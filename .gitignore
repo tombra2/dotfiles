@@ -41,4 +41,5 @@ pi/.pi/agent/auth.json
 pi/.pi/pi-acp/session-map.json
 pi/.pi/agent/models-store.json
 pi/.pi/agent/models.json
+pi/.pi/agent/crashes.json
 pi/.pi/agent/sessions/
