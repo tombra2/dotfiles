@@ -1,9 +1,11 @@
 {
-  "excludedApps": {},
-  "includeGtk": true,
   "includeNeovim": true,
   "includeVscode": false,
   "includeZed": true,
+  "includedApps": {
+    "neovim": true
+  },
   "selectedNeovimConfig": "return {\n\t{\n\t\t\"rose-pine/neovim\",\n\t\tname = \"rose-pine\",\n\t\tpriority = 1000,\n\t\topts = {\n\t\t\tvariant = \"main\",\n\t\t},\n\t},\n\t{\n\t\t\"LazyVim/LazyVim\",\n\t\topts = {\n\t\t\tcolorscheme = \"rose-pine\",\n\t\t},\n\t},\n}",
-  "videoCpuMode": false
+  "videoCpuMode": false,
+  "wallpaperFolder": "/home/thomas/Wallpapers"
 }
