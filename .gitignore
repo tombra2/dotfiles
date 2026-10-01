@@ -19,6 +19,7 @@ claude/.claude/Untitled
 # Backup files
 *.bak.[0-9]*
 kitty/.config/kitty/*.bak.*
+kitty/.config/kitty/kitty.local.conf
 
 # Per-machine monitor layout (keep separate on laptop and desktop)
 hypr/.config/hypr/monitors.local.lua

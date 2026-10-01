@@ -1,0 +1,4 @@
+# Per-machine Kitty overrides.
+# Copy this file to kitty.local.conf (gitignored) on each computer.
+# Uncomment and set the font size for this machine.
+# font_size 14.0
