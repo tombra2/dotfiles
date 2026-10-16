@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+set -e
+
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+run_step() {
+    echo -e "${GREEN}➤ $1${NC}"
+
+    set +e
+    eval "$2"
+    RESULT=$?
+    set -e
+
+    if [ $RESULT -eq 0 ]; then
+        return 0
+    fi
+
+    echo -e "${RED}✘ Fehler in Schritt: $1 (Exit-Code: $RESULT)${NC}"
+    exit $RESULT
+}
+
+# 1. Clean
+run_step "Cleaning project" \
+    "./mvnw clean"
+
+# 2. Palantir Java Format automatisch anwenden
+run_step "Formatting Java code with Palantir" \
+    "./mvnw spotless:apply"
+
+# 3. Prüfen, ob Formatierung korrekt ist
+run_step "Checking Java formatting" \
+    "./mvnw spotless:check"
+
+# 4. Kompilieren
+run_step "Compiling project" \
+    "./mvnw compile"
+
+# 5. Tests
+run_step "Running tests" \
+    "./mvnw test"
+
+# 6. Maven Verify
+run_step "Running Maven verification" \
+    "./mvnw verify"
+
+echo -e "${GREEN}✅ Alle Checks wurden erfolgreich abgeschlossen.${NC}"

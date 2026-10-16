@@ -15,11 +15,15 @@ Die aktuellen Git-Änderungen sollen anhand ihrer fachlichen und technischen Zus
 
 ## Workflow
 
-1. **Aktuellen Zustand prüfen**
+1. **Aktuellen Zustand und Branch prüfen**
 
-   - `git status --porcelain`, um geänderte, neue und gelöschte Dateien aufzulisten.
-   - `git diff` sowie `git diff --staged`, falls bereits Änderungen gestaged wurden, um die tatsächlichen Änderungen und nicht nur die Dateinamen zu prüfen.
+   - Prüfe den aktuellen Branch mit `git branch --show-current` und den Working Tree mit `git status --porcelain`.
+   - Prüfe `git diff` sowie `git diff --staged`, falls bereits Änderungen gestaged wurden, um die tatsächlichen Änderungen und nicht nur die Dateinamen zu sehen.
    - Wenn keine Änderungen vorhanden sind, teile dies dem Benutzer mit und beende den Vorgang.
+   - Wenn bereits ein passender Feature-Branch ausgecheckt ist, arbeite auf diesem weiter und erstelle keinen zusätzlichen Branch.
+   - Wenn du auf einem Basis-Branch wie `main` oder `master` bist, schlage einen passenden neuen Branch-Namen vor und bitte um Bestätigung, bevor du ihn erstellst. Erstelle und pushe keinen Branch ohne Zustimmung.
+   - Kläre vor dem Branch-Wechsel, ob alle uncommitteten Änderungen auf denselben Branch gehören. Wenn Änderungen unabhängig sind oder die Zuordnung unklar ist, frage den Benutzer und fahre erst nach seiner Entscheidung fort.
+   - Erstelle den bestätigten Branch vom aktuellen Ausgangspunkt, bevor du Commits erstellst. Bewahre dabei alle bestätigten Änderungen im Working Tree. Verwende keinen destruktiven Befehl und überschreibe oder verwerfe keine Änderungen.
 
 2. **Nach Logik gruppieren, nicht nach Datei oder Verzeichnis**
 
@@ -60,9 +64,10 @@ Die aktuellen Git-Änderungen sollen anhand ihrer fachlichen und technischen Zus
 
 5. **Push durchführen**
 
-   - Nachdem alle Gruppen committed wurden, führe `git push` aus.
+   - Nachdem alle Gruppen committed wurden, pushe den aktuellen Branch.
    - Falls der aktuelle Branch noch keinen Upstream besitzt, verwende:
      `git push -u origin <branch>`
+   - Pushe niemals den Basis-Branch, wenn der Workflow einen neuen Feature-Branch erstellt hat.
    - Gib anschließend die endgültige Liste der erstellten Commits aus:
      `git log --oneline -n <count>`
 

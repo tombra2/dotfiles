@@ -75,12 +75,11 @@ alias hd='hunk diff'
 
 alias start='ddev start && ddev launch && ddev mailpit'
 alias stop='ddev stop'
-
 alias test='ddev exec php bin/phpunit'
-
 alias migra='ddev exec php bin/console make:migration'
 alias docmigra='ddev exec php bin/console doctrine:migrations:migrate'
 alias sql='ddev exec php bin/console dbal:run-sql'
+alias cc='symfony cache:clear'
 
 
 # ==============================================================================

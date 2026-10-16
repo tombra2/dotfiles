@@ -1,13 +1,12 @@
 {
-  "lastChangelogVersion": "0.99.1",
+  "lastChangelogVersion": "1.3.0",
   "theme": "dark",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-6-luna",
   "defaultThinkingLevel": "low",
   "packages": [
     "npm:pi-web-access",
-    "npm:@juicesharp/rpiv-ask-user-question",
-    "npm:pi-mcp-extension"
+    "npm:@juicesharp/rpiv-ask-user-question"
   ],
   "hideThinkingBlock": false,
   "modelThinkingLevels": {

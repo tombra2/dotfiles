@@ -54,25 +54,25 @@ width = "80%"
 height = "80%"
 
 [[keys.command]]
-key = "ctrl+left"
+key = "ctrl+h"
 type = "plugin_action"
 command = "willfish.herdr-navigator.left"
 description = "navigate left (Neovim/Herdr)"
 
 [[keys.command]]
-key = "ctrl+down"
+key = "ctrl+j"
 type = "plugin_action"
 command = "willfish.herdr-navigator.down"
 description = "navigate down (Neovim/Herdr)"
 
 [[keys.command]]
-key = "ctrl+up"
+key = "ctrl+k"
 type = "plugin_action"
 command = "willfish.herdr-navigator.up"
 description = "navigate up (Neovim/Herdr)"
 
 [[keys.command]]
-key = "ctrl+right"
+key = "ctrl+l"
 type = "plugin_action"
 command = "willfish.herdr-navigator.right"
 description = "navigate right (Neovim/Herdr)"

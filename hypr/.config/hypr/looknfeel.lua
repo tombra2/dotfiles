@@ -2,38 +2,33 @@
 
 -- Blur the windows behind floating popups such as Todoist.
 hl.config({
-  decoration = {
-    blur = {
-      enabled = true,
-      size = 6,
-      passes = 3,
-    },
-  },
+	decoration = {
+		blur = {
+			enabled = true,
+			size = 6,
+			passes = 3,
+		},
+	},
 })
 
 -- https://wiki.hypr.land/Configuring/Basics/Variables/#general
 -- hl.config({
---   general = {
---     -- No gaps between windows or borders.
---     gaps_in = 0,
---     gaps_out = 0,
---     border_size = 0,
+-- 	general = {
+-- 		-- No gaps between windows or borders.
+-- 		gaps_in = 10,
+-- 		gaps_out = 5,
+-- 		border_size = 0,
 --
---     -- Change to niri-like side-scrolling layout.
---     layout = "scrolling",
---   },
+-- 		-- Change to niri-like side-scrolling layout.
+-- 		layout = "scrolling",
+-- 	},
 -- })
-
--- https://wiki.hypr.land/Configuring/Basics/Variables/#decoration
--- hl.config({
---   decoration = {
---     -- Use round window corners.
---     rounding = 8,
 --
---     -- Dim unfocused windows (0.0 = no dim, 1.0 = fully dimmed).
---     dim_inactive = true,
---     dim_strength = 0.15,
---   },
+-- -- https://wiki.hypr.land/Configuring/Basics/Variables/#decoration
+-- hl.config({
+-- 	decoration = {
+-- 		rounding = 8,
+-- 	},
 -- })
 
 -- https://wiki.hypr.land/Configuring/Basics/Variables/#animations
@@ -59,3 +54,8 @@ hl.config({
 --     column_width = 0.97,
 --   },
 -- })
+
+-- Opt another application in to Omarchy's standard transparency.
+-- Find its class with: hyprctl clients
+-- o.transparent_window("my-app")
+-- o.transparent_window("my-app", "0.9 0.85") -- Custom active/inactive opacity.

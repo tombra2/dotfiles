@@ -1,31 +1,15 @@
 {
   "bar": {
-    "centerAnchor": "omarchy.clock",
+    "background": "opaque",
     "layout": {
       "center": [
         {
-          "id": "omarchy.indicators"
-        },
-        {
-          "id": "omarchy.elsewhen",
-          "zones": "Vienna|Europe/Vienna, Delhi|Asia/Kolkata, Tokyo|Asia/Tokyo, Los Angeles|America/Los_Angeles, New York|America/New_York"
-        },
-        {
-          "id": "omarchy.keyboard-layout"
-        },
-        {
-          "id": "omarchy.clock",
           "birthYear": 0,
           "format": "HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
+          "id": "omarchy.clock",
           "lifeExpectancy": 86,
           "verticalFormat": "HH\n—\nmm"
-        },
-        {
-          "id": "omarchy.weather"
-        },
-        {
-          "id": "omarchy.system-update"
         }
       ],
       "left": [
@@ -41,16 +25,10 @@
           "id": "omarchy.tray"
         },
         {
-          "id": "io.github.twiking.omasettings"
+          "id": "omarchy.keyboard-layout"
         },
         {
           "id": "omarchy.bluetooth"
-        },
-        {
-          "id": "tony.ddev-projects"
-        },
-        {
-          "id": "omarchy.dropbox"
         },
         {
           "id": "omarchy.agents"
@@ -73,10 +51,27 @@
         {
           "id": "hello.world"
         }
-      ]
+      ],
+      "centerBegin": [
+        {
+          "id": "omarchy.indicators"
+        },
+        {
+          "id": "omarchy.elsewhen",
+          "zones": "Vienna|Europe/Vienna, Delhi|Asia/Kolkata, Tokyo|Asia/Tokyo, Los Angeles|America/Los_Angeles, New York|America/New_York"
+        }
+      ],
+      "centerEnd": [
+        {
+          "id": "omarchy.weather"
+        },
+        {
+          "id": "omarchy.system-update"
+        }
+      ],
+      "tray": []
     },
-    "position": "top",
-    "transparent": false
+    "position": "top"
   },
   "idle": {
     "lock": 300,

@@ -8,6 +8,7 @@ SEARCH_PATHS=(
   "$HOME/workspace/github.com/tombra2|1"
   "$HOME/workspace/htl/pos|1"
   "$HOME/workspace/htl/syp|1"
+  "$HOME/workspace/htl/syp/recook|1"
   "$HOME/workspace/probe|1"
   "$HOME/workspace/akaryon-development.com/brandner|1"
   "$HOME/workspace/htl/tinf|1"
@@ -161,7 +162,10 @@ main() {
     return
   fi
 
-  choice="$({ workspace_rows; directory_rows; } | fzf \
+  choice="$({
+    workspace_rows
+    directory_rows
+  } | fzf \
     --delimiter=$'\t' \
     --with-nth=1 \
     --prompt='project> ' \
@@ -172,7 +176,7 @@ main() {
   if [[ "$kind" == "workspace" ]]; then
     "$HERDR_BIN" workspace focus "$workspace_id" >/dev/null
   elif ! workspace_id="$(focus_workspace_for_path "$selected_path")"; then
-      create_dev_workspace "$selected_path"
+    create_dev_workspace "$selected_path"
   fi
 
   attach_if_needed

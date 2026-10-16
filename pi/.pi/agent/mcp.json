@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "drawio": {
+      "url": "https://mcp.draw.io/mcp",
+      "description": "Create and open diagrams in draw.io"
+    },
+    "gitlab": {
+      "url": "https://git.htl-klu.at/api/v4/mcp",
+      "description": "GitLab instance at git.htl-klu.at"
+    }
+  }
+}
