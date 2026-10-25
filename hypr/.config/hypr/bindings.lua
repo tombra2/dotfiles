@@ -1,6 +1,7 @@
 -- ALT+TAB is reserved for Herdr tab switching.
 hl.unbind("ALT + TAB")
 hl.unbind("SUPER + TAB")
+hl.unbind("CTRL + K")
 hl.unbind("SUPER + W")
 hl.unbind("SUPER + H")
 hl.unbind("SUPER + J")
@@ -23,7 +24,7 @@ o.bind("SUPER + T", "Todoist ein/aus", "$HOME/.config/script/todoist-toggle")
 hl.unbind("SUPER + SHIFT + T")
 o.bind("SUPER + SHIFT + T", "Toggle window floating/tiling", hl.dsp.window.float({ action = "toggle" }))
 
-o.bind("SUPER + TAB", "former workspace", hl.dsp.focus({ workspace = "previous" }))
+o.bind("CTRL + K", "former workspace", hl.dsp.focus({ workspace = "previous" }))
 
 -- Global shortcut: create a Herdr home workspace with nvim, pi and terminal.
 o.bind("ALT + SHIFT + N", "Herdr: Home workspace", "$HOME/.config/script/herdr-home-workspace")

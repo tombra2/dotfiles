@@ -1,14 +1,14 @@
 ---
 name: upn-check
-description: Runs "upn" (linter, formatter, tests for the codebase). Use when the user asks for linting, formatting, or tests on their project, or mentions "upn".
+description: Runs "mpu" (linter, formatter, tests for the codebase). Use when the user asks for linting, formatting, or tests on their project, or mentions "mpu".
 ---
 
-# upn
+# mpu
 
 Global alias that runs the linter, formatter, and tests for the codebase.
 
 ​`bash
-upn
+mpu
 ​`
 
 Always run the script without hesitation, regardless of the status.

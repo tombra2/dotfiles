@@ -129,12 +129,12 @@
     "oauthState": "81103238ac1ebd9b6b52c593fd93a0caaddbd00270d6a22d352e03f27af60511",
     "codeVerifier": "eDJ5QtoE2drdSUAL1HlDp_sJIh3664OJdbFS771RHWw",
     "tokens": {
-      "refresh_token": "8b9c6755a7b6e673932441dbe8cb4688fd4085d23a965e537e08efda3b0f1088",
-      "access_token": "1f7f4e8e0052967ee8b77e14b8d3fd7dedf07a8ed39c3e8b1814721a20cf0bcd",
+      "refresh_token": "74f4705499b888c86f41963e4819e3f91cd05c6e09971f9147e9acc0430a7afe",
+      "access_token": "172de3897c5d3608fede18cc2e661f18105e5ac2e1e19638a1725d1da4946166",
       "token_type": "Bearer",
       "expires_in": 7200,
       "scope": "mcp"
     },
-    "tokensExpireAt": 1792154220849
+    "tokensExpireAt": 1792954363235
   }
 }
