@@ -4,7 +4,7 @@
 
 - This is a GNU Stow repository. Each top-level tool directory is an independent package whose paths mirror the target under `$HOME` (for example, `waybar/.config/waybar` -> `~/.config/waybar`). Run Stow from the repository root and target only the package being changed: `stow <package>...`.
 - There is no root build, test, lint, or package-manager workflow. Validate changes with the component-specific commands below; do not invent a project-wide test command.
-- Read the package-local instructions before editing Neovim or Kanata: `nvim/.config/nvim/CLAUDE.md` and `kanata/.config/kanata/CLAUDE.md`.
+- Kanata has detailed package instructions in `kanata/.config/kanata/CLAUDE.md`; read them before editing. Neovim has no package-local `CLAUDE.md`.
 
 ## Runtime Validation
 
