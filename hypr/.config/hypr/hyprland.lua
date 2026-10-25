@@ -27,6 +27,7 @@ local function place(pattern, number, rules)
 end
 
 place("^kitty$", 2)
+place("^com\\.mitchellh\\.ghostty$", 2)
 place("[sS]potify", 3)
 place(".*[tT]hunderbird.*", 4)
 place(".*[dD]iscord.*", 5)
@@ -44,8 +45,9 @@ o.window({ class = "chrome-app.todoist.com__app_today-Default" }, {
 	size = { "monitor_w*0.70", "monitor_h*0.75" },
 })
 
--- Keep every window fully opaque.
+-- Keep windows opaque except terminals tagged by Omarchy as transparent.
 o.window(".*", { opacity = "1 1" })
+o.window({ class = "com.mitchellh.ghostty" }, { opacity = "0.9 0.85" })
 
 -- Load settings written by OmaSettings (omasettings:managed).
 require("hypr.omasettings")

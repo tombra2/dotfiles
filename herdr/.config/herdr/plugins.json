@@ -1,0 +1,83 @@
+[
+  {
+    "plugin_id": "willfish.herdr-navigator",
+    "name": "Navigator",
+    "version": "0.1.0",
+    "min_herdr_version": "0.7.0",
+    "description": "Vim/Neovim-aware Herdr pane navigation actions",
+    "manifest_path": "/home/thomas/dotfiles/herdr/.config/herdr/plugins/github/willfish.herdr-navigator-0ecc243c00f9/herdr-plugin.toml",
+    "plugin_root": "/home/thomas/dotfiles/herdr/.config/herdr/plugins/github/willfish.herdr-navigator-0ecc243c00f9",
+    "enabled": true,
+    "platforms": [
+      "linux",
+      "macos"
+    ],
+    "build": [
+      {
+        "command": [
+          "cargo",
+          "build",
+          "--release"
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "down",
+        "title": "Navigate down",
+        "contexts": [
+          "pane"
+        ],
+        "command": [
+          "bin/herdr-navigator",
+          "down",
+          "alt+j"
+        ]
+      },
+      {
+        "id": "left",
+        "title": "Navigate left",
+        "contexts": [
+          "pane"
+        ],
+        "command": [
+          "bin/herdr-navigator",
+          "left",
+          "alt+h"
+        ]
+      },
+      {
+        "id": "right",
+        "title": "Navigate right",
+        "contexts": [
+          "pane"
+        ],
+        "command": [
+          "bin/herdr-navigator",
+          "right",
+          "alt+l"
+        ]
+      },
+      {
+        "id": "up",
+        "title": "Navigate up",
+        "contexts": [
+          "pane"
+        ],
+        "command": [
+          "bin/herdr-navigator",
+          "up",
+          "alt+k"
+        ]
+      }
+    ],
+    "source": {
+      "kind": "github",
+      "owner": "willfish",
+      "repo": "herdr-navigator",
+      "resolved_commit": "6fe572538a86287a8076e0580bbe217c369f8c24",
+      "managed_path": "/home/thomas/.config/herdr/plugins/github/willfish.herdr-navigator-0ecc243c00f9",
+      "installed_unix_ms": 1792828236656
+    }
+  }
+]
