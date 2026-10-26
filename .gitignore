@@ -37,10 +37,15 @@ id_ed25519
 # Herdr runtime data
 herdr/.config/herdr/session.json
 
-# Pi runtime data
-pi/.pi/agent/auth.json
-pi/.pi/pi-acp/session-map.json
-pi/.pi/agent/models-store.json
-pi/.pi/agent/models.json
-pi/.pi/agent/crashes.json
-pi/.pi/agent/sessions/
+# Pi: keep only shared configuration and resources in version control
+pi/.pi/*
+!pi/.pi/settings.json
+!pi/.pi/mcp.json
+!pi/.pi/extensions/
+!pi/.pi/extensions/**
+!pi/.pi/skills/
+!pi/.pi/skills/**
+!pi/.pi/prompts/
+!pi/.pi/prompts/**
+!pi/.pi/themes/
+!pi/.pi/themes/**
