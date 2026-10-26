@@ -26,13 +26,11 @@ local function place(pattern, number, rules)
 	o.window(pattern, rules)
 end
 
-place("^kitty$", 2)
 place("^com\\.mitchellh\\.ghostty$", 2)
 place("[sS]potify", 3)
 place(".*[tT]hunderbird.*", 4)
 place(".*[dD]iscord.*", 5)
 place("^com\\.onepassword\\.OnePassword$", 6, { tile = true, tag = "-floating-window" })
-place("^[eE]lement$", 7)
 place(".*[oO]bsidian.*", 9)
 place(".*[wW]hatsapp.*", 8)
 place("chromium", 10)
@@ -46,7 +44,7 @@ o.window({ class = "chrome-app.todoist.com__app_today-Default" }, {
 })
 
 -- Keep windows opaque except terminals tagged by Omarchy as transparent.
-o.window(".*", { opacity = "1 1" })
+o.window(".*", { opacity = "0.9 0.85" })
 o.window({ class = "com.mitchellh.ghostty" }, { opacity = "0.9 0.85" })
 
 -- Load settings written by OmaSettings (omasettings:managed).
