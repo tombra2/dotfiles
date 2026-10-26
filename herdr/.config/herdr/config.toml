@@ -7,75 +7,36 @@ auto_switch = false
 [terminal]
 default_shell = "/usr/bin/bash"
 shell_mode = "non_login"
-new_cwd = "home"
+new_cwd = "follow"
 
 [keys]
 prefix = "ctrl+space"
 help = "prefix+?"
 detach = "prefix+d"
 reload_config = "prefix+q"
-new_workspace = ""
-
+new_workspace = "prefix+N"
 rename_workspace = "prefix+shift+r"
 close_workspace = "prefix+shift+x"
 workspace_picker = "prefix+w"
 goto = "prefix+g"
 previous_workspace = ["alt+k", "alt+up"]
 next_workspace = ["alt+j", "alt+down"]
-new_tab = "alt+n"
+new_tab = "prefix+n"
 rename_tab = "prefix+r"
 previous_tab = ["alt+h", "alt+left"]
 next_tab = ["alt+l", "alt+right"]
 switch_tab = ["prefix+1..9", "alt+1..9"]
 close_tab = "prefix+k"
-focus_pane_left = "ctrl+alt+left"
-focus_pane_down = "ctrl+alt+down"
-focus_pane_up = "ctrl+alt+up"
-focus_pane_right = "ctrl+alt+right"
-split_vertical = ["prefix+v", "alt+shift+enter"]
-split_horizontal = ["prefix+h", "alt+enter"]
-close_pane = ["prefix+x", "alt+esc"]
+focus_pane_left = ["ctrl+h","ctrl+left"]
+focus_pane_down = ["ctrl+j", "ctrl+down"]
+focus_pane_up = ["ctrl+k","ctrl+up"]
+focus_pane_right = ["ctrl+l", "ctrl+right"]
+split_vertical = ["prefix+v"]
+split_horizontal = ["prefix+h"]
+close_pane = ["prefix+x"]
 copy_mode = "prefix+["
 zoom = "prefix+z"
 resize_mode = "prefix+shift+z"
-
-[[keys.command]]
-key = "alt+shift+n"
-type = "shell"
-command = "'$HOME/.config/script/herdr-home-workspace'"
-description = "new home workspace with nvim, pi and terminal"
-
-[[keys.command]]
-key = "ctrl+f"
-type = "popup"
-command = '"$HOME/.config/script/herdr-sessionizer"'
-description = "open project sessionizer"
-width = "80%"
-height = "80%"
-
-[[keys.command]]
-key = "ctrl+h"
-type = "plugin_action"
-command = "willfish.herdr-navigator.left"
-description = "navigate left (Neovim/Herdr)"
-
-[[keys.command]]
-key = "ctrl+j"
-type = "plugin_action"
-command = "willfish.herdr-navigator.down"
-description = "navigate down (Neovim/Herdr)"
-
-[[keys.command]]
-key = "ctrl+k"
-type = "plugin_action"
-command = "willfish.herdr-navigator.up"
-description = "navigate up (Neovim/Herdr)"
-
-[[keys.command]]
-key = "ctrl+l"
-type = "plugin_action"
-command = "willfish.herdr-navigator.right"
-description = "navigate right (Neovim/Herdr)"
 
 [ui]
 mouse_capture = true
