@@ -2,8 +2,8 @@
 
 -- Blur the windows behind floating popups such as Todoist.
 hl.config({
-	decoration = {
-		blur = {
+		decoration = {
+			blur = {
 			enabled = true,
 			size = 6,
 			passes = 3,

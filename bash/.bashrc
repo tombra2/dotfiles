@@ -42,7 +42,6 @@ export PATH="$HOME/.opencode/bin:$PATH"
 export PATH="$HOME/.config/script:$PATH"
 export PATH="$HOME/.config/composer/vendor/bin:$PATH"
 export PATH="$HOME/.local/opt/go/bin:$PATH"
-export COOLIFY_TOKEN="$(op read 'op://dev/Coolify MCP/token')"
 
 # ==============================================================================
 # General aliases
