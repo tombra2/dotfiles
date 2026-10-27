@@ -38,6 +38,14 @@ copy_mode = "prefix+["
 zoom = "prefix+z"
 resize_mode = "prefix+shift+z"
 
+[[keys.command]]
+key = "ctrl+f"
+type = "popup"
+command = 'exec "$HOME/.config/script/herdr-sessionizer"'
+description = "Projekt-Fuzzy-Finder"
+width = "80%"
+height = "80%"
+
 [ui]
 mouse_capture = true
 copy_on_select = true
