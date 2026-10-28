@@ -44,7 +44,7 @@ o.window({ class = "chrome-app.todoist.com__app_today-Default" }, {
 })
 
 -- Keep windows opaque except terminals tagged by Omarchy as transparent.
-o.window(".*", { opacity = "0.9 0.85" })
+o.window(".*", { opacity = "1 1" })
 o.window({ class = "com.mitchellh.ghostty" }, { opacity = "0.9 0.85" })
 
 -- Load settings written by OmaSettings (omasettings:managed).

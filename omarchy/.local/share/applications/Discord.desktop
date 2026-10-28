@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Discord
+Exec=omarchy-launch-or-focus-webapp discord https://discord.com/app
+StartupWMClass=chrome-discord.com__app-Default
+Terminal=false
+Type=Application
+Icon=omarchy-discord
+StartupNotify=true

@@ -1,19 +1,13 @@
 {
-  "version": 1,
-  "idle": {
-    "screensaver": 150,
-    "lock": 300
-  },
   "bar": {
-    "position": "top",
     "background": "opaque",
     "layout": {
-      "left": [
+      "center": [
         {
-          "id": "omarchy.menu"
-        },
-        {
-          "id": "omarchy.workspaces"
+          "format": "dddd HH:mm",
+          "formatAlt": "d MMMM 'W'ww yyyy",
+          "id": "omarchy.clock",
+          "verticalFormat": "HH\n—\nmm"
         }
       ],
       "centerBegin": [
@@ -21,17 +15,11 @@
           "id": "omarchy.indicators"
         }
       ],
-      "center": [
-        {
-          "id": "omarchy.clock",
-          "format": "dddd HH:mm",
-          "formatAlt": "d MMMM 'W'ww yyyy",
-          "verticalFormat": "HH\n—\nmm"
-        }
-      ],
       "centerEnd": [
         {
-          "id": "omarchy.elsewhen",
+          "id": "omarchy.weather"
+        },
+        {
           "cities": [
             {
               "name": "Vienna",
@@ -53,13 +41,22 @@
               "name": "New York",
               "zone": "America/New_York"
             }
-          ]
+          ],
+          "id": "omarchy.elsewhen"
         },
         {
-          "id": "omarchy.weather"
+          "id": "crmne.todoist"
         },
         {
           "id": "omarchy.system-update"
+        }
+      ],
+      "left": [
+        {
+          "id": "omarchy.menu"
+        },
+        {
+          "id": "omarchy.workspaces"
         }
       ],
       "right": [
@@ -92,10 +89,10 @@
         }
       ],
       "tray": []
-    }
+    },
+    "position": "top"
   },
   "dock": {
-    "position": "bottom",
     "pinned": [
       "org.gnome.Nautilus",
       "chromium",
@@ -104,7 +101,13 @@
       "omawrite",
       "X",
       "YouTube"
-    ]
+    ],
+    "position": "bottom"
   },
-  "plugins": []
+  "idle": {
+    "lock": 300,
+    "screensaver": 150
+  },
+  "plugins": [],
+  "version": 1
 }

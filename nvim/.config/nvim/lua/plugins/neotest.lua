@@ -3,7 +3,6 @@ return {
   lazy = true,
   dependencies = {
     "olimorris/neotest-phpunit",
-    "rcasia/neotest-java",
   },
   opts = function(_, opts)
     opts.adapters = opts.adapters or {}
@@ -20,15 +19,7 @@ return {
       }),
     }
 
-    local java_root = vim.fs.root(vim.fn.getcwd(), { "pom.xml", "build.gradle", "build.gradle.kts" })
-    if java_root then
-      local java_adapter = require("neotest-java")({})
-      local java_is_test_file = java_adapter.is_test_file
-      java_adapter.is_test_file = function(file_path)
-        return vim.endswith(file_path, ".java") and java_is_test_file(file_path)
-      end
-      table.insert(adapters, java_adapter)
-    end
+    -- neotest-java requires jdtls; do not start it alongside IntelliJ LSP.
 
     vim.list_extend(opts.adapters, adapters)
 

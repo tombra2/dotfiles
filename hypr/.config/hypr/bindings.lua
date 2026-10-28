@@ -1,3 +1,8 @@
+-- Focus an existing Ghostty terminal; use SUPER+ALT+RETURN for a new one.
+-- SUPER+ALT+RETURN previously launched Tmux.
+o.rebind("SUPER + RETURN", "Terminal öffnen/fokussieren", "omarchy-launch-or-focus '^com[.]mitchellh[.]ghostty$' 'omarchy-launch-terminal'")
+o.rebind("SUPER + ALT + RETURN", "Neues Terminal", o.launch_terminal())
+
 -- ALT+TAB is reserved for Herdr tab switching.
 hl.unbind("ALT + TAB")
 hl.unbind("SUPER + TAB")

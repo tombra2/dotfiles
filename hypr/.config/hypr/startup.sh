@@ -19,3 +19,9 @@ for _ in 1 2 3; do
   sleep 5
   hyprctl clients -j 2>/dev/null | grep -q 'chrome-web.whatsapp.com' && break
 done
+
+# End silent workspace placement after startup, so later launches follow
+# their windows to the assigned workspace (for example terminals to WS2).
+if touch "${XDG_RUNTIME_DIR:-/tmp}/hypr-startup-done"; then
+  hyprctl reload >/dev/null
+fi

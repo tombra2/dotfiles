@@ -9,7 +9,7 @@ return {
       cyclic = true,
     })
     local public_private = augend.constant.new({
-      elements = { "private", "public" },
+      elements = { "private", "public" ,"protected" },
       word = true,
       cyclic = true,
     })
