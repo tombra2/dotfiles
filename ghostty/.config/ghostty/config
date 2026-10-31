@@ -7,14 +7,14 @@ font-style = Regular
 font-size = 14
 
 # Window
-background-opacity = 0.9
+background = #191a1c
+background-opacity = 1
 window-theme = ghostty
 window-padding-x = 4
 window-padding-y = 4
 confirm-close-surface=false
 resize-overlay = never
 gtk-toolbar-style = flat
-background-opacity = 0.85
 # Cursor styling
 cursor-style = "block"
 cursor-style-blink = false
