@@ -7,7 +7,8 @@ return {
 		priority = 1000,
 	},
 	{
-		"bjarneo/aether.nvim",
+		"omacom/aether.nvim",
+		branch = "v3",
 		lazy = true,
 		priority = 1000,
 	},
