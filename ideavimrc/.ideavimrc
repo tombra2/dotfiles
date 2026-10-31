@@ -1,0 +1,41 @@
+let mapleader = " "
+
+Plug 'tpope/vim-commentary'
+set surround
+set highlightedyank
+set ideajoin
+set notimeout
+set matchpairs+=<:>
+set ideajoin
+set hlsearch
+set smartcase
+set clipboard=unnamed,unnamedplus
+set ignorecase
+set incsearch
+set multicursor
+set dial
+
+nnoremap <Esc> :nohlsearch<CR>
+vnoremap <Esc> <Esc>
+xnoremap p "_dP
+map / <Action>(Find)
+noremap u uzz
+noremap J mzJ`z
+nnoremap K mzK`z
+nnoremap u uzz
+nnoremap <cr> :action EditorSelectWord<cr>
+noremap <C-u> :action MethodUp<cr>
+vmap J :m '>+1<CR>gv=gv
+vmap K :m '<-2<CR>gv=gv
+let mapleader=" "
+nmap <leader>ca :action ShowIntentionActions<cr>
+nmap <leader>cr :action RenameElement<cr>
+map W [w
+map B [b
+nmap <leader>/ :action FindInPath<cr>
+nmap <leader>e :action ActivateProjectToolWindow<cr>
+nmap <leader>a ggVG
+nmap <leader><leader> :action Switcher<cr>
+nnoremap <C-7> :action ActivateTerminalToolWindow<CR>
+nmap <C-h> :action PrevSplitter<CR>
+nmap <C-l> :action NextSplitter<CR>

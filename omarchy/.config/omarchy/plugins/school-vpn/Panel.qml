@@ -49,9 +49,12 @@ Panel {
     Text {
       id: label
       anchors.centerIn: parent
-      text: root.busy ? "VPN …" : (root.connected ? "VPN ON" : "VPN OFF")
+      textFormat: Text.PlainText
+      // Font Awesome: locked / unlocked, dots while connecting.
+      text: root.busy ? "…" : (root.connected ? "\uf023" : "\uf09c")
       color: root.connected ? "#b8f3cf" : "#b8bec9"
-      font.pixelSize: 12
+      font.family: "JetBrainsMono Nerd Font"
+      font.pixelSize: 16
     }
 
     MouseArea {

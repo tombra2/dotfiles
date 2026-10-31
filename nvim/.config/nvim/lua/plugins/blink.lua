@@ -16,8 +16,7 @@ return {
     "saghen/blink.cmp",
     opts = {
       enabled = function()
-        -- IntelliJ uses its own native completion and Enter mapping.
-        return not vim.tbl_contains({ "markdown", "java", "kotlin" }, vim.bo.filetype)
+        return vim.bo.filetype ~= "markdown"
       end,
       keymap = {
         preset = "none",

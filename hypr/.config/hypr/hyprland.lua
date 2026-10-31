@@ -1,5 +1,8 @@
 dofile((os.getenv("OMARCHY_PATH") or "/usr/share/omarchy") .. "/default/hypr/bootstrap.lua")
 
+-- Your own gestures replace Omarchy's defaults.
+omarchy_default_gestures = false
+
 require("default.hypr.omarchy")
 require("hypr.monitors")
 require("hypr.input")
