@@ -39,6 +39,7 @@
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
 -- List current monitors and supported resolutions with: hyprctl monitors all
 
+-- Kept from your earlier monitors.lua, which is saved as monitors.lua.bak.1793719151.
 local omarchy_gdk_scale = 1
 local omarchy_monitor_scale = 1.25
 

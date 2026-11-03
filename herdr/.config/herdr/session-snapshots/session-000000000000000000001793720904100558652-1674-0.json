@@ -1,0 +1,143 @@
+{
+  "version": 3,
+  "workspaces": [
+    {
+      "id": "w6P",
+      "custom_name": "recook",
+      "identity_cwd": "/home/thomas/nextcloud/workspace/htl/syp/recook",
+      "public_pane_numbers": {
+        "5": 36,
+        "1": 37,
+        "2": 2
+      },
+      "next_public_pane_number": 43,
+      "public_tab_numbers": [
+        15,
+        2,
+        3
+      ],
+      "next_public_tab_number": 19,
+      "tabs": [
+        {
+          "custom_name": "edit",
+          "layout": {
+            "Pane": 1
+          },
+          "panes": {
+            "1": {
+              "cwd": "/home/thomas/nextcloud/workspace/htl/syp/recook"
+            }
+          },
+          "zoomed": false,
+          "focused": 1,
+          "root_pane": 1
+        },
+        {
+          "custom_name": "pi",
+          "layout": {
+            "Pane": 2
+          },
+          "panes": {
+            "2": {
+              "cwd": "/home/thomas/nextcloud/workspace/htl/syp/recook",
+              "agent_session": {
+                "source": "herdr:pi",
+                "agent": "pi",
+                "kind": "path",
+                "value": "/home/thomas/.pi/agent/sessions/--home-thomas-nextcloud-workspace-htl-syp-recook--/2026-10-24T18-38-53-343Z_01a16f35-679f-7335-a8c8-b4eccc33b37d.jsonl"
+              }
+            }
+          },
+          "zoomed": false,
+          "focused": 2,
+          "root_pane": 2
+        },
+        {
+          "custom_name": "terminal",
+          "layout": {
+            "Pane": 5
+          },
+          "panes": {
+            "5": {
+              "cwd": "/home/thomas/nextcloud/workspace/htl/syp/recook/infra/database"
+            }
+          },
+          "zoomed": false,
+          "focused": 5,
+          "root_pane": 5
+        }
+      ],
+      "active_tab": 2
+    },
+    {
+      "id": "w60",
+      "custom_name": "dotfiles",
+      "identity_cwd": "/home/thomas/dotfiles",
+      "public_pane_numbers": {
+        "29": 4,
+        "27": 2,
+        "28": 3
+      },
+      "next_public_pane_number": 5,
+      "public_tab_numbers": [
+        2,
+        3
+      ],
+      "next_public_tab_number": 4,
+      "tabs": [
+        {
+          "custom_name": "pi",
+          "layout": {
+            "Split": {
+              "direction": "Horizontal",
+              "ratio": 0.5,
+              "first": {
+                "Pane": 27
+              },
+              "second": {
+                "Pane": 28
+              }
+            }
+          },
+          "panes": {
+            "28": {
+              "cwd": "/home/thomas/dotfiles"
+            },
+            "27": {
+              "cwd": "/home/thomas/dotfiles",
+              "agent_session": {
+                "source": "herdr:pi",
+                "agent": "pi",
+                "kind": "path",
+                "value": "/home/thomas/.pi/agent/sessions/--home-thomas-dotfiles--/2026-10-25T16-55-07-407Z_01a173fc-c38e-7235-8dc5-7ade2a9b20eb.jsonl"
+              }
+            }
+          },
+          "zoomed": false,
+          "focused": 27,
+          "root_pane": 27
+        },
+        {
+          "custom_name": "terminal",
+          "layout": {
+            "Pane": 29
+          },
+          "panes": {
+            "29": {
+              "cwd": "/home/thomas/dotfiles"
+            }
+          },
+          "zoomed": false,
+          "focused": 29,
+          "root_pane": 29
+        }
+      ],
+      "active_tab": 1
+    }
+  ],
+  "active": 1,
+  "selected": 1,
+  "sidebar_width": null,
+  "sidebar_section_split": null,
+  "collapsed_space_keys": []
+}
