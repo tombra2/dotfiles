@@ -9,6 +9,12 @@ require("hypr.input")
 require("hypr.bindings")
 require("hypr.looknfeel")
 require("hypr.autostart")
+
+-- Load settings written by OmaControl (omacontrol:managed).
+-- It belongs above the toggles below: those turn the laptop
+-- display off with a monitor rule, and a rule of ours read
+-- afterwards would replace it and put the display back on.
+require("hypr.omacontrol")
 require("default.hypr.toggles")
 
 local startup_flag = (os.getenv("XDG_RUNTIME_DIR") or "/tmp") .. "/hypr-startup-done"

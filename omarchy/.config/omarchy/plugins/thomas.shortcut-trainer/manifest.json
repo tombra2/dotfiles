@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "thomas.shortcut-trainer",
+  "name": "Shortcut Trainer",
+  "version": "1.0.0",
+  "author": "Thomas",
+  "description": "Practice your active Hyprland shortcuts with green/red feedback",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Shortcut Trainer",
+    "category": "Utilities",
+    "allowMultiple": false,
+    "defaultSection": "left"
+  }
+}

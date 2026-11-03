@@ -1,7 +1,13 @@
--- Focus an existing Ghostty terminal; use SUPER+ALT+RETURN for a new one.
--- SUPER+ALT+RETURN previously launched Tmux.
+-- Focus an existing Ghostty terminal; use SUPER+SHIFT+RETURN for a new one.
+-- SUPER+SHIFT+RETURN previously launched the browser.
 o.rebind("SUPER + RETURN", "Terminal öffnen/fokussieren", "omarchy-launch-or-focus '^com[.]mitchellh[.]ghostty$' 'omarchy-launch-terminal'")
-o.rebind("SUPER + ALT + RETURN", "Neues Terminal", o.launch_terminal())
+hl.unbind("SUPER + ALT + RETURN")
+o.rebind("SUPER + SHIFT + RETURN", "Neues Terminal", o.launch_terminal())
+
+-- SUPER+^ (physische Taste links von 1): Fensterbreite +100 Pixel.
+-- Ersetzt auf dieser Taste die Quake-Konsole.
+hl.unbind("SUPER + grave")
+o.rebind("SUPER + code:49", "Fensterbreite +100 Pixel", hl.dsp.window.resize({ x = 100, y = 0, relative = true }))
 
 -- ALT+TAB is reserved for Herdr tab switching.
 hl.unbind("ALT + TAB")
@@ -36,3 +42,10 @@ o.bind("ALT + SHIFT + N", "Herdr: Home workspace", "$HOME/.config/script/herdr-h
 -- SUPER+P ersetzt die Standardaktion "Pseudo window" durch den Screenshot-Dialog.
 hl.unbind("SUPER + P")
 o.bind("SUPER + P", "Screenshot", "omarchy-capture-screenshot")
+
+-- Dictation keys from before Alt + Space and Right Alt became the defaults.
+-- Remove these lines to give the keys back to applications.
+if o.dictation_installed and o.dictation_installed() then
+  o.bind("SUPER + CTRL + X", "Toggle dictation", "omarchy-dictation toggle")
+  o.bind_hold("F9", "Start dictation (push-to-talk)", "omarchy-dictation start", "Stop dictation (push-to-talk)", "omarchy-dictation stop")
+end

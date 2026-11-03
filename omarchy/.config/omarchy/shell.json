@@ -4,10 +4,46 @@
     "layout": {
       "center": [
         {
-          "id": "omarchy.clock",
+          "birthYear": 0,
           "format": "HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
+          "id": "omarchy.clock",
+          "lifeExpectancy": 90,
           "verticalFormat": "HH\n—\nmm"
+        },
+        {
+          "id": "thomas.shortcut-trainer",
+          "selectedIds": [
+            "64:65",
+            "64:67",
+            "64:86",
+            "64:88",
+            "64:49",
+            "64:50",
+            "64:51",
+            "64:52",
+            "64:53",
+            "64:54",
+            "64:55",
+            "64:56",
+            "64:57",
+            "64:48",
+            "64:32",
+            "64:16777217",
+            "68:86"
+          ],
+          "workspaceNames": {
+            "1": "Intelij",
+            "2": "Termial",
+            "3": "Musik",
+            "4": "Email",
+            "5": "Discord",
+            "6": "1Password",
+            "7": "Workscreen",
+            "8": "Whatsapp",
+            "9": "obsidian",
+            "10": "Browser"
+          }
         }
       ],
       "centerBegin": [
@@ -62,6 +98,9 @@
       "right": [
         {
           "id": "omarchy.tray"
+        },
+        {
+          "id": "io.github.twiking.omacontrol"
         },
         {
           "id": "omarchy.dropbox"
