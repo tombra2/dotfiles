@@ -1,0 +1,9 @@
+# Herdr: local runtime state and installed plugins
+/herdr/.config/herdr/*.log
+/herdr/.config/herdr/*.sock
+/herdr/.config/herdr/*.bak
+/herdr/.config/herdr/.plugins.lock
+/herdr/.config/herdr/session.json
+/herdr/.config/herdr/session-snapshots/
+/herdr/.config/herdr/sessions/
+/herdr/.config/herdr/plugins/
