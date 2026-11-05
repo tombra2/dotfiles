@@ -2,27 +2,53 @@
 -- Every value here was set from the OmaControl window; delete a line
 -- to hand that setting back to your own config.
 
+hl.config({
+  input = {
+    touchpad = {
+      natural_scroll = true,
+      scroll_factor = 0.60,
+    },
+  },
+})
+
 
 -- Applications bound to a workspace, from the Workspaces page.
 o.window("com.onepassword.OnePassword", { workspace = "6" })
 o.window("chrome-discord.com__app-Default", { workspace = "5" })
-o.window("obsidian", { workspace = "9 silent" })
+o.window("obsidian", { workspace = "9" })
 o.window("com.mitchellh.ghostty", { workspace = "2" })
 o.window("spotify", { workspace = "3" })
-o.window("chrome-web.whatsapp.com__-Default", { workspace = "8 silent" })
-o.window("thunderbird", { workspace = "4 silent" })
-o.window("Spotify", { workspace = "3 silent" })
-o.launch_on_start("com.onepassword.OnePassword.desktop")
+o.window("chrome-web.whatsapp.com__-Default", { workspace = "8" })
+o.window("org.mozilla.Thunderbird", { workspace = "4 silent" })
+o.window("Spotify", { workspace = "3" })
+o.window("chromium", { workspace = "10" })
+o.window("md.obsidian.Obsidian", { workspace = "9" })
+o.window("com.microsoft.VSCode", { workspace = "1" })
+o.window("jetbrains-idea", { workspace = "1" })
+o.window("jetbrains-datagrip", { workspace = "1" })
+o.window("anki", { workspace = "1" })
+o.window("mysql-workbench-bin", { workspace = "1" })
+o.window("postman", { workspace = "1" })
+o.launch_on_start("1password.desktop")
 o.launch_on_start("Discord.desktop")
 o.launch_on_start("obsidian.desktop")
-o.launch_on_start("discord.desktop")
 o.launch_on_start("com.mitchellh.ghostty.desktop")
 o.launch_on_start("spotify.desktop")
 o.launch_on_start("WhatsApp.desktop")
 o.launch_on_start("org.mozilla.Thunderbird.desktop")
-o.launch_on_start("spotify.desktop")
+o.launch_on_start("chromium.desktop")
 
 -- Workspaces set up from the Workspaces page.
+hl.workspace_rule({ workspace = "2", persistent = true })
+hl.workspace_rule({ workspace = "1", persistent = true })
+hl.workspace_rule({ workspace = "3", persistent = true })
+hl.workspace_rule({ workspace = "4", persistent = true })
+hl.workspace_rule({ workspace = "5", persistent = true })
+hl.workspace_rule({ workspace = "6", persistent = true })
+hl.workspace_rule({ workspace = "7", persistent = true })
+hl.workspace_rule({ workspace = "8", persistent = true })
+hl.workspace_rule({ workspace = "9", persistent = true })
+hl.workspace_rule({ workspace = "10", persistent = true })
 hl.monitor({
   output = "desc:GIGA-BYTE TECHNOLOGY CO. LTD. MO32U2 0x01010101",
   mode = "3840x2160@120.00",

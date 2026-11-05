@@ -1,10 +1,8 @@
 const fs = require("node:fs");
-const vm = require("node:vm");
 const assert = require("node:assert/strict");
 const path = require("node:path");
 const base = path.resolve(__dirname, "..");
-const m = vm.createContext({});
-vm.runInContext(fs.readFileSync(path.join(base, "Model.js"), "utf8"), m);
+const m = require('./load.cjs')('Model.js');
 const bind = {modmask:64,key:"Q",description:"Close window"};
 const parse = list => m.fromBinds(JSON.stringify(list));
 assert.equal(parse([bind]).length, 1);
@@ -105,6 +103,128 @@ assert.ok(slot.workspaceSlot);
 assert.equal(m.nextWorkspaceTask([slot],12,.5),null);
 assert.ok(qml.includes("if (!flowRunning || !flowTask || flowAdvance.running) return"));
 assert.ok(qml.includes("onCurrentWorkspaceIdChanged: observeWorkspace(currentWorkspaceId)"));
+// All described live bindings, without weakening isolated keyboard capture.
+const media = {...bind,key:"XF86AudioRaiseVolume",locked:true,description:"Volume up"};
+const mouse = {...bind,key:"mouse:272",mouse:true,description:"Resize window"};
+const release = {...bind,release:true,description:"Clipboard manager"};
+const submap = {...bind,submap:"resize"};
+const catalog = m.workflowBinds(JSON.stringify([bind,media,mouse,release,submap]));
+assert.equal(catalog.length,5);
+assert.equal(catalog[0].id,parse([bind])[0].id); // Existing saved selection retained.
+assert.equal(catalog[0].trainable,true);
+for (const task of catalog.slice(1)) assert.equal(task.trainable,false);
+assert.equal(new Set(catalog.map(t=>t.id)).size,5);
+assert.equal(m.workflowBinds("oops").length,0);
+assert.equal(m.workflowBinds("{}").length,0);
+assert.equal(m.workflowBinds(null).length,0);
+assert.equal(m.workflowBinds(JSON.stringify([{...bind,description:attack}]))[0].description,attack);
+const duplicateCatalog = m.workflowBinds(JSON.stringify([bind,bind]));
+assert.equal(duplicateCatalog.length,2);
+assert.notEqual(duplicateCatalog[0].id,duplicateCatalog[1].id);
+assert.equal(duplicateCatalog[0].trainable,false);
+const mixedFlow = [{id:"ws",workspaceId:2},{id:"app",description:"Terminal"}];
+assert.equal(m.nextFlowTask(mixedFlow,2,"",0).id,"app");
+assert.equal(m.nextFlowTask(mixedFlow,1,"ws",0).id,"app");
+assert.equal(m.nextFlowTask([mixedFlow[1]],1,"app",0).id,"app");
+assert.equal(m.nextFlowTask([],1,"",0),null);
+const snapshot = (floating=false,fullscreen=0) => m.windowSnapshot(JSON.stringify([
+  {address:"0x123",floating,fullscreen,focusHistoryID:0,title:attack}
+]));
+const initial = snapshot();
+assert.equal(initial.focused,"0x123");
+assert.equal(initial.clients["0x123"].title,undefined);
+assert.equal(m.verificationKind({description:"Terminal"}),"manual");
+assert.equal(m.verificationKind({description:"Close all windows"}),"manual");
+assert.ok(m.windowOutcome({description:"Close window"},initial,m.windowSnapshot("[]")));
+assert.ok(!m.windowOutcome({description:"Close window"},initial,null));
+assert.ok(!m.windowOutcome({description:"Close window"},initial,initial));
+assert.ok(!m.windowOutcome({description:"Close window"},m.windowSnapshot("[]"),initial));
+assert.ok(m.windowOutcome({description:"Toggle window floating/tiling"},initial,snapshot(true)));
+assert.ok(!m.windowOutcome({description:"Toggle window floating/tiling"},initial,snapshot(false,2)));
+assert.ok(m.windowOutcome({description:"Full screen"},initial,snapshot(false,2)));
+assert.ok(!m.windowOutcome({description:"Terminal"},initial,snapshot(true,2)));
+assert.equal(m.windowSnapshot("oops"),null);
+assert.equal(m.windowSnapshot("{}"),null);
+assert.equal(m.windowSnapshot("[{}]"),null);
+assert.equal(m.windowSnapshot('[{"address":"0x123"}]'),null);
+assert.ok(qml.includes('command: ["timeout", "2s", "hyprctl", "-j", "clients"]'));
+assert.ok(qml.includes('generation: root.flowGeneration'));
+assert.ok(qml.includes('text: strings.t("flow.done")'));
+// Directional focus checks: real focus and matching geometry are both required.
+assert.equal(m.verificationKind({description:"focus left"}),"focus");
+assert.equal(m.focusDirection({description:"Focus on right window"}),"right");
+assert.equal(m.focusDirection({description:"Focus on next monitor"}),"");
+const geometry = (focused, targetX=400, targetY=0, workspace=2) =>
+  m.windowSnapshot(JSON.stringify([
+    {address:"0xa",floating:false,fullscreen:0,focusHistoryID:focused==="0xa"?0:1,
+      at:[0,0],size:[300,300],workspace:{id:2},monitor:0},
+    {address:"0xb",floating:false,fullscreen:0,focusHistoryID:focused==="0xb"?0:1,
+      at:[targetX,targetY],size:[300,300],workspace:{id:workspace},monitor:0}
+  ]));
+assert.ok(m.windowOutcome({description:"focus right"},geometry("0xa"),geometry("0xb")));
+assert.ok(m.windowOutcome({description:"focus left"},geometry("0xb"),geometry("0xa")));
+assert.ok(m.windowOutcome({description:"focus down"},geometry("0xa",0,400),geometry("0xb",0,400)));
+assert.ok(m.windowOutcome({description:"focus up"},geometry("0xb",0,400),geometry("0xa",0,400)));
+// Both normal movement and edge wrap are valid effects.
+assert.ok(m.windowOutcome({description:"focus left"},geometry("0xa"),geometry("0xb")));
+assert.ok(m.windowOutcome({description:"focus right"},geometry("0xb"),geometry("0xa")));
+assert.ok(m.windowOutcome({description:"focus up"},geometry("0xa",0,400),geometry("0xb",0,400)));
+assert.ok(m.windowOutcome({description:"focus down"},geometry("0xb",0,400),geometry("0xa",0,400)));
+assert.equal(m.focusDirection({description:"Focus on above window"}),"up");
+assert.equal(m.focusDirection({description:"Focus on below window"}),"down");
+const column = (focused, axis=1, extras=[]) => m.windowSnapshot(JSON.stringify(
+  [0,400,800].map((p,i)=>({
+    address:["0xa","0xb","0xc"][i],floating:false,fullscreen:0,
+    focusHistoryID:focused===["0xa","0xb","0xc"][i]?0:1,
+    at:axis===1?[0,p]:[p,0],size:[300,300],workspace:{id:2},monitor:0
+  })).concat(extras)));
+for (const [axis,back,forward] of [[1,"up","down"],[0,"left","right"]]) {
+  assert.ok(m.windowOutcome({description:"focus "+back},column("0xa",axis),column("0xc",axis)));
+  assert.ok(m.windowOutcome({description:"focus "+forward},column("0xc",axis),column("0xa",axis)));
+  // Moving against the requested direction from the middle is not a wrap.
+  assert.ok(!m.windowOutcome({description:"focus "+back},column("0xb",axis),column("0xc",axis)));
+  assert.ok(!m.windowOutcome({description:"focus "+forward},column("0xb",axis),column("0xa",axis)));
+  // From the boundary, only the opposite extreme counts as wrap.
+  assert.ok(!m.windowOutcome({description:"focus "+back},column("0xa",axis),column("0xb",axis)));
+}
+// Hyprland wrap may land diagonally at the opposite edge, not in the same row.
+const grid = focused => m.windowSnapshot(JSON.stringify(
+  [[0,0],[400,0],[0,400],[400,400]].map((at,i)=>({
+    address:["0xa","0xb","0xc","0xd"][i],floating:false,fullscreen:0,
+    focusHistoryID:focused===["0xa","0xb","0xc","0xd"][i]?0:1,
+    at,size:[300,300],workspace:{id:2},monitor:0
+  }))));
+assert.ok(m.windowOutcome({description:"focus left"},grid("0xc"),grid("0xb")));
+assert.ok(m.windowOutcome({description:"focus right"},grid("0xb"),grid("0xc")));
+assert.ok(m.windowOutcome({description:"focus up"},grid("0xa"),grid("0xd")));
+assert.ok(m.windowOutcome({description:"focus down"},grid("0xd"),grid("0xa")));
+const hiddenTop = {address:"0xd",floating:false,fullscreen:0,focusHistoryID:9,
+  at:[0,-400],size:[300,300],workspace:{id:2},monitor:0,hidden:true};
+assert.ok(m.windowOutcome({description:"focus up"},column("0xa",1,[hiddenTop]),column("0xc",1,[hiddenTop])));
+assert.ok(!m.windowOutcome({description:"focus right"},geometry("0xa"),geometry("0xa")));
+assert.ok(!m.windowOutcome({description:"focus right"},geometry("0xa"),geometry("0xb",400,0,3)));
+assert.ok(!m.windowOutcome({description:"focus right"},initial,snapshot(true)));
+assert.match(qml, /flowAdvance\.stop\(\)\s+chooseFlowTask\(\)/); // Next also works during green feedback.
+// Application shortcuts can share a workflow without WM misclassification.
+const appInput = {tasks:[
+  {id:"herdr:focus_pane_up:ctrl+k",source:"herdr",label:"Ctrl + K",description:"focus up"},
+  {id:"bash:ctrl+a",source:"bash",label:"Ctrl + A",description:"Line beginning"},
+  {id:"ghostty:ctrl+t",source:"ghostty",label:"Ctrl + T",description:attack}
+]};
+const appTasks = m.applicationTasks(JSON.stringify(appInput));
+assert.equal(appTasks.length,3);
+assert.equal(appTasks[2].description,attack);
+assert.equal(m.verificationKind(appTasks[0]),"herdr");
+assert.equal(m.groupFor(appTasks[0]),"herdr");
+assert.equal(m.groupFor(appTasks[1]),"terminal");
+assert.equal(m.groupFor(appTasks[2]),"terminal");
+assert.ok(appTasks.every(t=>t.trainable===false && t.workspaceId===0));
+assert.equal(m.selectionRows(appTasks,"Ctrl + K")[0].group,"herdr");
+assert.equal(m.selectionRows(appTasks,"Line beginning")[0].group,"terminal");
+assert.equal(m.applicationTasks("invalid").length,0);
+assert.equal(m.applicationTasks(JSON.stringify({tasks:[{...appInput.tasks[0],source:"other"}]})).length,0);
+assert.equal(m.applicationTasks(JSON.stringify({tasks:[{...appInput.tasks[0],id:"64:75"}]})).length,0);
+assert.equal(m.nextFlowTask(appTasks,2,appTasks[0].id,0).id,appTasks[1].id);
 // Custom display names: safe plain text, bounded, immutable, persistent.
 let names = m.withWorkspaceName({},2,"Terminal");
 names = m.withWorkspaceName(names,3,"Spotify");

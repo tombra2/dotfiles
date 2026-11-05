@@ -10,6 +10,7 @@ Column {
   required property var selectedIds
   required property var strings
   property var workspaceNames: ({})
+  property int trainingCount: 0
   signal workspaceNameChanged(int workspaceId, string name)
   property real listHeight: Commons.Style.space(340)
   readonly property var selected: Model.selectedTasks(tasks, selectedIds)
@@ -77,7 +78,8 @@ Column {
         label: entry.modelData.header
           ? root.strings.t("group." + entry.modelData.group) + " (" +
             Commons.I18n.formatNumber(entry.selectedCount) + "/" + Commons.I18n.formatNumber(entry.members.length) + ")"
-          : entry.modelData.task.label + " — " + entry.modelData.task.description
+          : entry.modelData.task.label + " — " + entry.modelData.task.description +
+            " · " + root.strings.t(Model.verificationKind(entry.modelData.task) === "manual" ? "flow.manual" : "flow.auto")
         onClicked: root.selectionChanged(Model.toggleSelection(root.tasks, root.selectedIds, entry.members))
       }
       Ui.TextField {
@@ -113,7 +115,7 @@ Column {
   Ui.Button {
     width: parent.width
     text: root.strings.t("selection.start")
-    enabled: root.selected.length > 0 && root.tasks.length > 0
+    enabled: root.trainingCount > 0
     opacity: enabled ? 1 : 0.4
     focusable: true
     onClicked: root.startRequested()

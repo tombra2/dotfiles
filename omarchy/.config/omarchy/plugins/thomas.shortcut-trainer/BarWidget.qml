@@ -6,15 +6,19 @@ import Quickshell.Wayland
 import qs.Commons as Commons
 import qs.Ui
 import "Model.js" as Model
+import "Herdr.js" as Herdr
 
 BarWidget {
   id: root
   moduleName: "thomas.shortcut-trainer"
 
-  property var allTasks: []
+  property var hyprTasks: []
+  property var applicationTasks: []
+  property bool applicationLoadFailed: false
+  readonly property var allTasks: hyprTasks.concat(applicationTasks)
   readonly property var selectedIds: setting("selectedIds", null)
   readonly property var workspaceNames: Model.cleanWorkspaceNames(setting("workspaceNames", {}))
-  readonly property var tasks: Model.selectedTasks(allTasks, selectedIds)
+  readonly property var tasks: Model.selectedTasks(allTasks, selectedIds).filter(function(t) { return t.trainable !== false })
   property bool selecting: false
   readonly property var catalog: strings
   onTasksChanged: { advance.stop(); stopWorkspaceFlow(); taskIndex = -1; nextTask() }
@@ -30,7 +34,12 @@ BarWidget {
   property int lastWorkspaceId: -1
   readonly property int currentWorkspaceId: Hyprland.focusedMonitor && Hyprland.focusedMonitor.activeWorkspace
     ? Hyprland.focusedMonitor.activeWorkspace.id : -1
-  readonly property var flowTasks: Model.workspaceTasks(tasks)
+  readonly property var flowTasks: Model.selectedTasks(allTasks, selectedIds)
+  property int flowGeneration: 0
+  readonly property alias windowState: windowObserver
+  readonly property alias herdrState: herdrObserver
+  readonly property string detectorRevision: "herdr-state-v2"
+  readonly property bool observesWindows: flowRunning && ["close", "floating", "fullscreen", "focus"].indexOf(Model.verificationKind(flowTask)) >= 0
   // A single live workflow is shared visually across all bar instances.
   readonly property var workflowOwner: {
     var widgets = bar && bar.moduleWidgets ? bar.moduleWidgets(moduleName) : [root]
@@ -43,8 +52,8 @@ BarWidget {
   readonly property color resultColor: displayResult > 0 ? "#62c777" : displayResult < 0 ? "#ef6262" : Commons.Color.muted
   onCurrentWorkspaceIdChanged: observeWorkspace(currentWorkspaceId)
 
-  implicitWidth: button.implicitWidth
-  implicitHeight: button.implicitHeight
+  implicitWidth: barButtons.implicitWidth
+  implicitHeight: barButtons.implicitHeight
 
   Commons.Translations { id: strings; directory: Qt.resolvedUrl("i18n") }
 
@@ -59,22 +68,19 @@ BarWidget {
     result = 0
     loadFailed = false
     if (!bindings.running) bindings.running = true
+    if (!appCatalog.running) appCatalog.running = true
   }
-  function saveSelection(ids) {
+  function saveSetting(key, value) {
     var entry = { id: moduleName }
-    for (var key in settings) if (key !== "id") entry[key] = settings[key]
-    entry.selectedIds = ids
+    for (var name in settings) if (name !== "id") entry[name] = settings[name]
+    entry[key] = value
     settings = entry
     if (bar && bar.shell && typeof bar.shell.updateEntryInline === "function")
       bar.shell.updateEntryInline(moduleName, entry)
   }
+  function saveSelection(ids) { saveSetting("selectedIds", ids) }
   function saveWorkspaceName(workspaceId, name) {
-    var entry = { id: moduleName }
-    for (var key in settings) if (key !== "id") entry[key] = settings[key]
-    entry.workspaceNames = Model.withWorkspaceName(workspaceNames, workspaceId, name)
-    settings = entry
-    if (bar && bar.shell && typeof bar.shell.updateEntryInline === "function")
-      bar.shell.updateEntryInline(moduleName, entry)
+    saveSetting("workspaceNames", Model.withWorkspaceName(workspaceNames, workspaceId, name))
   }
   function editSelection() {
     advance.stop()
@@ -97,26 +103,54 @@ BarWidget {
   function stopWorkspaceFlow() {
     flowRunning = false
     flowAdvance.stop()
+    flowGeneration++
+    flowTask = null
   }
-  function startWorkspaceFlow() {
-    if (bindings.running || loadFailed || flowTasks.length < 2 || currentWorkspaceId < 1) return
+  function setFlowTask(next) {
+    flowAdvance.stop()
+    flowGeneration++
+    flowTask = next
+    result = 0
+    if (!flowTask) stopWorkspaceFlow()
+  }
+  function chooseInitialTask() {
+    if (flowRunning && !flowTask && windowObserver.settled && herdrObserver.settled) chooseFlowTask()
+  }
+  function chooseFlowTask() {
+    setFlowTask(Model.nextFlowTask(flowTasks, currentWorkspaceId,
+      flowTask ? flowTask.id : "", Math.random(), herdrObserver.latest))
+  }
+  function completeFlowTask() {
+    if (!flowRunning || !flowTask || flowAdvance.running) return
+    result = 1
+    correct++
+    flowAdvance.restart()
+  }
+  function skipFlowTask() {
+    if (!flowRunning) return
+    flowAdvance.stop()
+    chooseFlowTask()
+  }
+  function startWorkspaceFlow(explicitTask) {
+    if (bindings.running || appCatalog.running || loadFailed || (!explicitTask && !flowTasks.length)) return false
     var widgets = bar && bar.moduleWidgets ? bar.moduleWidgets(moduleName) : [root]
     for (var i = 0; i < widgets.length; i++) if (widgets[i]) widgets[i].close()
     correct = 0
     incorrect = 0
     lastWorkspaceId = currentWorkspaceId
-    flowTask = Model.nextWorkspaceTask(flowTasks, currentWorkspaceId, Math.random())
-    result = 0
-    flowRunning = !!flowTask
+    flowGeneration++
+    // Random selection waits for current context; explicit diagnostics can name any task.
+    flowTask = explicitTask || null
+    flowRunning = true
+    return true
   }
   function observeWorkspace(id) {
     if (id < 1 || id === lastWorkspaceId) return
     lastWorkspaceId = id
     if (!flowRunning || !flowTask || flowAdvance.running) return
+    if (Model.verificationKind(flowTask) !== "workspace") return
     if (Model.workspaceMatches(flowTask, id)) {
-      result = 1
-      correct++
-      flowAdvance.restart()
+      completeFlowTask()
     } else {
       result = -1
       incorrect++
@@ -140,7 +174,7 @@ BarWidget {
     }
   }
 
-  Component.onCompleted: bindings.running = true
+  Component.onCompleted: { bindings.running = true; appCatalog.running = true }
 
   // Exclusive focus only focuses the surface. The Wayland inhibitor is what
   // asks Hyprland to deliver compositor shortcut chords to this window.
@@ -159,10 +193,35 @@ BarWidget {
       return JSON.stringify({opened: root.opened, selecting: root.selecting,
         inhibited: shortcutInhibitor.active, task: trainer.flowRunning ? trainer.flowTask : root.task,
         workflow: trainer.flowRunning, workspace: root.currentWorkspaceId,
+        revision: root.detectorRevision,
+        verification: Herdr.observable(trainer.flowTask) ? "herdr:" + Herdr.action(trainer.flowTask) : Model.verificationKind(trainer.flowTask),
+        herdrAvailable: trainer.herdrState.available, herdrSnapshots: trainer.herdrState.samples,
+        herdrExitCode: trainer.herdrState.lastExitCode, herdrOutputBytes: trainer.herdrState.outputBytes,
+        herdrBaselineReady: !!trainer.herdrState.baseline,
+        herdrFocus: trainer.herdrState.baseline ? trainer.herdrState.baseline.focused : "",
+        herdrTaskPossible: Herdr.canPerform(trainer.flowTask, trainer.herdrState.baseline),
+        baselineReady: !!trainer.windowState.baseline,
+        baselineFocused: trainer.windowState.baseline ? trainer.windowState.baseline.focused : "",
+        latestFocused: trainer.windowState.latest ? trainer.windowState.latest.focused : "",
+        snapshots: trainer.windowState.samples, generation: trainer.flowGeneration,
+        available: root.allTasks.length, selected: root.flowTasks.length,
+        applicationShortcuts: root.applicationTasks.length, applicationLoadFailed: root.applicationLoadFailed,
+        hasOwner: !!root.workflowOwner, renderedText: barLabel.text,
+        controls: {done: doneButton.mapToGlobal(doneButton.width / 2, doneButton.height / 2),
+          next: skipButton.mapToGlobal(skipButton.width / 2, skipButton.height / 2)},
         displayName: Model.workspaceName(root.workspaceNames, (trainer.flowRunning ? trainer.flowTask : root.task || {}).workspaceId),
         result: trainer.result, correct: trainer.correct, incorrect: trainer.incorrect})
     }
     function startWorkspaceFlow(): void { root.startWorkspaceFlow() }
+    function startWorkflow(): void { root.startWorkspaceFlow() }
+    // Explicit one-task entry point; does not modify the saved selection.
+    function startWorkflowTask(id: string): bool {
+      var candidates = root.allTasks.filter(function(t) { return t.id === id })
+      return candidates.length === 1 && root.startWorkspaceFlow(candidates[0])
+    }
+    function stopWorkflow(): void { if (root.workflowOwner) root.workflowOwner.stopWorkspaceFlow() }
+    function completeTask(): void { if (root.workflowOwner) root.workflowOwner.completeFlowTask() }
+    function skipTask(): void { if (root.workflowOwner) root.workflowOwner.skipFlowTask() }
     function stopWorkspaceFlow(): void {
       if (root.workflowOwner) root.workflowOwner.stopWorkspaceFlow()
     }
@@ -173,11 +232,58 @@ BarWidget {
     command: ["hyprctl", "-j", "binds"]
     stdout: StdioCollector {
       onStreamFinished: {
-        root.allTasks = Model.fromBinds(text)
+        root.hyprTasks = Model.workflowBinds(text)
       }
     }
     onExited: function(code, status) {
       root.loadFailed = code !== 0 || status !== 0
+    }
+  }
+
+  Process {
+    id: appCatalog
+    command: ["python3", Quickshell.env("HOME") + "/.config/omarchy/plugins/thomas.shortcut-trainer/catalog.py"]
+    stdout: StdioCollector {
+      onStreamFinished: {
+        root.applicationTasks = Model.applicationTasks(text)
+        try {
+          var data = JSON.parse(text)
+          root.applicationLoadFailed = !Array.isArray(data.errors) || data.errors.length > 0
+        } catch (_) { root.applicationLoadFailed = true }
+      }
+    }
+    onExited: function(code, status) {
+      if (code !== 0 || status !== 0) root.applicationLoadFailed = true
+    }
+  }
+
+  // Both observers remain warm through feedback and task changes. This prevents
+  // losing the first action immediately after a new task is displayed.
+  StateObserver {
+    id: windowObserver
+    active: root.flowRunning
+    generation: root.flowGeneration
+    command: ["timeout", "2s", "hyprctl", "-j", "clients"]
+    decode: Model.windowSnapshot
+    onSampled: function(snapshot) {
+      if (!root.flowTask) { root.chooseInitialTask(); return }
+      if (!snapshot || !root.observesWindows || flowAdvance.running) return
+      if (baseline && Model.windowOutcome(root.flowTask, baseline, snapshot)) root.completeFlowTask()
+    }
+  }
+  StateObserver {
+    id: herdrObserver
+    active: root.flowRunning
+    generation: root.flowGeneration
+    command: ["timeout", "2s", "herdr", "api", "snapshot"]
+    decode: Herdr.snapshot
+    onSampled: function(snapshot) {
+      if (!root.flowTask) { root.chooseInitialTask(); return }
+      if (snapshot && !flowAdvance.running && Herdr.outcome(root.flowTask, baseline, snapshot))
+        root.completeFlowTask()
+      // Herdr actions may be prepared in a different tab/workspace or after a
+      // layout change. Compare adjacent real states rather than a stale origin.
+      baseline = snapshot
     }
   }
 
@@ -190,20 +296,18 @@ BarWidget {
   Timer {
     id: flowAdvance
     interval: 850
-    onTriggered: {
-      root.flowTask = Model.nextWorkspaceTask(root.flowTasks, root.currentWorkspaceId, Math.random())
-      root.result = 0
-      if (!root.flowTask) root.stopWorkspaceFlow()
-    }
+    onTriggered: root.chooseFlowTask()
   }
 
+  Grid {
+    id: barButtons
+    columns: root.vertical ? 1 : 3
   WidgetButton {
     id: button
-    anchors.fill: parent
     bar: root.bar
     labelVisible: false
     hasVisualContent: true
-    fixedWidth: root.vertical ? root.barSize : barLabel.implicitWidth + Commons.Style.space(36)
+    fixedWidth: root.vertical ? root.barSize : barLabel.width + Commons.Style.space(36)
     pressFeedbackButtons: Qt.NoButton
     onPressed: function(mouseButton) {
       if (mouseButton === Qt.LeftButton) {
@@ -232,13 +336,37 @@ BarWidget {
         textFormat: Text.PlainText
         text: (root.displayTask ? Model.workspaceName(root.workspaceNames, root.displayTask.workspaceId) : "") ||
           (root.workflowOwner && root.displayTask
-            ? strings.t("flow.task").arg(Commons.I18n.formatNumber(root.displayTask.workspaceId)).arg(root.displayTask.label)
+            ? root.displayTask.workspaceId
+              ? strings.t("flow.task").arg(Commons.I18n.formatNumber(root.displayTask.workspaceId)).arg(root.displayTask.label)
+              : strings.t("flow.action").arg(root.displayTask.description).arg(root.displayTask.label)
             : root.task ? root.task.label : strings.t("title"))
+        width: Math.min(implicitWidth, Commons.Style.space(440))
+        elide: Text.ElideRight
         color: Commons.Color.bar.text
         font.family: Commons.Style.font.family
         font.pixelSize: Commons.Style.font.body
       }
     }
+  }
+
+  WidgetButton {
+    id: doneButton
+    bar: root.bar
+    visible: !!root.workflowOwner
+    text: strings.t("flow.done")
+    onPressed: function(mouseButton) {
+      if (mouseButton === Qt.LeftButton && root.workflowOwner) root.workflowOwner.completeFlowTask()
+    }
+  }
+  WidgetButton {
+    id: skipButton
+    bar: root.bar
+    visible: !!root.workflowOwner
+    text: strings.t("flow.skip")
+    onPressed: function(mouseButton) {
+      if (mouseButton === Qt.LeftButton && root.workflowOwner) root.workflowOwner.skipFlowTask()
+    }
+  }
   }
 
   KeyboardPanel {
@@ -281,14 +409,14 @@ BarWidget {
       }
       Button {
         text: strings.t("flow.start")
-        enabled: root.flowTasks.length >= 2 && !bindings.running && !root.loadFailed && root.currentWorkspaceId > 0
+        enabled: root.flowTasks.length > 0 && !bindings.running && !appCatalog.running && !root.loadFailed
         focusable: false
         onClicked: root.startWorkspaceFlow()
       }
       Text {
         width: parent.width
         textFormat: Text.PlainText
-        text: strings.t("flow.hint")
+        text: strings.t("flow.hint") + (root.applicationLoadFailed ? "\n" + strings.t("catalog.error") : "")
         wrapMode: Text.Wrap
         color: Commons.Color.muted
         font.family: Commons.Style.font.family
@@ -300,6 +428,7 @@ BarWidget {
         tasks: root.allTasks
         selectedIds: root.selectedIds
         workspaceNames: root.workspaceNames
+        trainingCount: root.tasks.length
         onWorkspaceNameChanged: function(workspaceId, name) { root.saveWorkspaceName(workspaceId, name) }
         strings: root.catalog
         listHeight: Math.max(Commons.Style.space(100), Math.min(Commons.Style.space(340), panel.availableCardHeight - Commons.Style.space(440)))

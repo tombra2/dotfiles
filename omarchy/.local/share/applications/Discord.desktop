@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=1.0
 Name=Discord
-Exec=omarchy-launch-or-focus-webapp discord https://discord.com/app
+Exec=/home/thomas/.local/bin/launch-until-window chrome-discord.com__app-Default -- omarchy-launch-or-focus-webapp discord https://discord.com/app
 StartupWMClass=chrome-discord.com__app-Default
 Terminal=false
 Type=Application

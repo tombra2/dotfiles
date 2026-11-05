@@ -1,3 +1,5 @@
+.import "Herdr.js" as Herdr
+
 // Pure helpers shared by QML and the regression tests. No commands are executed.
 function keyCode(name) {
   var key = String(name || "").toUpperCase()
@@ -60,11 +62,163 @@ function fromBinds(raw) {
     candidates.push({id: id, key: code, mask: mask, scanCode: scanCode,
       label: label(mask, keyName), description: b.description,
       workspaceId: workspaceTarget(b),
-      workspaceSlot: typeof b.dispatcher === "string" && b.dispatcher.indexOf("function:") === 0 &&
+      workspaceSlot: typeof b.dispatcher === "string" && b.dispatcher !== "workspace" &&
         /^Switch to workspace ([1-9]|10)$/.test(b.description)})
   })
   // Ambiguous duplicate bindings are not useful exercises.
   return candidates.filter(function(b) { return counts[b.id] === 1 }).slice(0, 500)
+}
+
+// Live mode also offers bindings that cannot be captured in isolated practice.
+// Binding arguments are never executed.
+function workflowBinds(raw) {
+  if (typeof raw !== "string" || raw.length > 2000000) return []
+  var safe = fromBinds(raw), byId = Object.create(null), seen = Object.create(null)
+  safe.forEach(function(t) { byId[t.id] = t })
+  var binds
+  try { binds = JSON.parse(raw) } catch (_) { return [] }
+  if (!Array.isArray(binds)) return []
+  return binds.slice(0, 5000).filter(function(b) {
+    return b && typeof b.description === "string" && b.description.length > 0 &&
+      b.description.length <= 200 && Number.isInteger(b.modmask) &&
+      typeof b.key === "string" && b.key.length <= 80
+  }).map(function(b) {
+    var single = fromBinds(JSON.stringify([b]))[0]
+    if (single && byId[single.id]) {
+      single.trainable = true
+      return single
+    }
+    var key = b.key || ("Code " + b.keycode)
+    var id = "live:" + b.modmask + ":" + key + ":" + String(b.submap || "").slice(0, 80) +
+      ":" + !!b.release + ":" + !!b.mouse
+    var n = seen[id] || 0
+    seen[id] = n + 1
+    return {id: id + ":" + n, key: 0, mask: b.modmask, trainable: false,
+      label: label(b.modmask, key) + (b.release ? " ↑" : "") +
+        (b.submap ? " [" + String(b.submap).slice(0, 80) + "]" : ""),
+      description: b.description, workspaceId: 0}
+  }).slice(0, 500)
+}
+
+// App-internal shortcuts are workflow exercises, never window-manager actions.
+function applicationTasks(raw) {
+  if (typeof raw !== "string" || raw.length > 2000000) return []
+  var data
+  try { data = JSON.parse(raw) } catch (_) { return [] }
+  if (!data || !Array.isArray(data.tasks)) return []
+  return data.tasks.slice(0, 1000).filter(function(t) {
+    return t && ["herdr", "ghostty", "bash"].indexOf(t.source) >= 0 &&
+      typeof t.id === "string" && t.id.indexOf(t.source + ":") === 0 && t.id.length <= 300 &&
+      typeof t.label === "string" && t.label.length <= 200 &&
+      typeof t.description === "string" && t.description.length <= 200
+  }).map(function(t) {
+    return {id: t.id, source: t.source, label: t.label, description: t.description,
+      trainable: false, workspaceId: 0}
+  })
+}
+
+function focusDirection(task) {
+  var match = /^(?:focus(?: on)? (left|right|up|down|above|below)(?: window)?)$/i.exec(task && task.description || "")
+  var direction = match ? match[1].toLowerCase() : ""
+  return direction === "above" ? "up" : direction === "below" ? "down" : direction
+}
+
+function verificationKind(task) {
+  if (Herdr.observable(task)) return "herdr"
+  if (!task || task.source) return "manual"
+  if (task.workspaceId > 0) return "workspace"
+  if (focusDirection(task)) return "focus"
+  if (task.description === "Close window") return "close"
+  if (task.description === "Toggle window floating/tiling") return "floating"
+  if (task.description === "Full screen" || task.description === "Tiled full screen") return "fullscreen"
+  return "manual"
+}
+
+function nextFlowTask(tasks, currentWorkspace, previousId, random, herdrState) {
+  var available = tasks.filter(function(t) {
+    return (!t.workspaceId || !workspaceMatches(t, currentWorkspace)) && Herdr.canPerform(t, herdrState)
+  })
+  var other = available.filter(function(t) { return t.id !== previousId })
+  if (other.length) available = other
+  return available.length ? available[Math.floor(random * available.length)] : null
+}
+
+// Only needed state is retained in memory; no window titles or commands.
+function windowSnapshot(raw) {
+  if (typeof raw !== "string" || raw.length > 2000000) return null
+  var list
+  try { list = JSON.parse(raw) } catch (_) { return null }
+  if (!Array.isArray(list) || list.length > 5000) return null
+  if (list.some(function(c) {
+    return !c || typeof c.address !== "string" || !/^0x[0-9a-f]+$/i.test(c.address) ||
+      typeof c.floating !== "boolean" || !Number.isInteger(c.fullscreen)
+  })) return null
+  var clients = Object.create(null), focused = ""
+  list.forEach(function(c) {
+    if (!c || typeof c.address !== "string" || !/^0x[0-9a-f]+$/i.test(c.address)) return
+    clients[c.address] = {floating: c.floating, fullscreen: c.fullscreen,
+      at: Array.isArray(c.at) ? c.at.slice(0, 2) : null,
+      size: Array.isArray(c.size) ? c.size.slice(0, 2) : null,
+      workspace: c.workspace ? c.workspace.id : null, monitor: c.monitor,
+      hidden: c.hidden === true || c.mapped === false}
+    if (c.focusHistoryID === 0) focused = c.address
+  })
+  return {clients: clients, focused: focused}
+}
+
+// At a boundary the compositor may wrap to the opposite end of the row/column.
+// Use pre-action geometry so viewport scrolling cannot move the boundary.
+function focusWraps(direction, before, after) {
+  var old = before.clients[before.focused]
+  var axis = direction === "left" || direction === "right" ? 0 : 1
+  var sign = direction === "left" || direction === "up" ? -1 : 1
+  function valid(c) {
+    return c && !c.hidden && c.workspace === old.workspace && c.monitor === old.monitor &&
+      Array.isArray(c.at) && Array.isArray(c.size) && c.at.length === 2 && c.size.length === 2 &&
+      c.at.concat(c.size).every(function(n) { return typeof n === "number" && isFinite(n) }) &&
+      c.size[0] > 0 && c.size[1] > 0
+  }
+  function position(c) { return sign * (c.at[axis] + c.size[axis] / 2) }
+  var target = before.clients[after.focused]
+  if (!valid(old) || !valid(target)) return false
+  var origin = position(old), destination = position(target), opposite = origin
+  var candidates = Object.keys(before.clients).map(function(id) { return before.clients[id] }).filter(valid)
+  for (var i = 0; i < candidates.length; i++) {
+    var p = position(candidates[i])
+    if (p > origin + 1) return false // Not at the requested boundary.
+    opposite = Math.min(opposite, p)
+  }
+  return destination < origin - 1 && Math.abs(destination - opposite) <= 1
+}
+
+function windowOutcome(task, before, after) {
+  if (!before || !after || !before.focused || !before.clients[before.focused]) return false
+  var old = before.clients[before.focused], now = after.clients[before.focused]
+  var kind = verificationKind(task)
+  if (kind === "focus") {
+    var target = after.clients[after.focused]
+    if (!target || after.focused === before.focused ||
+        old.workspace == null || old.workspace !== target.workspace ||
+        old.monitor == null || old.monitor !== target.monitor) return false
+    if (!old.at || !old.size || !target.at || !target.size) return false
+    var values = old.at.concat(old.size, target.at, target.size)
+    if (values.length !== 8 || !values.every(function(n) { return typeof n === "number" && isFinite(n) })) return false
+    var dx = target.at[0] + target.size[0] / 2 - old.at[0] - old.size[0] / 2
+    var dy = target.at[1] + target.size[1] / 2 - old.at[1] - old.size[1] / 2
+    var direction = focusDirection(task)
+    var direct = direction === "left" ? dx < -1 : direction === "right" ? dx > 1 :
+      direction === "up" ? dy < -1 : dy > 1
+    return direct || focusWraps(direction, before, after)
+  }
+  if (kind === "close") return !now
+  if (!now) return false
+  if (kind === "floating")
+    return typeof old.floating === "boolean" && typeof now.floating === "boolean" &&
+      old.floating !== now.floating
+  if (kind === "fullscreen")
+    return Number.isInteger(old.fullscreen) && Number.isInteger(now.fullscreen) &&
+      old.fullscreen !== now.fullscreen
+  return false
 }
 
 // Only direct, numbered workspace switches. Never infer a destination for
@@ -121,6 +275,8 @@ function nextWorkspaceTask(tasks, currentWorkspace, random) {
 
 // Groups are inferred from active binding descriptions, not executable commands.
 function groupFor(task) {
+  if (task.source === "herdr") return "herdr"
+  if (task.source === "ghostty" || task.source === "bash") return "terminal"
   var d = task.description.toLowerCase()
   if (/workspace|arbeitsfläche|scratchpad|quake/.test(d)) return "workspaces"
   if (/clipboard|copy|paste|cut|select all|zwischenablage/.test(d)) return "clipboard"
@@ -149,7 +305,7 @@ function toggleSelection(tasks, ids, targets) {
 
 function selectionRows(tasks, query) {
   var rows = [], q = String(query || "").trim().toLowerCase()
-  ;["windows", "workspaces", "apps", "system", "capture", "clipboard", "other"].forEach(function(group) {
+  ;["terminal", "herdr", "windows", "workspaces", "apps", "system", "capture", "clipboard", "other"].forEach(function(group) {
     var members = tasks.filter(function(t) { return groupFor(t) === group })
     var visible = members.filter(function(t) {
       return !q || (t.label + " " + t.description).toLowerCase().indexOf(q) >= 0
