@@ -1,1 +1,24 @@
-**/.claude/settings.local.json
+# Local credentials and environment secrets (.env.* includes .env.local)
+.env
+.env.*
+.credentials.json
+
+# Allow public templates
+!.env.example
+!.env.sample
+!.env.template
+!.env.dist
+
+# Common private SSH key filenames
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+
+# Private keys and key containers
+*.key
+*.p12
+*.pfx
+
+# Local Docker Compose overrides
+compose.override.yaml

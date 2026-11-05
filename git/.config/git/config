@@ -26,11 +26,11 @@
 	sort = -version:refname  # Sort version numbers as you would expect
 [rerere]
 	enabled = true           # Record and reuse conflict resolutions
-	autoupdate = true        # Apply stored conflict resolutions automatically
+	autoupdate = false       # Review reused resolutions before staging
 [user]
 	name = Thomas Brandner
 	email = brandner.thomas@me.com
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBv/StZg50KdIHUBIWa5+GGLJesfUdH5YXvKk/51Q5w3
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINo4iLNdMYhnQZiIZJ+CI+zpRflkLnef6t7/oFPvdtVt
 
 [credential "https://github.com"]
 	helper = 
