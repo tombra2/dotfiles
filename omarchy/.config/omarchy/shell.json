@@ -49,6 +49,9 @@
           "id": "omarchy.weather"
         },
         {
+          "id": "omarchy.media"
+        },
+        {
           "cities": [
             {
               "name": "Vienna",
@@ -93,6 +96,9 @@
           "id": "omarchy.tray"
         },
         {
+          "id": "omarchy.network"
+        },
+        {
           "id": "io.github.twiking.omacontrol"
         },
         {
@@ -106,9 +112,6 @@
         },
         {
           "id": "omarchy.bluetooth"
-        },
-        {
-          "id": "omarchy.network"
         },
         {
           "id": "thomas.school-vpn"
